@@ -1,0 +1,44 @@
+﻿@model TFSAdminDashboard.Models.VersionControlOverviewModel
+
+
+<table class="table table-bordered">
+    <tbody>
+        <tr class="info">
+            <th>
+                Name
+            </th>
+            <th>
+                Last ChangetSet Id
+            </th>
+            <th>
+                Last Check-In
+            </th>
+            <th>
+                Inner ChangetSet Id
+            </th>
+            <th>
+                Inner Last Check-In
+            </th>
+        </tr>
+        @foreach (TFSAdminDashboard.DTO.VersionControlItem vci in Model.VersionControlItemCollection)
+        {
+            <tr>
+                <td>
+                    @vci.DisplayName
+                </td>
+                <td>
+                    @vci.ItemChangeSetId
+                </td>
+                <td>
+                    @vci.ItemLastCheckIn
+                </td>
+                <td>
+                    @vci.InnerChangeSetId
+                </td>
+                <td>
+                    @vci.InnerLastCheckIn
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,73 @@
+﻿@model TFSAdminDashboard.Models.TestManagementOverviewModel
+
+<table class="table table-bordered">
+    <tbody>
+        <tr class="info">
+            <th>
+                Name
+            </th>
+            <th>
+                Area Path
+            </th>
+            <th>
+                Iteration Path
+            </th>
+            <th>
+                Owner
+            </th>
+            <th>
+                State
+            </th>
+            <th>
+                Revision
+            </th>
+            <th>
+                Description
+            </th>
+            <th>
+                Last Update Date
+            </th>
+            <th>
+                Start Date
+            </th>
+            <th>
+                End Date
+            </th>
+        </tr>
+        @foreach (TFSAdminDashboard.DTO.TestPlanDefinition tp in Model.TestPlanDefinitionCollection)
+        {
+            <tr>
+                <td>
+                    @tp.Name
+                </td>
+                <td>
+                    @tp.AreaPath
+                </td>
+                <td>
+                    @tp.IterationPath
+                </td>
+                <td>
+                    @tp.Owner
+                </td>
+                <td>
+                    @tp.State
+                </td>
+                <td>
+                    @tp.Revision
+                </td>
+                <td>
+                    @tp.Description
+                </td>
+                <td>
+                    @tp.LastUpdate
+                </td>
+                <td>
+                    @tp.StartDate
+                </td>
+                <td>
+                    @tp.EndDate
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

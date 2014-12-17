@@ -1,0 +1,7 @@
+﻿@model Dictionary<string,string>
+
+<option value="">Select the project</option>
+@foreach(KeyValuePair<string, string> tp in Model)
+{
+    <option value="@tp.Value">@tp.Key</option>
+}

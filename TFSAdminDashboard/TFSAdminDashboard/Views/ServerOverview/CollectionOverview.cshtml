@@ -1,0 +1,36 @@
+﻿@model TFSAdminDashboard.Models.CollectionOverviewModel
+<div class="panel panel-info">
+    <div class="panel-heading">
+
+        <strong class="lead">
+            @Model.ProjectCollections.Count project collections
+        </strong>
+
+    </div>
+    <table class="table table-bordered table-striped table-hover">
+        <tbody data-link="row" class="rowlink">
+            <tr>
+                <th>
+                    Name
+                </th>
+                <th>
+                    Instance Id
+                </th>
+            </tr>
+            @foreach (TFSAdminDashboard.DTO.ProjectCollectionDefinition collection in Model.ProjectCollections)
+            {
+
+                <tr>
+                    <td>
+                        <a href="@Url.Action("Index", "CollectionOverview", new {id = collection.InstanceId.ToString()})">
+                            @collection.Name
+                        </a>
+                    </td>
+                    <td>
+                        @collection.InstanceId
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

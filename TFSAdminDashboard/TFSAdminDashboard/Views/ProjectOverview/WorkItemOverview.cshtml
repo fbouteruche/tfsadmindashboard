@@ -1,0 +1,49 @@
+﻿@model TFSAdminDashboard.Models.WorkItemOverviewModel
+<table class="table table-bordered">
+    <tbody>
+        <tr class="info">
+            <th>Name</th>
+            <th>Categories</th>
+            <th>Description</th>
+            <th>State</th>
+            <th>Count</th>
+        </tr>
+        @foreach (TFSAdminDashboard.DTO.WorkItemDefinition wid in Model.WorkItemDefinitionCollection)
+        {
+            bool first = true;
+            int stateCount = wid.StateCollection.Count + 1;
+            int stateSum = wid.StateCollection.Sum(x => x.Value);
+            foreach (KeyValuePair<string, int> state in wid.StateCollection)
+            {
+                <tr>
+                    @if(first)
+                    { 
+                        first = false;
+                        <td rowspan="@stateCount">
+                            @wid.Name
+                        </td>
+                        <td rowspan="@stateCount">
+                            @foreach(string category in @wid.Categories)
+                            {
+                                @category
+                            }
+                        </td>
+                        <td rowspan="@stateCount">
+                            @wid.Description
+                        </td>
+                    }
+                    <td>@state.Key</td>
+                    <td>@state.Value</td>
+                </tr>
+            }
+            <tr>
+                <td>
+                    All
+                </td>
+                <td>
+                    @stateSum
+                </td>
+            </tr>
+        }         
+    </tbody>
+</table>

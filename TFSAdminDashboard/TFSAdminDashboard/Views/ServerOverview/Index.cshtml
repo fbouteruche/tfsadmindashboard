@@ -1,0 +1,30 @@
+﻿@model TFSAdminDashboard.Models.ServerOverviewModel
+
+<div class="row">
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            Server Overview - @Model.Name - Time Zone : @Model.TimeZone.StandardName
+        </div>
+        <div class="panel-body">
+            <ul class="nav nav-tabs" role="tablist">
+                <li class="active"><a href="#identityservice" role="tab" data-toggle="tab">Identity Service</a></li>
+                <li><a href="#projectcollections" role="tab" data-toggle="tab">Project Collections</a></li>
+                <li><a href="#organizationcatalogservice" role="tab" data-toggle="tab">Organizational Catalog Service</a></li>
+                <li><a href="#infrastructurecatalogservice" role="tab" data-toggle="tab">Infrastructure Catalog Service</a></li>
+            </ul>
+            <ul class="nav nav-tabs" role="tablist">
+                
+            </ul>
+            <div class="tab-content">
+                <div class="tab-pane active" id="identityservice" data-action="@Url.Action("IdentityOverview")"></div>
+                <div class="tab-pane" id="projectcollections" data-action="@Url.Action("CollectionOverview")"></div>
+                <div class="tab-pane" id="organizationcatalogservice" data-action="@Url.Action("OrganizationalOverview")"></div>
+                <div class="tab-pane" id="infrastructurecatalogservice" data-action="@Url.Action("InfrastructureOverview")"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script src="~/Scripts/ServerOverview.js"></script>
+}

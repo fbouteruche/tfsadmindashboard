@@ -1,0 +1,55 @@
+﻿@model TFSAdminDashboard.Models.BuildOverviewModel
+
+<table class="table table-bordered">
+    <tbody>
+        <tr class="info">
+            <th>
+                Name
+            </th>
+            <th>
+                Enabled
+            </th>
+            <th>
+                Continuous Integration Type
+            </th>
+            <th>
+                Retained Build Count
+            </th>
+            <th>
+                Failed or Partial Build Count
+            </th>
+            <th>
+                Last Success Date
+            </th>
+            <th>
+                Last Failed Date
+            </th>
+        </tr>
+        @foreach (TFSAdminDashboard.DTO.BuildDefinition bd in Model.BuildDefinitionCollection)
+        {
+            <tr>
+                <td>
+                    @bd.Name
+                </td>
+                <td>
+                    @bd.Enabled
+                </td>
+                <td>
+                    @bd.ContinuousIntegrationType
+                </td>
+                <td>
+                    @bd.RetainedBuild
+                </td>
+                <td>
+                    @bd.FailedOrPartial
+                </td>
+                <td>
+                    @bd.LastSuccess
+                </td>
+                <td>
+                    @bd.LastFail
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

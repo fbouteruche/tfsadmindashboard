@@ -1,0 +1,45 @@
+﻿<div class="row">
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            Project Overview
+        </div>
+        <div class="panel-body">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="input-group">
+                                <span class="input-group-addon">Team Project Collection</span>
+                                @Html.DropDownList("TpcList", null, "Select the collection", new { @class = "form-control", data_tpcListAction = @Url.Action("ProjectList") })
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="input-group">
+                                <span class="input-group-addon">Team Project</span>
+                                @Html.DropDownList("TpList", null, "Select the project", new { @class = "form-control", data_tpListAction = @Url.Action("ProjectOverview") })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <ul class="nav nav-tabs" role="tablist">
+                <li class="active"><a href="#identityservice" role="tab" data-toggle="tab">Identity Service</a></li>
+                <li><a href="#workitemservice" role="tab" data-toggle="tab">Work Item Service</a></li>
+                <li><a href="#versioncontrolservice" role="tab" data-toggle="tab">Version Control Service</a></li>
+                <li><a href="#buildservice" role="tab" data-toggle="tab">Build Service</a></li>
+                <li><a href="#testmanagementservice" role="tab" data-toggle="tab">Test Management Service</a></li>
+            </ul>
+            <div class="tab-content">
+                <div class="tab-pane active" id="identityservice" data-action="@Url.Action("IdentityOverview")"></div>
+                <div class="tab-pane" id="workitemservice" data-action="@Url.Action("WorkItemOverview")"></div>
+                <div class="tab-pane" id="versioncontrolservice" data-action="@Url.Action("VersionControlOverview")"></div>
+                <div class="tab-pane" id="buildservice" data-action="@Url.Action("BuildOverview")"></div>
+                <div class="tab-pane" id="testmanagementservice" data-action="@Url.Action("TestManagementOverview")"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script src="~/Scripts/ProjectOverview.js"></script>
+}

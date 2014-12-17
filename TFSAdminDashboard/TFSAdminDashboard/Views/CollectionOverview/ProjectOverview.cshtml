@@ -1,0 +1,49 @@
+﻿@model TFSAdminDashboard.Models.ProjectOverviewModel
+<div class="panel panel-info">
+    <div class="panel-heading">
+
+        <strong class="lead">
+            @Model.Projects.Count projects
+        </strong>
+
+    </div>
+    <table class="table table-bordered table-striped table-hover">
+        <tbody data-link="row" class="rowlink">
+            <tr>
+                <th>
+                    Name
+                </th>
+                <th>
+                    Id
+                </th>
+                <th>
+                    State
+                </th>
+                <th>
+                    Uri
+                </th>
+            </tr>
+            @foreach (TFSAdminDashboard.DTO.ProjectDefinition project in Model.Projects)
+            {
+
+                <tr>
+                    <td>
+                        <a href="@Url.Action("Index", "ProjectOverview", new {id = project.Id.ToString()})">
+                            @project.Name
+                        </a>
+                    </td>
+                    <td>
+                        @project.Id
+                    </td>
+                    <td>
+                        @project.State
+                    </td>
+                    <td>
+                        @project.Uri
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+

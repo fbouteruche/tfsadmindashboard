@@ -1,0 +1,65 @@
+﻿@model TFSAdminDashboard.Models.IdentityOverviewModel
+
+
+<table class="table table-bordered">
+    <tbody>
+        <tr class="info">
+            <th>
+                Application Group
+            </th>
+            <th>
+                Count
+            </th>
+            <th>
+                User
+            </th>
+            <th>
+                Active
+            </th>
+            <th>
+                Mail
+            </th>
+            <th>
+                Domain
+            </th>
+            <th>
+                Account
+            </th>
+        </tr>
+        @foreach (TFSAdminDashboard.DTO.ApplicationGroupDefinition ag in Model.ApplicationGroupCollection)
+        {
+            bool first = true;
+            foreach (TFSAdminDashboard.DTO.User user in ag.UserCollection)
+            {
+                <tr>
+                    @if (first)
+                    {
+                        first = false;
+                        <td rowspan="@ag.UserCollection.Count">
+                            @ag.Name
+                        </td>
+                        <td rowspan="@ag.UserCollection.Count">
+                            @ag.UserCollection.Count
+                        </td>
+                    }
+                    <td>
+                        @user.Name
+                    </td>
+                    <td>
+                        @user.IsActive
+                    </td>
+                    <td>
+                        @user.Mail
+                    </td>
+                    <td>
+                        @user.Domain
+                    </td>
+                    <td>
+                        @user.Account
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+
