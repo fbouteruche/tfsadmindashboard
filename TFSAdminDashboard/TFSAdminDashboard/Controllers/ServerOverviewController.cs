@@ -18,7 +18,7 @@ namespace TFSAdminDashboard.Controllers
     {
         private static Uri tfsUri = new Uri(TFSAdminDashboard.Properties.Settings.Default.TfsUrl);
 
-        private TfsConfigurationServer configurationServer = new TfsConfigurationServer(tfsUri, new NetworkCredential(TFSAdminDashboard.Properties.Settings.Default.TfsUserName, TFSAdminDashboard.Properties.Settings.Default.TfsPassword));
+        private TfsConfigurationServer configurationServer = new TfsConfigurationServer(tfsUri, new NetworkCredential(TFSAdminDashboard.Properties.Settings.Default.TfsUserName, Environment.GetEnvironmentVariable(TFSAdminDashboard.Properties.Settings.Default.TfsPasswordEnvironmentVariable)));
 
         // GET: TfsOverview
         public ActionResult Index()
