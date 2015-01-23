@@ -231,6 +231,7 @@
     <Content Include="Views\CollectionOverview\ProjectOverview.cshtml" />
     <Content Include="Views\CollectionOverview\BuildOverview.cshtml" />
     <Content Include="Views\DashboardView\Index.cshtml" />
+    <Content Include="variable.ps1" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -12,9 +12,9 @@ namespace TFSAdminDashboard.Controllers
 {
     public class DashboardViewController : Controller
     {
-        private static Uri tfsUri = new Uri(TFSAdminDashboard.Properties.Settings.Default.TfsUrl);
-
-        private TfsConfigurationServer configurationServer = new TfsConfigurationServer(tfsUri, new NetworkCredential(TFSAdminDashboard.Properties.Settings.Default.TfsUserName, TFSAdminDashboard.Properties.Settings.Default.TfsPassword));
+        private TfsConfigurationServer  configurationServer = new TfsConfigurationServer(
+            new Uri(Environment.GetEnvironmentVariable("TfsUrl")),
+            new NetworkCredential(Environment.GetEnvironmentVariable("TfsLoginName"), Environment.GetEnvironmentVariable("TfsPassword")));
 
 
         // GET: DashboardView

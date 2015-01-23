@@ -21,9 +21,9 @@ namespace TFSAdminDashboard.Controllers
 {
     public class ProjectOverviewController : Controller
     {
-        private static Uri tfsUri = new Uri(TFSAdminDashboard.Properties.Settings.Default.TfsUrl);
-
-        private TfsConfigurationServer configurationServer = new TfsConfigurationServer(tfsUri, new NetworkCredential(TFSAdminDashboard.Properties.Settings.Default.TfsUserName, Environment.GetEnvironmentVariable(TFSAdminDashboard.Properties.Settings.Default.TfsPasswordEnvironmentVariable)));
+        private TfsConfigurationServer configurationServer = new TfsConfigurationServer(
+            new Uri(Environment.GetEnvironmentVariable("TfsUrl")),
+            new NetworkCredential(Environment.GetEnvironmentVariable("TfsLoginName"), Environment.GetEnvironmentVariable("TfsPassword")));
 
         // GET: ProjectOverview
         public ActionResult Index(string id)
