@@ -16,7 +16,7 @@ namespace TFSAdminDashboard
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "ServerOverview", action = "Index", id = UrlParameter.Optional }
+                defaults: new { controller = "DashboardView", action = "Index", id = UrlParameter.Optional }
             );
             routes.MapRoute(
                 name: "ProjectLevel",

@@ -28,6 +28,8 @@ namespace TFSAdminDashboard.Controllers
             //ITeamFoundationRegistry serverRegistry = configurationServer.GetService<ITeamFoundationRegistry>();
             
             //ITeamFoundationJobService serverJobService = configurationServer.GetService<ITeamFoundationJobService>();
+            //TeamFoundationJobDefinition[] jobs = serverJobService.QueryJobs();
+
             //IPropertyService serverPropertyService = configurationServer.GetService<IPropertyService>();
             //IEventService serverEventService = configurationServer.GetService<IEventService>();
             //ISecurityService serverSecurityService = configurationServer.GetService<ISecurityService>();

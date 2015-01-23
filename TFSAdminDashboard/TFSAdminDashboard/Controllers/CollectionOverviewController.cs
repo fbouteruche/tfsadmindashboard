@@ -1,4 +1,5 @@
-﻿using Microsoft.TeamFoundation.Client;
+﻿using Microsoft.TeamFoundation.Build.Client;
+using Microsoft.TeamFoundation.Client;
 using Microsoft.TeamFoundation.Framework.Client;
 using Microsoft.TeamFoundation.Framework.Common;
 using System;
@@ -68,10 +69,28 @@ namespace TFSAdminDashboard.Controllers
             if(!string.IsNullOrWhiteSpace(id))
             {
                 TfsTeamProjectCollection tpc = configurationServer.GetTeamProjectCollection(new Guid(id));
-                pom.Projects = CatalogNodeBrowsingHelper.GetTeamProjects(tpc.CatalogNode);
+                pom.Projects = CatalogNodeBrowsingHelper.GetTeamProjects(tpc.CatalogNode, false);
             }
             return PartialView(pom);
         }
 
+        public ActionResult BuildOverview(string id)
+        { 
+            BuildOverviewModel bom = new BuildOverviewModel();
+            if(!string.IsNullOrWhiteSpace(id))
+            {
+                TfsTeamProjectCollection tpc = configurationServer.GetTeamProjectCollection(new Guid(id));
+                ReadOnlyCollection<CatalogNode> teamProjectNodes = tpc.CatalogNode.QueryChildren(
+                    new[] { CatalogResourceTypes.TeamProject },
+                    false, CatalogQueryOptions.None);
+
+                IBuildServer bs = tpc.GetService<IBuildServer>();
+                foreach (CatalogNode teamProjectNode in teamProjectNodes)
+                {
+                    BuildServerHelper.FeedBuildDefinition(bom.BuildDefinitionCollection, bs, teamProjectNode.Resource.DisplayName);
+                }
+            }
+            return PartialView(bom);
+        }
     }
 }

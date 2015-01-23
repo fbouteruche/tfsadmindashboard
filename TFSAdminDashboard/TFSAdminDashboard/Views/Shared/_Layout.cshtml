@@ -16,10 +16,11 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("TFS Admin Dashboard", "Index", "ProjectOverview", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("TFS Admin Dashboard", "Index", "DashboardView", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("Dashboard View", "Index", "DashboardView")</li>
                     <li>@Html.ActionLink("Server Overview", "Index", "ServerOverview")</li>
                     <li>@Html.ActionLink("Collection Overview", "Index", "CollectionOverview")</li>
                     <li>@Html.ActionLink("Project Overview", "Index", "ProjectOverview")</li>
