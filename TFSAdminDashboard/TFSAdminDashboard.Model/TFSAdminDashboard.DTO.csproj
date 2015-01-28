@@ -4,16 +4,15 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{69CFBAE0-DBE4-4B3E-8C42-7098EC391A77}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <ProjectGuid>{8B7DA413-1AC0-4295-B059-DB0EBB89DD7C}</ProjectGuid>
+    <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>TfsAdminDashboardConsole</RootNamespace>
-    <AssemblyName>TfsAdminDashboardConsole</AssemblyName>
+    <RootNamespace>TFSAdminDashboard.DTO</RootNamespace>
+    <AssemblyName>TFSAdminDashboard.DTO</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -23,7 +22,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -32,13 +30,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="CsvHelper">
-      <HintPath>..\packages\CsvHelper.2.10.0\lib\net40-client\CsvHelper.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.TeamFoundation.Client, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
-    <Reference Include="Microsoft.TeamFoundation.Common, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
-    <Reference Include="Microsoft.TeamFoundation.VersionControl.Client, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -47,26 +40,31 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ExtractBuildMachineListCommand.cs" />
-    <Compile Include="ExtractProjectListCommand.cs" />
-    <Compile Include="Program.cs" />
-    <Compile Include="ProjectDefinitionCsvMap.cs" />
+    <Compile Include="ApplicationGroupDefinition.cs" />
+    <Compile Include="BuildAgentDefinition.cs" />
+    <Compile Include="BuildControllerDefinition.cs" />
+    <Compile Include="BuildDefinition.cs" />
+    <Compile Include="BuildServiceHostDefinition.cs" />
+    <Compile Include="DataCollectorDefinition.cs" />
+    <Compile Include="ProcessGuidanceSiteDefinition.cs" />
+    <Compile Include="ProjectCollectionDefinition.cs" />
+    <Compile Include="ProjectPortalDefinition.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.config" />
-    <None Include="packages.config" />
-    <None Include="variable.ps1" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\TFSAdminDahsboard.DataAccess\TFSAdminDashboard.DataAccess.csproj">
-      <Project>{ee7ff479-448b-422e-a858-5dddbaf09766}</Project>
-      <Name>TFSAdminDashboard.DataAccess</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\TFSAdminDashboard.Model\TFSAdminDashboard.DTO.csproj">
-      <Project>{8b7da413-1ac0-4295-b059-db0ebb89dd7c}</Project>
-      <Name>TFSAdminDashboard.DTO</Name>
-    </ProjectReference>
+    <Compile Include="ReportingConfigurationDefinition.cs" />
+    <Compile Include="ReportingFolderDefinition.cs" />
+    <Compile Include="ReportingServerDefinition.cs" />
+    <Compile Include="SharePointSiteCreationLocationDefinition.cs" />
+    <Compile Include="SharePointWebApplicationDefinition.cs" />
+    <Compile Include="TeamFoundationServerInstanceDefinition.cs" />
+    <Compile Include="ProjectDefinition.cs" />
+    <Compile Include="TeamSystemWebAccessDefinition.cs" />
+    <Compile Include="TestControllerDefinition.cs" />
+    <Compile Include="TestEnvironmentDefinition.cs" />
+    <Compile Include="TestPlanDefinition.cs" />
+    <Compile Include="User.cs" />
+    <Compile Include="VersionControlItem.cs" />
+    <Compile Include="WorkItemCategoryDefinition.cs" />
+    <Compile Include="WorkItemDefinition.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

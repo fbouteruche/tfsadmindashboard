@@ -1,4 +1,5 @@
-﻿using Microsoft.TeamFoundation.Client;
+﻿using Microsoft.TeamFoundation.Build.Client;
+using Microsoft.TeamFoundation.Client;
 using Microsoft.TeamFoundation.Framework.Client;
 using Microsoft.TeamFoundation.Framework.Common;
 using System;
@@ -17,8 +18,8 @@ namespace TFSAdminDashboard.Controllers
     public class ServerOverviewController : Controller
     {
         private TfsConfigurationServer configurationServer = new TfsConfigurationServer(
-             new Uri(Environment.GetEnvironmentVariable("TfsUrl")),
-             new NetworkCredential(Environment.GetEnvironmentVariable("TfsLoginName"), Environment.GetEnvironmentVariable("TfsPassword")));
+             new Uri(Environment.GetEnvironmentVariable("TfsUrl", EnvironmentVariableTarget.User)),
+             new NetworkCredential(Environment.GetEnvironmentVariable("TfsLoginName", EnvironmentVariableTarget.User), Environment.GetEnvironmentVariable("TfsPassword", EnvironmentVariableTarget.User)));
 
         // GET: TfsOverview
         public ActionResult Index()
@@ -117,6 +118,13 @@ namespace TFSAdminDashboard.Controllers
             IdentityOverviewModel iom = new IdentityOverviewModel();
             IdentityServiceManagementHelper.FeedIdentityData(iom.ApplicationGroupCollection, iom.UserCollection, serverIdentityManagementService, null);
             return PartialView(iom);
+        }
+
+        public ActionResult MachineOverview()
+        {
+            MachineOverviewModel machineOverviewModel = new MachineOverviewModel();
+            machineOverviewModel.SetBuildServiceHostCollection(BuildServerHelper.GetAllBuildServiceHosts(configurationServer));
+            return PartialView(machineOverviewModel);
         }
     }
 }

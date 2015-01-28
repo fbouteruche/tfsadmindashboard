@@ -1,0 +1,71 @@
+﻿@model TFSAdminDashboard.Models.MachineOverviewModel
+
+
+<table class="table table-bordered">
+    <tbody>
+        <tr class="info">
+            <th>
+                Host Name
+            </th>
+            <th>
+                Type
+            </th>
+            <th>
+                Name
+            </th>
+            <th>
+                Status
+            </th>
+            
+        </tr>
+        @foreach (TFSAdminDashboard.DTO.BuildServiceHostDefinition buildServiceHost in Model.BuildServiceHostCollection)
+        {
+            bool first = true;
+            foreach (TFSAdminDashboard.DTO.BuildControllerDefinition controller in buildServiceHost.BuildControllers)
+            {
+                <tr>
+                    @if (first)
+                    {
+                        first = false;
+                        <td rowspan="@(buildServiceHost.BuildControllers.Count + buildServiceHost.BuildAgents.Count)">
+                            @buildServiceHost.Name
+                        </td>
+                    }
+                    <td>
+                        Controller
+                    </td>
+                    <td>
+                        @controller.Name
+                    </td>
+                    <td>
+                        @controller.Status
+                    </td>
+                </tr>
+            }
+            foreach (TFSAdminDashboard.DTO.BuildAgentDefinition agent in buildServiceHost.BuildAgents)
+            {
+                <tr>
+                    @if (first)
+                    {
+                        first = false;
+                        <td rowspan="@(buildServiceHost.BuildControllers.Count + buildServiceHost.BuildAgents.Count)">
+                            @buildServiceHost.Name
+                        </td>
+                    }
+                    <td>
+                        Agent
+                    </td>
+                    <td>
+                        @agent.Name
+                    </td>
+                    <td>
+                        @agent.Status
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+
+
+

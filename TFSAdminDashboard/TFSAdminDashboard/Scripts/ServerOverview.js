@@ -7,4 +7,6 @@
     $('#organizationcatalogservice').load(urlOrganizationalCatalogService);
     var urlInfrastructureCatalogService = $('#infrastructurecatalogservice').data('action');
     $('#infrastructurecatalogservice').load(urlInfrastructureCatalogService);
+    var urlMachineService = $('#machineservice').data('action');
+    $('#machineservice').load(urlMachineService);
 });

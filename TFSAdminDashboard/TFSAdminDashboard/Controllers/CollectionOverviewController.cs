@@ -18,8 +18,8 @@ namespace TFSAdminDashboard.Controllers
     public class CollectionOverviewController : Controller
     {
         private TfsConfigurationServer configurationServer = new TfsConfigurationServer(
-            new Uri(Environment.GetEnvironmentVariable("TfsUrl")),
-            new NetworkCredential(Environment.GetEnvironmentVariable("TfsLoginName"), Environment.GetEnvironmentVariable("TfsPassword")));
+             new Uri(Environment.GetEnvironmentVariable("TfsUrl", EnvironmentVariableTarget.User)),
+             new NetworkCredential(Environment.GetEnvironmentVariable("TfsLoginName", EnvironmentVariableTarget.User), Environment.GetEnvironmentVariable("TfsPassword", EnvironmentVariableTarget.User)));
 
         // GET: CollectionOverview
         public ActionResult Index(string id)
@@ -43,11 +43,6 @@ namespace TFSAdminDashboard.Controllers
             ViewBag.TpcList = tpcList;
 
             return View();
-        }
-
-        public ActionResult CollectionOverview()
-        {
-            return PartialView();
         }
 
         public ActionResult IdentityOverview(string id)
@@ -92,5 +87,18 @@ namespace TFSAdminDashboard.Controllers
             }
             return PartialView(bom);
         }
+
+        public ActionResult MachineOverview(string id)
+        {
+            MachineOverviewModel machineOverviewModel = new MachineOverviewModel();
+            if (!string.IsNullOrWhiteSpace(id))
+            {
+                TfsTeamProjectCollection tpc = configurationServer.GetTeamProjectCollection(new Guid(id));
+                machineOverviewModel.SetBuildServiceHostCollection(BuildServerHelper.GetAllBuildServiceHosts(tpc));
+            }
+            return PartialView(machineOverviewModel);
+        }
+
+        
     }
 }

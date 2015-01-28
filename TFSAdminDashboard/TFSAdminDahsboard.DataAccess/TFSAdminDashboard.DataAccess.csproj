@@ -4,16 +4,15 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{69CFBAE0-DBE4-4B3E-8C42-7098EC391A77}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <ProjectGuid>{EE7FF479-448B-422E-A858-5DDDBAF09766}</ProjectGuid>
+    <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>TfsAdminDashboardConsole</RootNamespace>
-    <AssemblyName>TfsAdminDashboardConsole</AssemblyName>
+    <RootNamespace>TFSAdminDashboard.DataAccess</RootNamespace>
+    <AssemblyName>TFSAdminDashboard.DataAccess</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -23,7 +22,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -32,9 +30,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="CsvHelper">
-      <HintPath>..\packages\CsvHelper.2.10.0\lib\net40-client\CsvHelper.dll</HintPath>
-    </Reference>
+    <Reference Include="Microsoft.TeamFoundation.Build.Client, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.TeamFoundation.Client, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.TeamFoundation.Common, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.TeamFoundation.VersionControl.Client, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
@@ -47,22 +43,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ExtractBuildMachineListCommand.cs" />
-    <Compile Include="ExtractProjectListCommand.cs" />
-    <Compile Include="Program.cs" />
-    <Compile Include="ProjectDefinitionCsvMap.cs" />
+    <Compile Include="BuildServerHelper.cs" />
+    <Compile Include="CatalogNodeBrowsingHelper.cs" />
+    <Compile Include="IdentityServiceManagementHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TeamProjectHelper.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
-    <None Include="packages.config" />
-    <None Include="variable.ps1" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\TFSAdminDahsboard.DataAccess\TFSAdminDashboard.DataAccess.csproj">
-      <Project>{ee7ff479-448b-422e-a858-5dddbaf09766}</Project>
-      <Name>TFSAdminDashboard.DataAccess</Name>
-    </ProjectReference>
     <ProjectReference Include="..\TFSAdminDashboard.Model\TFSAdminDashboard.DTO.csproj">
       <Project>{8b7da413-1ac0-4295-b059-db0ebb89dd7c}</Project>
       <Name>TFSAdminDashboard.DTO</Name>

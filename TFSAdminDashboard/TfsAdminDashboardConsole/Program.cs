@@ -22,6 +22,11 @@ namespace TfsAdminDashboardConsole
                 ExtractProjectListCommand command = new ExtractProjectListCommand();
                 command.Execute(args);
             }
+            else if(args.Length > 0 && args[0] == "ExtractBuildMachineList")
+            {
+                ExtractBuildMachineListCommand command = new ExtractBuildMachineListCommand();
+                command.Execute(args);
+            }
         }
     }
 }
