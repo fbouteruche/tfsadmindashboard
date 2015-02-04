@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TFSAdminDashboard.DataAcces
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TfsAdminDashboardConsole", "TfsAdminDashboardConsole\TfsAdminDashboardConsole.csproj", "{69CFBAE0-DBE4-4B3E-8C42-7098EC391A77}"
 EndProject
+Project("{F5034706-568F-408A-B7B3-4D38C6DB8A32}") = "TfsAdminDashboardPS", "TfsAdminDashboardPS\TfsAdminDashboardPS.pssproj", "{6CAFC0C6-A428-4D30-A9F9-700E829FEA51}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{69CFBAE0-DBE4-4B3E-8C42-7098EC391A77}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{69CFBAE0-DBE4-4B3E-8C42-7098EC391A77}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{69CFBAE0-DBE4-4B3E-8C42-7098EC391A77}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6CAFC0C6-A428-4D30-A9F9-700E829FEA51}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6CAFC0C6-A428-4D30-A9F9-700E829FEA51}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6CAFC0C6-A428-4D30-A9F9-700E829FEA51}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6CAFC0C6-A428-4D30-A9F9-700E829FEA51}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
