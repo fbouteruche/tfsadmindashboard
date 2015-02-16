@@ -1,8 +1,8 @@
 ﻿@model TFSAdminDashboard.Models.MachineOverviewModel
 
 
-<table class="table table-bordered">
-    <tbody>
+<table class="table table-bordered table-striped table-hover">
+    <tbody data-link="row" class="rowlink">
         <tr class="info">
             <th>
                 Host Name
@@ -16,7 +16,10 @@
             <th>
                 Status
             </th>
-            
+            <th>
+                RDP Link
+            </th>
+
         </tr>
         @foreach (TFSAdminDashboard.DTO.BuildServiceHostDefinition buildServiceHost in Model.BuildServiceHostCollection)
         {
@@ -40,6 +43,9 @@
                     <td>
                         @controller.Status
                     </td>
+                    <td>
+                        <a href="@controller.RDPUri">@controller.RDPUri</a>
+                    </td>
                 </tr>
             }
             foreach (TFSAdminDashboard.DTO.BuildAgentDefinition agent in buildServiceHost.BuildAgents)
@@ -60,6 +66,9 @@
                     </td>
                     <td>
                         @agent.Status
+                    </td>
+                    <td>
+                        <a href="@agent.RDPUri">@agent.RDPUri</a>
                     </td>
                 </tr>
             }
