@@ -26,7 +26,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="rdp.bat" />
+  </ItemGroup>
   <ItemGroup>
     <Compile Include="RetrieveWinLog.ps1" />
   </ItemGroup>
