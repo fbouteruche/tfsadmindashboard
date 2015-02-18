@@ -1,4 +1,14 @@
-﻿@model TFSAdminDashboard.Models.CollectionOverviewModel
+﻿<script type="text/javascript">
+        $(document).ready(function () {
+            $("#collectionThrobber").hide()
+        });
+
+        $(document).loading(function () {
+            $("#collectionThrobber").show()
+        });
+</script>
+
+@model TFSAdminDashboard.Models.CollectionOverviewModel
 <div class="panel panel-info">
     <div class="panel-heading">
 

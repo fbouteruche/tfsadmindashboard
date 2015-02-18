@@ -1,4 +1,14 @@
-﻿@model TFSAdminDashboard.Models.ProjectOverviewModel
+﻿<script type="text/javascript">
+        $(document).ready(function () {
+            $("#projectThrobber").hide()
+        });
+
+        $(document).loading(function () {
+            $("#projectThrobber").show()
+        });
+</script>
+
+@model TFSAdminDashboard.Models.ProjectOverviewModel
 <div class="panel panel-info">
     <div class="panel-heading">
 

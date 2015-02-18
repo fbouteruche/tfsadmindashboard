@@ -1,4 +1,13 @@
-﻿@model TFSAdminDashboard.Models.BuildOverviewModel
+﻿<script type="text/javascript">
+        $(document).ready(function () {
+            $("#buildThrobber").hide()
+        });
+
+        $(document).loading(function () {
+            $("#buildThrobber").show()
+        });
+</script>
+@model TFSAdminDashboard.Models.BuildOverviewModel
 
 <table class="table table-bordered">
     <tbody>

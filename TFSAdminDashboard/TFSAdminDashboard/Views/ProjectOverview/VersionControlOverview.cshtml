@@ -1,4 +1,14 @@
-﻿@model TFSAdminDashboard.Models.VersionControlOverviewModel
+﻿<script type="text/javascript">
+        $(document).ready(function () {
+            $("#versionCThrobber").hide()
+        });
+
+        $(document).loading(function () {
+            $("#versionCThrobber").show()
+        });
+</script>
+
+@model TFSAdminDashboard.Models.VersionControlOverviewModel
 
 
 <table class="table table-bordered">

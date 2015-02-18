@@ -1,4 +1,14 @@
-﻿@model TFSAdminDashboard.Models.IdentityOverviewModel
+﻿<script type="text/javascript">
+        $(document).ready(function () {
+            $("#identityThrobber").hide()
+        });
+
+        $(document).loading(function () {
+            $("#identityThrobber").show()
+        });
+</script>
+
+@model TFSAdminDashboard.Models.IdentityOverviewModel
 
 
 <table class="table table-bordered">

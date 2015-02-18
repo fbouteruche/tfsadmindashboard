@@ -1,5 +1,14 @@
-﻿@model TFSAdminDashboard.Models.MachineOverviewModel
+﻿<script type="text/javascript">
+        $(document).ready(function () {
+            $("#machinesThrobber").hide()
+        });
 
+        $(document).loading(function () {
+            $("#machinesThrobber").show()
+        });
+</script>
+
+@model TFSAdminDashboard.Models.MachineOverviewModel
 
 <table class="table table-bordered">
     <tbody>

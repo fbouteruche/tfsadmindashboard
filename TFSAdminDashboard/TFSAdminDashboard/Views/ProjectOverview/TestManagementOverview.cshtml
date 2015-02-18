@@ -1,4 +1,13 @@
-﻿@model TFSAdminDashboard.Models.TestManagementOverviewModel
+﻿<script type="text/javascript">
+        $(document).ready(function () {
+            $("#testManagementThrobber").hide()
+        });
+
+        $(document).loading(function () {
+            $("#testManagementThrobber").show()
+        });
+</script>
+@model TFSAdminDashboard.Models.TestManagementOverviewModel
 
 <table class="table table-bordered">
     <tbody>
