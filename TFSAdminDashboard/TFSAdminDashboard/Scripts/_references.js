@@ -10,3 +10,5 @@
 /// <reference path="respond.js" />
 /// <reference path="respond.matchmedia.addlistener.js" />
 /// <reference path="serveroverview.js" />
+/// <reference path="justgage.1.0.1.js" />
+/// <reference path="raphael.2.1.0.min.js" />

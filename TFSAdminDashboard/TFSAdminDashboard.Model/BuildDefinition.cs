@@ -26,7 +26,7 @@ namespace TFSAdminDashboard.DTO
             set;
         }
 
-        public int FailedOrPartial { get; set; }
+        public int FailedOrPartialRatio { get; set; }
 
         public int RetainedBuild { get; set; }
 

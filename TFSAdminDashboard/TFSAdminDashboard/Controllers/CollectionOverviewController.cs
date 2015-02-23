@@ -70,7 +70,12 @@ namespace TFSAdminDashboard.Controllers
         }
 
         public ActionResult BuildOverview(string id)
-        { 
+        {
+            if (string.IsNullOrEmpty(id))
+            {
+                return RedirectToAction("Index");
+            }
+
             BuildOverviewModel bom = new BuildOverviewModel();
             if(!string.IsNullOrWhiteSpace(id))
             {

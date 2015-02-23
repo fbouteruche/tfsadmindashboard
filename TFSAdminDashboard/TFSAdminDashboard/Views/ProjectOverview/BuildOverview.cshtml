@@ -1,6 +1,32 @@
-﻿<script type="text/javascript">
+﻿<script src="~/Scripts/justgage.1.0.1.min.js"></script>
+<script src="~/Scripts/raphael.2.1.0.min.js"></script>
+<style>
+    .gauge {
+        width:100px; height:80px;
+      }
+</style>
+<script type="text/javascript">
         $(document).ready(function () {
             $("#buildThrobber").hide()
+
+            $('.gauge').each(function () {
+
+                new JustGage({
+                    id: this.id,
+                    value: $(this).attr("value"),
+                    min: 0,
+                    max: 100,
+                    title: " ",
+                    label: " ",
+                    levelColorsGradient: false
+                })
+            })
+
+            // Post drawing resize
+            $('svg').each(function () {
+                $(this).width(100);
+                $(this).height(100);
+            })
         });
 
         $(document).loading(function () {
@@ -25,7 +51,7 @@
                 Retained Build Count
             </th>
             <th>
-                Failed or Partial Build Count
+                Failed or Partial Ratio
             </th>
             <th>
                 Last Success Date
@@ -49,9 +75,7 @@
                 <td>
                     @bd.RetainedBuild
                 </td>
-                <td>
-                    @bd.FailedOrPartial
-                </td>
+                <td class="gauge" id="@bd.Name" value="@bd.FailedOrPartialRatio"></td>
                 <td>
                     @bd.LastSuccess
                 </td>

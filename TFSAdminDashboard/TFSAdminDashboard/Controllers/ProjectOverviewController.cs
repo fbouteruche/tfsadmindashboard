@@ -176,7 +176,7 @@ namespace TFSAdminDashboard.Controllers
                     Name = buildDefinition.Name,
                     Enabled = buildDefinition.Enabled,
                     ContinuousIntegrationType = buildDefinition.ContinuousIntegrationType.ToString(),
-                    FailedOrPartial = failedOrPartialCount,
+                    FailedOrPartialRatio = failedOrPartialCount,
                     RetainedBuild = buildCount,
                     LastSuccess = lastSucceededBuild != null ? lastSucceededBuild.FinishTime : DateTime.MinValue,
                     LastFail = lastFailedBuild != null ? lastFailedBuild.FinishTime : DateTime.MinValue
@@ -284,6 +284,11 @@ namespace TFSAdminDashboard.Controllers
 
         public ActionResult BuildOverview(string id, string projectid)
         {
+            if(string.IsNullOrEmpty(id) || string.IsNullOrEmpty(projectid))
+            {
+                return RedirectToAction("Index");
+            }
+
             TfsTeamProjectCollection tpc = configurationServer.GetTeamProjectCollection(new Guid(id));
             ReadOnlyCollection<CatalogNode> teamProjectNodes = tpc.CatalogNode.QueryChildren(
                     new[] { CatalogResourceTypes.TeamProject }, new[] { new KeyValuePair<string, string>("ProjectID", projectid) },

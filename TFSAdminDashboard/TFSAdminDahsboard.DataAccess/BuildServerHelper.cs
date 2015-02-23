@@ -16,7 +16,7 @@ namespace TFSAdminDashboard.DataAccess
 
         public static void FeedBuildDefinition(ICollection<BuildDefinition> collection, IBuildServer bs, string projectName)
         {
-            
+
 
             IBuildDefinition[] buildDefinitions = bs.QueryBuildDefinitions(projectName);
             foreach (IBuildDefinition buildDefinition in buildDefinitions)
@@ -29,7 +29,7 @@ namespace TFSAdminDashboard.DataAccess
                 buildDetailSpec.QueryOrder = BuildQueryOrder.FinishTimeDescending;
                 buildDetailSpec.MinFinishTime = DateTime.Now.AddMonths(-1);
                 IBuildQueryResult overallBuildDetailsQueryResults = bs.QueryBuilds(buildDetailSpec);
-            
+
 
                 IBuildDetail[] buildDetails = bs.QueryBuilds(buildDefinition);
                 int failedOrPartialCount = buildDetails.Count(x => x.Status == BuildStatus.Failed || x.Status == BuildStatus.PartiallySucceeded);
@@ -42,7 +42,7 @@ namespace TFSAdminDashboard.DataAccess
                     Name = buildDefinition.Name,
                     Enabled = buildDefinition.Enabled,
                     ContinuousIntegrationType = buildDefinition.ContinuousIntegrationType.ToString(),
-                    FailedOrPartial = failedOrPartialCount,
+                    FailedOrPartialRatio = buildCount != 0 ? failedOrPartialCount / buildCount : 0,
                     RetainedBuild = buildCount,
                     LastSuccess = lastSucceededBuild != null ? lastSucceededBuild.FinishTime : DateTime.MinValue,
                     LastFail = lastFailedBuild != null ? lastFailedBuild.FinishTime : DateTime.MinValue
@@ -74,7 +74,7 @@ namespace TFSAdminDashboard.DataAccess
                 }
 
                 // Get domain from collection name for rdp links
-                if(string.IsNullOrEmpty(TFSDomain))
+                if (string.IsNullOrEmpty(TFSDomain))
                 {
                     Uri uri = new Uri(buildServiceHostDefinitionForController.CollectionName);
 
@@ -113,7 +113,7 @@ namespace TFSAdminDashboard.DataAccess
                 }
             }
         }
-        
+
         public static ICollection<BuildServiceHostDefinition> GetAllBuildServiceHosts(TfsTeamProjectCollection tpc)
         {
             List<BuildServiceHostDefinition> buildServiceHostCollection = new List<BuildServiceHostDefinition>();
