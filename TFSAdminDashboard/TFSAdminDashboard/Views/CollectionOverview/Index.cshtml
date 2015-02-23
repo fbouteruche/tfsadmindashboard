@@ -1,4 +1,14 @@
-﻿@model TFSAdminDashboard.Models.CollectionOverviewModel
+﻿<script type="text/javascript">
+
+    function onChangeHandler() {
+        $('.throb').each(function () {
+            $(this).show()
+        });
+    }
+
+</script>
+
+@model TFSAdminDashboard.Models.CollectionOverviewModel
 
 <div class="row">
     <div class="panel panel-primary">
@@ -12,17 +22,17 @@
                         <div class="col-md-12">
                             <div class="input-group">
                                 <span class="input-group-addon">Team Project Collection</span>
-                                @Html.DropDownList("TpcList", null, "Select the collection", new { @class = "form-control", data_tpcListAction = @Url.Action("CollectionOverview") })
+                                @Html.DropDownList("TpcList", null, "Select the collection", new { @class = "form-control", data_tpcListAction = @Url.Action("CollectionOverview"), @onchange = "onChangeHandler();" })
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
             <ul class="nav nav-tabs" role="tablist">
-                <li class="active"><a href="#identityservice" role="tab" data-toggle="tab">Identity Service <img id="identityThrobber" src="~/Img/ajax-loader.gif" /></a></li>
-                <li><a href="#projects" role="tab" data-toggle="tab">Projects <img id="projectThrobber" src="~/Img/ajax-loader.gif" /></a></li>
-                <li><a href="#buildservice" role="tab" data-toggle="tab">Build Service <img id="buildThrobber" src="~/Img/ajax-loader.gif" /></a></li>
-                <li><a href="#machineservice" role="tab" data-toggle="tab">Machine Service <img id="machineThrobber" src="~/Img/ajax-loader.gif" /></a></li>
+                <li class="active"><a href="#identityservice" role="tab" data-toggle="tab">Identity Service <img class="throb" id="identityThrobber" src="~/Img/ajax-loader.gif" /></a></li>
+                <li><a href="#projects" role="tab" data-toggle="tab">Projects <img class="throb" id="projectThrobber" src="~/Img/ajax-loader.gif" /></a></li>
+                <li><a href="#buildservice" role="tab" data-toggle="tab">Build Service <img class="throb" id="buildThrobber" src="~/Img/ajax-loader.gif" /></a></li>
+                <li><a href="#machineservice" role="tab" data-toggle="tab">Machine Service <img class="throb" id="machineThrobber" src="~/Img/ajax-loader.gif" /></a></li>
             </ul>
             <ul class="nav nav-tabs" role="tablist"></ul>
             <div class="tab-content">
