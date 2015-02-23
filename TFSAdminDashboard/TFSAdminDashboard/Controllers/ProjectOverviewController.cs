@@ -249,6 +249,11 @@ namespace TFSAdminDashboard.Controllers
 
         public ActionResult IdentityOverview(string id, string projectid)
         {
+            if (string.IsNullOrEmpty(id) || string.IsNullOrEmpty(projectid))
+            {
+                return RedirectToAction("Index");
+            }
+
             TfsTeamProjectCollection tpc = configurationServer.GetTeamProjectCollection(new Guid(id));
             ReadOnlyCollection<CatalogNode> teamProjectNodes = tpc.CatalogNode.QueryChildren(
                     new[] { CatalogResourceTypes.TeamProject }, new[] { new KeyValuePair<string, string>("ProjectID", projectid) },
