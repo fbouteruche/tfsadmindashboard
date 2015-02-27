@@ -51,7 +51,10 @@
                 Retained Build Count
             </th>
             <th>
-                Failed or Partial Ratio
+                Failed Ratio
+            </th>
+            <th>
+                %
             </th>
             <th>
                 Last Success Date
@@ -76,6 +79,9 @@
                     @bd.RetainedBuild
                 </td>
                 <td class="gauge" id="@bd.Name" value="@bd.FailedOrPartialRatio"></td>
+                <td>
+                    @bd.FailedOrPartialRatio
+                </td>
                 <td>
                     @bd.LastSuccess
                 </td>
