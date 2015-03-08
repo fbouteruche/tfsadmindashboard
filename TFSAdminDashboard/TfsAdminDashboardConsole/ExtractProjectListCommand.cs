@@ -28,10 +28,11 @@ namespace TfsAdminDashboardConsole
         {
             ICollection<ProjectDefinition> projectList = TeamProjectHelper.GetAllProjects(configurationServer);
 
-
-            CsvWriter csv = new CsvWriter(new StreamWriter(Path.Combine(Environment.GetEnvironmentVariable("TfsExtractPath", EnvironmentVariableTarget.User), Environment.GetEnvironmentVariable("TfsExtractProjectList", EnvironmentVariableTarget.User))));
-            csv.Configuration.RegisterClassMap<ProjectDefinitionCsvMap>();
-            csv.WriteRecords(projectList);
+            using (CsvWriter csv = new CsvWriter(new StreamWriter(Path.Combine(Environment.GetEnvironmentVariable("TfsExtractPath", EnvironmentVariableTarget.User), Environment.GetEnvironmentVariable("TfsExtractProjectList", EnvironmentVariableTarget.User)))))
+            {
+                csv.Configuration.RegisterClassMap<ProjectDefinitionCsvMap>();
+                csv.WriteRecords(projectList);
+            }
         }
     }
 }

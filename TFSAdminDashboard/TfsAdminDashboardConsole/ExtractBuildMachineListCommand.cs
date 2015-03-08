@@ -53,8 +53,10 @@ namespace TfsAdminDashboardConsole
                 }
             }
 
-            CsvWriter csv = new CsvWriter(new StreamWriter(Path.Combine(Environment.GetEnvironmentVariable("TfsExtractPath", EnvironmentVariableTarget.User), Environment.GetEnvironmentVariable("TfsExtractMachineList", EnvironmentVariableTarget.User))));
-            csv.WriteRecords(records);
+            using (CsvWriter csv = new CsvWriter(new StreamWriter(Path.Combine(Environment.GetEnvironmentVariable("TfsExtractPath", EnvironmentVariableTarget.User), Environment.GetEnvironmentVariable("TfsExtractMachineList", EnvironmentVariableTarget.User)))))
+            {
+                csv.WriteRecords(records);
+            }
         }
     }
 }
