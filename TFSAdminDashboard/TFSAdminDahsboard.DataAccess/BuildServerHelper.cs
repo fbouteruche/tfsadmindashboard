@@ -52,9 +52,6 @@ namespace TFSAdminDashboard.DataAccess
             }
         }
 
-        private static string TFSDomain;
-
-
         private static void FeedBuildMachineData(ICollection<BuildServiceHostDefinition> serverHosts, IBuildServer bs)
         {
             IBuildController[] controllers = bs.QueryBuildControllers(true);
@@ -73,20 +70,9 @@ namespace TFSAdminDashboard.DataAccess
                     buildServiceHostDefinitionForController = serverHosts.FirstOrDefault(x => x.Name == controller.ServiceHost.Name);
                 }
 
-                // Get domain from collection name for rdp links
-                if (string.IsNullOrEmpty(TFSDomain))
-                {
-                    Uri uri = new Uri(buildServiceHostDefinitionForController.CollectionName);
-
-                    var list = uri.Host.Split('.').ToList();
-                    list.RemoveAt(0); // remove hostname
-
-                    TFSDomain = string.Join(".", list.ToArray());
-                }
-
                 BuildControllerDefinition buildControllerDefinition = new BuildControllerDefinition();
                 buildControllerDefinition.Name = controller.Name;
-                buildControllerDefinition.RDPUri = string.Format("rdp://{0}.{1}", buildServiceHostDefinitionForController.Name, TFSDomain);
+                buildControllerDefinition.RDPUri = string.Format("rdp://{0}.{1}", buildServiceHostDefinitionForController.Name, Environment.GetEnvironmentVariable("RDPDomain", EnvironmentVariableTarget.User));
                 buildControllerDefinition.Status = controller.Status.ToString();
                 buildServiceHostDefinitionForController.BuildControllers.Add(buildControllerDefinition);
 
@@ -108,7 +94,7 @@ namespace TFSAdminDashboard.DataAccess
                     BuildAgentDefinition buildAgentDefinition = new BuildAgentDefinition();
                     buildAgentDefinition.Name = agent.Name;
                     buildAgentDefinition.Status = agent.Status.ToString();
-                    buildAgentDefinition.RDPUri = string.Format("rdp://{0}.{1}", buildServiceHostDefinitionForAgent.Name, TFSDomain);
+                    buildAgentDefinition.RDPUri = string.Format("rdp://{0}.{1}", buildServiceHostDefinitionForAgent.Name, Environment.GetEnvironmentVariable("RDPDomain", EnvironmentVariableTarget.User));
                     buildServiceHostDefinitionForAgent.BuildAgents.Add(buildAgentDefinition);
                 }
             }
