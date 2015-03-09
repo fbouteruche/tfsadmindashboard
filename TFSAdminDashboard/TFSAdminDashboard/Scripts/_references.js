@@ -12,3 +12,4 @@
 /// <reference path="respond.js" />
 /// <reference path="respond.matchmedia.addlistener.js" />
 /// <reference path="serveroverview.js" />
+/// <reference path="tfsadmindashboard.js" />

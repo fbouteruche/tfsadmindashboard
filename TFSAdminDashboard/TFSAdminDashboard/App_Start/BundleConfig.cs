@@ -24,6 +24,9 @@ namespace TFSAdminDashboard
                       "~/Scripts/jasny-bootstrap.js",
                       "~/Scripts/respond.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/tfsadmindashboard").Include(
+                      "~/Scripts/tfsadmindashboard.js"));
+
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/jasny-bootstrap.css",

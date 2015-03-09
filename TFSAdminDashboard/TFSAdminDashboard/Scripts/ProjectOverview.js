@@ -1,37 +1,26 @@
-﻿$(function () {
+﻿function loadProjectOverviewTabPanes() {
+    loadTabPaneData('#identityservice', '#TpcList', '#TpList');
+    loadTabPaneData('#workitemservice', '#TpcList', '#TpList');
+    loadTabPaneData('#versioncontrolservice', '#TpcList', '#TpList');
+    loadTabPaneData('#buildservice', '#TpcList', '#TpList');
+    loadTabPaneData('#testmanagementservice', '#TpcList', '#TpList');
+}
+
+function clearProjectOverviewTabPanes() {
+    $('#identityservice').html("");
+    $('#workitemservice').html("");
+    $('#versioncontrolservice').html("");
+    $('#buildservice').html("");
+    $('#testmanagementservice').html("");
+}
+
+$(function () {
     if ($('#TpcList').val() != '' && $('#TpList').val() != '') {
-        var urlIdentityService = $('#identityservice').data('action');
-        var urlIdentityService = urlIdentityService + '/' + $('#TpcList').val();
-        var urlIdentityService = urlIdentityService + '/' + $('#TpList').val();
-        $('#identityservice').load(urlIdentityService);
-
-        var urlWorkItemService = $('#workitemservice').data('action');
-        var urlWorkItemService = urlWorkItemService + '/' + $('#TpcList').val();
-        var urlWorkItemService = urlWorkItemService + '/' + $('#TpList').val();
-        $('#workitemservice').load(urlWorkItemService);
-
-        var urlVersionControlService = $('#versioncontrolservice').data('action');
-        var urlVersionControlService = urlVersionControlService + '/' + $('#TpcList').val();
-        var urlVersionControlService = urlVersionControlService + '/' + $('#TpList').val();
-        $('#versioncontrolservice').load(urlVersionControlService);
-
-        var urlBuildService = $('#buildservice').data('action');
-        var urlBuildService = urlBuildService + '/' + $('#TpcList').val();
-        var urlBuildService = urlBuildService + '/' + $('#TpList').val();
-        $('#buildservice').load(urlBuildService);
-
-        var urlTestManagementService = $('#testmanagementservice').data('action');
-        var urlTestManagementService = urlTestManagementService + '/' + $('#TpcList').val();
-        var urlTestManagementService = urlTestManagementService + '/' + $('#TpList').val();
-        $('#testmanagementservice').load(urlTestManagementService);
+        loadProjectOverviewTabPanes();
     }
 
     $('#TpcList').change(function () {
-        $('#identityservice').html("");
-        $('#workitemservice').html("");
-        $('#versioncontrolservice').html("");
-        $('#buildservice').html("");
-        $('#testmanagementservice').html("");
+        clearProjectOverviewTabPanes();
         if ($('#TpcList').val() != '') {
             var URL = $('#TpcList').data('tpclistaction');
             var URL = URL + '/' + $('#TpcList').val();
@@ -44,37 +33,9 @@
     });
 
     $('#TpList').change(function () {
-        $('#identityservice').html("");
-        $('#workitemservice').html("");
-        $('#versioncontrolservice').html("");
-        $('#buildservice').html("");
-        $('#testmanagementservice').html("");
+        clearProjectOverviewTabPanes();
         if ($('#TpList').val() != '') {
-            var urlIdentityService = $('#identityservice').data('action');
-            var urlIdentityService = urlIdentityService + '/' + $('#TpcList').val();
-            var urlIdentityService = urlIdentityService + '/' + $('#TpList').val();
-            $('#identityservice').load(urlIdentityService);
-
-            var urlWorkItemService = $('#workitemservice').data('action');
-            var urlWorkItemService = urlWorkItemService + '/' + $('#TpcList').val();
-            var urlWorkItemService = urlWorkItemService + '/' + $('#TpList').val();
-            $('#workitemservice').load(urlWorkItemService);
-
-            var urlVersionControlService = $('#versioncontrolservice').data('action');
-            var urlVersionControlService = urlVersionControlService + '/' + $('#TpcList').val();
-            var urlVersionControlService = urlVersionControlService + '/' + $('#TpList').val();
-            $('#versioncontrolservice').load(urlVersionControlService);
-
-            var urlBuildService = $('#buildservice').data('action');
-            var urlBuildService = urlBuildService + '/' + $('#TpcList').val();
-            var urlBuildService = urlBuildService + '/' + $('#TpList').val();
-            $('#buildservice').load(urlBuildService);
-
-            var urlTestManagementService = $('#testmanagementservice').data('action');
-            var urlTestManagementService = urlTestManagementService + '/' + $('#TpcList').val();
-            var urlTestManagementService = urlTestManagementService + '/' + $('#TpList').val();
-            $('#testmanagementservice').load(urlTestManagementService);
-            
+            loadProjectOverviewTabPanes();
         }
     });
 });
