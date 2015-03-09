@@ -1,5 +1,5 @@
-﻿$credential = Get-Credential -Credential "***REMOVED***"
-$desthostname = "***REMOVED***"
+﻿$credential = Get-Credential -Credential "credential"
+$desthostname = "hostname"
 
 function Set-TrustedHosts([string]$hostname)
 {
