@@ -185,6 +185,7 @@
     <Compile Include="Controllers\DashboardViewController.cs" />
     <Compile Include="Controllers\ProjectOverviewController.cs" />
     <Compile Include="Controllers\ServerOverviewController.cs" />
+    <Compile Include="Controllers\TFAdminControllerBase.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -293,7 +294,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
-    <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TFSAdminDahsboard.DataAccess\TFSAdminDashboard.DataAccess.csproj">

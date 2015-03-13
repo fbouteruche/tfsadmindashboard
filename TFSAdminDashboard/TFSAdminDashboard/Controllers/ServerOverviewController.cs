@@ -15,12 +15,9 @@ using TFSAdminDashboard.Models;
 
 namespace TFSAdminDashboard.Controllers
 {
-    public class ServerOverviewController : Controller
+    public class ServerOverviewController : TFAdminControllerBase
     {
-        private TfsConfigurationServer configurationServer = new TfsConfigurationServer(
-             new Uri(Environment.GetEnvironmentVariable("TfsUrl", EnvironmentVariableTarget.User)),
-             new NetworkCredential(Environment.GetEnvironmentVariable("TfsLoginName", EnvironmentVariableTarget.User), Environment.GetEnvironmentVariable("TfsPassword", EnvironmentVariableTarget.User)));
-
+       
         // GET: TfsOverview
         public ActionResult Index()
         {

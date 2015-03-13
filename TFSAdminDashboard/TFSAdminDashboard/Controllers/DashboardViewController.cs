@@ -10,12 +10,8 @@ using TFSAdminDashboard.DTO;
 
 namespace TFSAdminDashboard.Controllers
 {
-    public class DashboardViewController : Controller
+    public class DashboardViewController : TFAdminControllerBase
     {
-        private TfsConfigurationServer configurationServer = new TfsConfigurationServer(
-             new Uri(Environment.GetEnvironmentVariable("TfsUrl", EnvironmentVariableTarget.User)),
-             new NetworkCredential(Environment.GetEnvironmentVariable("TfsLoginName", EnvironmentVariableTarget.User), Environment.GetEnvironmentVariable("TfsPassword", EnvironmentVariableTarget.User)));
-
         // GET: DashboardView
         public ActionResult Index()
         {
