@@ -12,6 +12,13 @@ namespace TFSAdminDashboard.DataAccess
 {
     public class IdentityServiceManagementHelper
     {
+        public static int GetAllIdentityCount(IIdentityManagementService ims)
+        {
+            // TODO
+            return 0;
+            //ims.ReadIdentities();
+        }
+
         public static void FeedIdentityData(ICollection<ApplicationGroupDefinition> applicationGroupCollection, ICollection<User> userCollection, IIdentityManagementService ims, string projectUri)
         {
             //Get the project application groups

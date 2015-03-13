@@ -1,10 +1,30 @@
-﻿<div class="row">
+﻿@model TFSAdminDashboard.Models.OrganizationalOverviewModel
+
+<div class="row">
     <div class="panel panel-primary">
         <div class="panel-heading">
-            Dashboard
+            DashBoard Overview
         </div>
         <div class="panel-body">
-            
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            Number of collections: @Model.ProjectCollectionCollection.Count();
+                        </div>
+                        <div class="col-md-12">
+                            Number of projects: @Model.ProjectCount;
+                        </div>
+                        <div class="col-md-12">
+                            Number of users: @Model.UserCount;
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
+
+@section scripts{
+    <script src="~/Scripts/DashBoardOverview.js"></script>
+}

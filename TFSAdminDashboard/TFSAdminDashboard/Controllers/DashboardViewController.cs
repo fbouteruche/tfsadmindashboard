@@ -7,6 +7,8 @@ using System.Web;
 using System.Web.Mvc;
 using TFSAdminDashboard.DataAccess;
 using TFSAdminDashboard.DTO;
+using TFSAdminDashboard.Models;
+using Microsoft.TeamFoundation.Framework.Client;
 
 namespace TFSAdminDashboard.Controllers
 {
@@ -15,8 +17,14 @@ namespace TFSAdminDashboard.Controllers
         // GET: DashboardView
         public ActionResult Index()
         {
-            //ICollection<ProjectDefinition> projects = CatalogNodeBrowsingHelper.GetTeamProjects(configurationServer.CatalogNode, true);
-            return View();
+            OrganizationalOverviewModel dashb = new OrganizationalOverviewModel()
+            {
+                ProjectCollectionCollection = CatalogNodeBrowsingHelper.GetProjectCollections(configurationServer.CatalogNode),
+                ProjectCount = CatalogNodeBrowsingHelper.GetTeamProjects(configurationServer.CatalogNode, true).Count(),
+                UserCount = IdentityServiceManagementHelper.GetAllIdentityCount(configurationServer.GetService<IIdentityManagementService>())
+            };
+
+            return View(dashb);
         }
     }
 }

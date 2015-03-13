@@ -13,5 +13,9 @@ namespace TFSAdminDashboard.Models
             get;
             set;
         }
+
+        public int ProjectCount;
+
+        public int UserCount;
     }
 }

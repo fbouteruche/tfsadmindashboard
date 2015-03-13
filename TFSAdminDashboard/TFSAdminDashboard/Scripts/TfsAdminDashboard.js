@@ -1,14 +1,14 @@
 ﻿function loadTabPaneData(tabPaneSelector) {
-    var actionUrl = $(tabpaneId).data('action');
-    $(tabpaneId).load(actionUrl);
+    var actionUrl = $(tabPaneSelector).data('action');
+    $(tabPaneSelector).load(actionUrl);
 }
 
 function loadTabPaneData(tabPaneSelector, tpcSelector) {
-    var actionUrl = $(tabpaneId).data('action') + '/' + $(tpcSelector).val();
-    $(tabpaneId).load(actionUrl);
+    var actionUrl = $(tabPaneSelector).data('action') + '/' + $(tpcSelector).val();
+    $(tabPaneSelector).load(actionUrl);
 }
 
 function loadTabPaneData(tabPaneSelector, tpcSelector, tpSelector) {
-    var actionUrl = $(tabpaneId).data('action') + '/' + $(tpcSelector).val() + '/' + $(tpSelector).val();
-    $(tabpaneId).load(actionUrl);
+    var actionUrl = $(tabPaneSelector).data('action') + '/' + $(tpcSelector).val() + '/' + $(tpSelector).val();
+    $(tabPaneSelector).load(actionUrl);
 }
