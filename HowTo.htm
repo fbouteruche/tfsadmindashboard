@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="description" content="TFS Admin Dashboard : ">
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>TFS Admin Dashboard - How to compile and run the project</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/fbouteruche/tfsadmindashboard">View on GitHub</a>
+
+          <h1 id="project_title">TFS Admin Dashboard</h1>
+          <h2 id="project_tagline">How to compile and run the project</h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/fbouteruche/tfsadmindashboard/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/fbouteruche/tfsadmindashboard/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+      <p>
+	   <h2>Compilation</h2>
+	   
+	   <h3>Nuget Package</h3>
+	  <p>
+	  <p>The project makes use of a non official nuget package, named Microsoft.TeamFoundationAPI.10, whose sources are stored <a href="https://github.com/fbouteruche/tfsadmindashboard/blob/master/TFSAdminDashboard/CustomNugetPackageSources/Microsoft.TeamFoundationAPI.10/Microsoft.TeamFoundationAPI.10.nuspec">here</a> (it is included in the code).</p>
+	  <br/>
+	  <p>So as to make use of this package, one has to put in a \lib\net40 directory all the assemblies stored in a box with Visual Studio 2010 installed in the following directory:</p>  
+	  <p><code>"C:\Program Files (x86)\Microsoft Visual Studio 10.0\Common7\IDE\ReferenceAssemblies\v2.0"</code></p> 
+	  <p>and then to compile the package:</p>
+	  
+	  <p>
+	 <code>nuget pack Microsoft.TeamFoundationAPI.10.nuspec</code>
+	 </p>
+	 <p>
+	 Once the package is compiled, it can be installed from a local folder, as decribed <a href="http://stackoverflow.com/questions/10240029/how-to-install-a-nuget-package-nupkg-file-locally">here</a>.
+	 </p>
+	 <p>Via such a package, it will be quite easy to adapt the project to TFS 2013 or any other version.</p>
+	 
+	 </p> 
+	  
+	  <h3>Environment variables</h3>
+	  
+	  <p>So as to be as portable as possible, the code makes use of environment variables:</p>
+	  
+	  <ul>
+	  <li><code>TfsUrl</code></li>
+	  <li><code>TfsLoginName</code></li>
+	  <li><code>TfsPassword</code></li>
+	  <li><code>RDPDomain</code></li>
+	  </ul>
+	  
+	  <p>These can be set with the following <a href="https://github.com/fbouteruche/tfsadmindashboard/blob/master/TFSAdminDashboard/TFSAdminDashboard/variable.ps1">powershell script</a>, included in the solution.</p>
+	   </p>
+	   
+	   <p>That's all folks.</p>
+	   
+      </section>
+	 
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">TFS Admin Dashboard maintained by <a href="https://github.com/fbouteruche">fbouteruche</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+		<a href="index.html">Back</a>
+      </footer>
+    </div>
+
+    
+
+  </body>
+</html>
