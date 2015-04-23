@@ -13,10 +13,11 @@ using System.Text;
 using System.Threading.Tasks;
 using TFSAdminDashboard.DataAccess;
 using TFSAdminDashboard.DTO;
+using TfsAdminDashboardConsole.Commands.IO;
 
-namespace TfsAdminDashboardConsole
+namespace TfsAdminDashboardConsole.Commands
 {
-    class ExtractProjectListCommand
+    class ExtractProjectListCommand : iCommand
     {
         private TfsConfigurationServer configurationServer = new TfsConfigurationServer(
             new Uri(Environment.GetEnvironmentVariable("TfsUrl", EnvironmentVariableTarget.User)),
@@ -24,16 +25,21 @@ namespace TfsAdminDashboardConsole
 
        public ExtractProjectListCommand() {}
 
-        public void Execute(string[] args)
+        public void Execute()
         {
+            Console.WriteLine("Extract Project List in progress...");
             ICollection<ProjectDefinition> projectList = TeamProjectHelper.GetAllProjects(configurationServer);
 
-            using (CsvWriter csv = new CsvWriter(new StreamWriter(Path.Combine(Environment.GetEnvironmentVariable("TfsExtractPath", EnvironmentVariableTarget.User), Environment.GetEnvironmentVariable("TfsExtractProjectList", EnvironmentVariableTarget.User)))))
+            string fileName = FileNameTool.GetFileName("TfsExtractProjectList");
+
+            using (CsvWriter csv = new CsvWriter(new StreamWriter(fileName)))
             {
                 csv.Configuration.RegisterClassMap<ProjectDefinitionCsvMap>();
                 csv.WriteExcelSeparator();
                 csv.WriteRecords(projectList);
             }
+
+            Console.WriteLine("Extract Project done");
         }
     }
 }
