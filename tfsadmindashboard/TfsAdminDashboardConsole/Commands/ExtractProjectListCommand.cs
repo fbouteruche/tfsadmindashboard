@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 using TFSAdminDashboard.DataAccess;
 using TFSAdminDashboard.DTO;
 
-namespace TfsAdminDashboardConsole
+namespace TfsAdminDashboardConsole.Commands
 {
     class ExtractProjectListCommand
     {

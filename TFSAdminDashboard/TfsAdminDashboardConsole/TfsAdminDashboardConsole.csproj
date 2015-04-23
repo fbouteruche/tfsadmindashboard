@@ -32,6 +32,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CommandLine">
+      <HintPath>..\packages\CommandLineParser.1.9.71\lib\net45\CommandLine.dll</HintPath>
+    </Reference>
     <Reference Include="CsvHelper">
       <HintPath>..\packages\CsvHelper.2.10.0\lib\net40-client\CsvHelper.dll</HintPath>
     </Reference>
@@ -113,10 +116,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ExtractBuildMachineListCommand.cs" />
-    <Compile Include="ExtractProjectListCommand.cs" />
+    <Compile Include="CommandLineOptions.cs" />
+    <Compile Include="Commands\ExtractBuildMachineListCommand.cs" />
+    <Compile Include="Commands\ExtractProjectListCommand.cs" />
     <Compile Include="Program.cs" />
-    <Compile Include="ProjectDefinitionCsvMap.cs" />
+    <Compile Include="Commands\ProjectDefinitionCsvMap.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

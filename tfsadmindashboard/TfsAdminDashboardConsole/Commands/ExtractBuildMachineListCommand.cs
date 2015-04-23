@@ -12,7 +12,7 @@ using TFSAdminDashboard.DataAccess;
 using TFSAdminDashboard.DTO;
 using System.Net.Sockets;
 
-namespace TfsAdminDashboardConsole
+namespace TfsAdminDashboardConsole.Commands
 {
     class ExtractBuildMachineListCommand
     {
