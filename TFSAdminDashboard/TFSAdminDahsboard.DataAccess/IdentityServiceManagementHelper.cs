@@ -12,11 +12,32 @@ namespace TFSAdminDashboard.DataAccess
 {
     public class IdentityServiceManagementHelper
     {
-        public static int GetAllIdentityCount(IIdentityManagementService ims)
+
+        /// <summary>
+        /// Gets all identity count.
+        /// </summary>
+        /// <remarks>Slow as hell though, we'll have to find a solution for this.</remarks>
+        /// <param name="configurationServer">The configuration server.</param>
+        /// <param name="TPCs">The list of TPCs to Query</param>
+        /// <returns>the number of valid users</returns>
+        public static int GetAllIdentityCount(TfsConfigurationServer configurationServer, ICollection<ProjectCollectionDefinition> TPCs)
         {
-            // TODO
-            return 0;
-            //ims.ReadIdentities();
+            List<User> globalUserCollection = new List<User>();
+
+            foreach (var collection in TPCs)
+            {
+                TfsTeamProjectCollection tpc = configurationServer.GetTeamProjectCollection(collection.InstanceId);
+                IIdentityManagementService ims = tpc.GetService<IIdentityManagementService>();
+
+                ICollection<ApplicationGroupDefinition> groupCollection = new List<ApplicationGroupDefinition>();
+                ICollection<User> userCollection = new List<User>();
+
+                IdentityServiceManagementHelper.FeedIdentityData(groupCollection, userCollection, ims, null);
+
+                globalUserCollection.AddRange(userCollection);
+            }
+
+            return globalUserCollection.Select(x => x.Mail).Distinct().Count();
         }
 
         public static void FeedIdentityData(ICollection<ApplicationGroupDefinition> applicationGroupCollection, ICollection<User> userCollection, IIdentityManagementService ims, string projectUri)

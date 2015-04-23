@@ -17,11 +17,13 @@ namespace TFSAdminDashboard.Controllers
         // GET: DashboardView
         public ActionResult Index()
         {
+            var projectCollections = CatalogNodeBrowsingHelper.GetProjectCollections(configurationServer.CatalogNode);
+
             OrganizationalOverviewModel dashb = new OrganizationalOverviewModel()
             {
-                ProjectCollectionCollection = CatalogNodeBrowsingHelper.GetProjectCollections(configurationServer.CatalogNode),
+                ProjectCollectionCollection = projectCollections,
                 ProjectCount = CatalogNodeBrowsingHelper.GetTeamProjects(configurationServer.CatalogNode, true).Count(),
-                UserCount = IdentityServiceManagementHelper.GetAllIdentityCount(configurationServer.GetService<IIdentityManagementService>())
+                UserCount = IdentityServiceManagementHelper.GetAllIdentityCount(configurationServer, projectCollections)
             };
 
             return View(dashb);
