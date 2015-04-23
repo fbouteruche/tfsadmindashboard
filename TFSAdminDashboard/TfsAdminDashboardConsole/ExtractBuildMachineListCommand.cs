@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TFSAdminDashboard.DataAccess;
 using TFSAdminDashboard.DTO;
+using System.Net.Sockets;
 
 namespace TfsAdminDashboardConsole
 {
@@ -33,6 +34,7 @@ namespace TfsAdminDashboardConsole
                     records.Add(
                         new { 
                             HostName = buildServiceHostDefinition.Name,
+                            IP = GetIPFromHostName(buildServiceHostDefinition.Name),
                             CollectionName = buildServiceHostDefinition.CollectionName,
                             ServiceType = "Controller",
                             ServiceName = controller.Name,
@@ -45,6 +47,7 @@ namespace TfsAdminDashboardConsole
                         new
                         {
                             HostName = buildServiceHostDefinition.Name,
+                            IP = GetIPFromHostName(buildServiceHostDefinition.Name),
                             CollectionName = buildServiceHostDefinition.CollectionName,
                             ServiceType = "Agent",
                             ServiceName = agent.Name,
@@ -57,6 +60,35 @@ namespace TfsAdminDashboardConsole
             {
                 csv.WriteRecords(records);
             }
+        }
+
+        /// <summary>
+        /// Gets the name of the ip from host.
+        /// </summary>
+        /// <param name="p">The p.</param>
+        /// <returns></returns>
+        /// <exception cref="System.NotImplementedException"></exception>
+        private string GetIPFromHostName(string host)
+        {
+            try
+            { 
+            IPHostEntry hostEntry;
+
+                hostEntry = Dns.GetHostEntry(host + Environment.GetEnvironmentVariable("RDPDomain", EnvironmentVariableTarget.User));
+
+                if (hostEntry.AddressList.Length > 0)
+                {
+                    var ip = hostEntry.AddressList[0];
+                    return ip.ToString();
+                }
+            }
+            catch (System.Net.Sockets.SocketException)
+            {
+                // No IP adress found for this host, no sweat though
+                ;
+            }
+
+            return string.Empty;
         }
     }
 }
