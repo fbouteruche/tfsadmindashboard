@@ -31,6 +31,7 @@ namespace TfsAdminDashboardConsole
             using (CsvWriter csv = new CsvWriter(new StreamWriter(Path.Combine(Environment.GetEnvironmentVariable("TfsExtractPath", EnvironmentVariableTarget.User), Environment.GetEnvironmentVariable("TfsExtractProjectList", EnvironmentVariableTarget.User)))))
             {
                 csv.Configuration.RegisterClassMap<ProjectDefinitionCsvMap>();
+                csv.WriteExcelSeparator();
                 csv.WriteRecords(projectList);
             }
         }

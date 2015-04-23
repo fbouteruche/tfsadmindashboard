@@ -58,6 +58,7 @@ namespace TfsAdminDashboardConsole
 
             using (CsvWriter csv = new CsvWriter(new StreamWriter(Path.Combine(Environment.GetEnvironmentVariable("TfsExtractPath", EnvironmentVariableTarget.User), Environment.GetEnvironmentVariable("TfsExtractMachineList", EnvironmentVariableTarget.User)))))
             {
+                csv.WriteExcelSeparator();
                 csv.WriteRecords(records);
             }
         }
