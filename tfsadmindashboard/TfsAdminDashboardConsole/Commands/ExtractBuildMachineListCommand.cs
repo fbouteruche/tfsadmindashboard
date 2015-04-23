@@ -11,10 +11,11 @@ using System.Threading.Tasks;
 using TFSAdminDashboard.DataAccess;
 using TFSAdminDashboard.DTO;
 using System.Net.Sockets;
+using TfsAdminDashboardConsole.Commands.IO;
 
 namespace TfsAdminDashboardConsole.Commands
 {
-    class ExtractBuildMachineListCommand
+    class ExtractBuildMachineListCommand : iCommand
     {
         private TfsConfigurationServer configurationServer = new TfsConfigurationServer(
             new Uri(Environment.GetEnvironmentVariable("TfsUrl", EnvironmentVariableTarget.User)),
@@ -22,8 +23,9 @@ namespace TfsAdminDashboardConsole.Commands
 
         public ExtractBuildMachineListCommand() { }
 
-        public void Execute(string[] args)
+        public void Execute()
         {
+            Console.WriteLine("Extract Build Machines in progress...");
             ICollection<BuildServiceHostDefinition> buildServiceHostList = BuildServerHelper.GetAllBuildServiceHosts(configurationServer);
 
             ArrayList records = new ArrayList();
@@ -56,11 +58,15 @@ namespace TfsAdminDashboardConsole.Commands
                 }
             }
 
-            using (CsvWriter csv = new CsvWriter(new StreamWriter(Path.Combine(Environment.GetEnvironmentVariable("TfsExtractPath", EnvironmentVariableTarget.User), Environment.GetEnvironmentVariable("TfsExtractMachineList", EnvironmentVariableTarget.User)))))
+            string fileName = FileNameTool.GetFileName("TfsExtractMachineList");
+
+            using (CsvWriter csv = new CsvWriter((new StreamWriter(fileName))))
             {
                 csv.WriteExcelSeparator();
                 csv.WriteRecords(records);
             }
+
+            Console.WriteLine("Extract Build Machines done");
         }
 
         /// <summary>

@@ -119,8 +119,10 @@
     <Compile Include="CommandLineOptions.cs" />
     <Compile Include="Commands\ExtractBuildMachineListCommand.cs" />
     <Compile Include="Commands\ExtractProjectListCommand.cs" />
+    <Compile Include="Commands\iCommand.cs" />
+    <Compile Include="Commands\IO\FileNameTool.cs" />
     <Compile Include="Program.cs" />
-    <Compile Include="Commands\ProjectDefinitionCsvMap.cs" />
+    <Compile Include="Commands\IO\ProjectDefinitionCsvMap.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -17,17 +17,31 @@ namespace TfsAdminDashboardConsole
 
         static void Main(string[] args)
         {
-         
-            if(args.Length > 0 && args[0] == "ExtractProjectList")
-            {
-                ExtractProjectListCommand command = new ExtractProjectListCommand();
-                command.Execute(args);
-            }
-            else if(args.Length > 0 && args[0] == "ExtractBuildMachineList")
-            {
-                ExtractBuildMachineListCommand command = new ExtractBuildMachineListCommand();
-                command.Execute(args);
-            }
+             var options = new CommandLineOptions();
+             bool processed = false;
+
+             if (CommandLine.Parser.Default.ParseArguments(args, options))
+             {
+                 processed = (options.extractProjects || options.extractMachines) == true;
+
+                 if (options.extractProjects == true)
+                 {
+                     ExtractProjectListCommand command = new ExtractProjectListCommand();
+                     command.Execute();
+                 }
+
+                 if (options.extractMachines == true)
+                 {
+                     ExtractBuildMachineListCommand command = new ExtractBuildMachineListCommand();
+                     command.Execute();
+                 }
+             }
+
+             if (processed == false)
+             {
+                 Console.Write(options.GetUsage());
+                 Console.ReadKey();
+             }
         }
     }
 }
