@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TFSAdminDashboard.DTO;
 
-namespace TfsAdminDashboardConsole
+namespace TfsAdminDashboardConsole.Commands
 {
     public sealed class ProjectDefinitionCsvMap : CsvClassMap<ProjectDefinition>
     {
