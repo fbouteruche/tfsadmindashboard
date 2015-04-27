@@ -31,7 +31,7 @@ namespace TfsAdminDashboardConsole.Commands
             var projectCollections = CatalogNodeBrowsingHelper.GetProjectCollections(configurationServer.CatalogNode);
             List<User> userList = IdentityServiceManagementHelper.GetAllIdentities(configurationServer, projectCollections).ToList();
 
-            // Now get the "ou" attribute from the Active Directory (so as to 
+            // Now get the "ou" attribute from the Active Directory (so as to gets a user's Service)
             logger.Info("Fetch the ou property in the AD");
             Fetch_OU_ADProperty(userList);
 
