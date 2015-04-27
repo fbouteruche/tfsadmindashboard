@@ -22,8 +22,7 @@ namespace TFSAdminDashboard.Controllers
             OrganizationalOverviewModel dashb = new OrganizationalOverviewModel()
             {
                 ProjectCollectionCollection = projectCollections,
-                ProjectCount = CatalogNodeBrowsingHelper.GetTeamProjects(configurationServer.CatalogNode, true).Count(),
-                UserCount = IdentityServiceManagementHelper.GetAllIdentityCount(configurationServer, projectCollections)
+                ProjectCount = CatalogNodeBrowsingHelper.GetTeamProjects(configurationServer.CatalogNode, true).Count()
             };
 
             return View(dashb);
