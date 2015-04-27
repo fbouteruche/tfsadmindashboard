@@ -12,11 +12,14 @@ using TFSAdminDashboard.DataAccess;
 using TFSAdminDashboard.DTO;
 using System.Net.Sockets;
 using TfsAdminDashboardConsole.Commands.IO;
+using NLog;
 
 namespace TfsAdminDashboardConsole.Commands
 {
     class ExtractBuildMachineListCommand : iCommand
     {
+        private static Logger logger = LogManager.GetCurrentClassLogger();
+
         private TfsConfigurationServer configurationServer = new TfsConfigurationServer(
             new Uri(Environment.GetEnvironmentVariable("TfsUrl", EnvironmentVariableTarget.User)),
             new NetworkCredential(Environment.GetEnvironmentVariable("TfsLoginName", EnvironmentVariableTarget.User), Environment.GetEnvironmentVariable("TfsPassword", EnvironmentVariableTarget.User)));
@@ -25,7 +28,7 @@ namespace TfsAdminDashboardConsole.Commands
 
         public void Execute()
         {
-            Console.WriteLine("Extract Build Machines in progress...");
+            logger.Info("Extract Build Machines in progress...");
             ICollection<BuildServiceHostDefinition> buildServiceHostList = BuildServerHelper.GetAllBuildServiceHosts(configurationServer);
 
             ArrayList records = new ArrayList();
@@ -66,7 +69,7 @@ namespace TfsAdminDashboardConsole.Commands
                 csv.WriteRecords(records);
             }
 
-            Console.WriteLine("Extract Build Machines done");
+            logger.Info("Extract Build Machines done");
         }
 
         /// <summary>

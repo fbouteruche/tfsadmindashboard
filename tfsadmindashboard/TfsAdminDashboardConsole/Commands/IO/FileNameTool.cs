@@ -19,7 +19,8 @@ namespace TfsAdminDashboardConsole.Commands.IO
             return Path.Combine(
                 Environment.GetEnvironmentVariable("TfsExtractPath", EnvironmentVariableTarget.User),
                 DateTime.Now.ToString("yyyy_MM_dd") + "_" +
-                Environment.GetEnvironmentVariable(envVFileName, EnvironmentVariableTarget.User));
+                Environment.GetEnvironmentVariable("TfsExtractPrefix", EnvironmentVariableTarget.User) + "_" +
+                Environment.GetEnvironmentVariable(envVFileName, EnvironmentVariableTarget.User) + ".csv");
 
         }
     }
