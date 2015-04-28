@@ -41,8 +41,14 @@ namespace TfsAdminDashboardConsole
 
                  if (options.extractUsers == true)
                  {
-                     logger.Info("Extract users (that's a quite long process)");
-                     iCommand command = new ExtractUsersListCommand();
+                     logger.Info("Extract users");
+                     logger.Warn("that's a quite long process");
+                     if(options.extractUOFromAD)
+                     {
+                         logger.Warn("especially with the AD query");
+                     }
+
+                     iCommand command = new ExtractUsersListCommand(options.extractUOFromAD);
                      command.Execute();
                  }
              }

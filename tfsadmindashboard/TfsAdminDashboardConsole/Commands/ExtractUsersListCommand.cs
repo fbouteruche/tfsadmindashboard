@@ -18,12 +18,16 @@ namespace TfsAdminDashboardConsole.Commands
     class ExtractUsersListCommand : iCommand
     {
         private static Logger logger = LogManager.GetCurrentClassLogger();
+        private bool extractOUOption;
 
         private TfsConfigurationServer configurationServer = new TfsConfigurationServer(
     new Uri(Environment.GetEnvironmentVariable("TfsUrl", EnvironmentVariableTarget.User)),
     new NetworkCredential(Environment.GetEnvironmentVariable("TfsLoginName", EnvironmentVariableTarget.User), Environment.GetEnvironmentVariable("TfsPassword", EnvironmentVariableTarget.User)));
 
-        public ExtractUsersListCommand() { }
+        public ExtractUsersListCommand(bool extractOU) 
+        {
+            this.extractOUOption = extractOU;
+        }
 
         public void Execute()
         {
@@ -32,8 +36,11 @@ namespace TfsAdminDashboardConsole.Commands
             List<User> userList = IdentityServiceManagementHelper.GetAllIdentities(configurationServer, projectCollections).ToList();
 
             // Now get the "ou" attribute from the Active Directory (so as to gets a user's Service)
-            logger.Info("Fetch the ou property in the AD");
-            Fetch_OU_ADProperty(userList);
+            if (this.extractOUOption)
+            { 
+                logger.Info("Fetch the ou property in the AD");
+                Fetch_OU_ADProperty(userList);
+            }
 
             string fileName = FileNameTool.GetFileName("TfsExtractUsersList");
 
@@ -41,7 +48,15 @@ namespace TfsAdminDashboardConsole.Commands
             {
                 csv.Configuration.RegisterClassMap<ProjectDefinitionCsvMap>();
                 csv.WriteExcelSeparator();
-                csv.WriteRecords(userList.Where(x => !string.IsNullOrEmpty(x.OU) && !x.OU.StartsWith("FT/SCE/G2S/NRS/IT LABS")).DistinctBy(x => x.OU).OrderBy(x => x.Name));
+
+                if (this.extractOUOption)
+                { 
+                    csv.WriteRecords(userList.Where(x => !string.IsNullOrEmpty(x.OU) && !x.OU.StartsWith(Environment.GetEnvironmentVariable("LDAP_OU_FILTER_OUT"))).DistinctBy(x => x.OU).OrderBy(x => x.Name));
+                }
+                else
+                {
+                    csv.WriteRecords(userList.DistinctBy(x => x.Mail).OrderBy(x => x.Name));
+                }
             }
 
             logger.Info("Extract Users done");

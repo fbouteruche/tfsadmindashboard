@@ -45,6 +45,10 @@ namespace TfsAdminDashboardConsole
         HelpText = "Extract the TFS Platform Users list")]
         public bool extractUsers { get; set; }
 
+        [Option('o', "ExtractOUFromAD", Required = false,
+        HelpText = "Extract also the OU property for each user in the Active Directory")]
+        public bool extractUOFromAD { get; set; }
+
          /// <summary>
         /// Gets the usage.
         /// </summary>
