@@ -24,6 +24,7 @@ namespace TFSAdminDashboard.Controllers
                 ProjectCollectionCollection = projectCollections,
 
                 ProjectCount = CatalogNodeBrowsingHelper.GetTeamProjects(configurationServer.CatalogNode, true).Count()
+
             };
 
             return View(dashb);

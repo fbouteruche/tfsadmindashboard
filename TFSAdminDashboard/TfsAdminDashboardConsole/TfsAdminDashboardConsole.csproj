@@ -107,8 +107,15 @@
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.TeamFoundationAPI.10.1.0.0\lib\net40\Microsoft.TeamFoundation.WorkItemTracking.Proxy.dll</HintPath>
     </Reference>
+    <Reference Include="MoreLinq">
+      <HintPath>..\packages\morelinq.1.1.0\lib\net35\MoreLinq.dll</HintPath>
+    </Reference>
+    <Reference Include="NLog">
+      <HintPath>..\packages\NLog.3.2.1\lib\net45\NLog.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.DirectoryServices" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -119,6 +126,7 @@
     <Compile Include="CommandLineOptions.cs" />
     <Compile Include="Commands\ExtractBuildMachineListCommand.cs" />
     <Compile Include="Commands\ExtractProjectListCommand.cs" />
+    <Compile Include="Commands\ExtractUsersListCommand.cs" />
     <Compile Include="Commands\iCommand.cs" />
     <Compile Include="Commands\IO\FileNameTool.cs" />
     <Compile Include="Program.cs" />
@@ -127,6 +135,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <Content Include="NLog.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
+    </Content>
     <None Include="packages.config" />
     <None Include="variable.ps1" />
   </ItemGroup>

@@ -35,6 +35,20 @@ namespace TfsAdminDashboardConsole
         HelpText = "Extract the TFS Platform Team Projects list")]
         public bool extractProjects { get; set; }
 
+        /// <summary>
+        /// Gets or sets a value indicating whether [extract users] is needed or not.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if [extract projects]; otherwise, <c>false</c>.
+        /// </value>
+        [Option('u', "ExtractUsers", Required = false,
+        HelpText = "Extract the TFS Platform Users list")]
+        public bool extractUsers { get; set; }
+
+        [Option('o', "ExtractOUFromAD", Required = false,
+        HelpText = "Extract also the OU property for each user in the Active Directory")]
+        public bool extractUOFromAD { get; set; }
+
          /// <summary>
         /// Gets the usage.
         /// </summary>

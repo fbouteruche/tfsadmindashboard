@@ -14,11 +14,14 @@ using System.Threading.Tasks;
 using TFSAdminDashboard.DataAccess;
 using TFSAdminDashboard.DTO;
 using TfsAdminDashboardConsole.Commands.IO;
+using NLog;
 
 namespace TfsAdminDashboardConsole.Commands
 {
     class ExtractProjectListCommand : iCommand
     {
+        private static Logger logger = LogManager.GetCurrentClassLogger();
+
         private TfsConfigurationServer configurationServer = new TfsConfigurationServer(
             new Uri(Environment.GetEnvironmentVariable("TfsUrl", EnvironmentVariableTarget.User)),
             new NetworkCredential(Environment.GetEnvironmentVariable("TfsLoginName", EnvironmentVariableTarget.User), Environment.GetEnvironmentVariable("TfsPassword", EnvironmentVariableTarget.User)));
@@ -27,7 +30,7 @@ namespace TfsAdminDashboardConsole.Commands
 
         public void Execute()
         {
-            Console.WriteLine("Extract Project List in progress...");
+            logger.Info("Extract Project List in progress...");
             ICollection<ProjectDefinition> projectList = TeamProjectHelper.GetAllProjects(configurationServer);
 
             string fileName = FileNameTool.GetFileName("TfsExtractProjectList");
@@ -39,7 +42,7 @@ namespace TfsAdminDashboardConsole.Commands
                 csv.WriteRecords(projectList);
             }
 
-            Console.WriteLine("Extract Project done");
+            logger.Info("Extract Project done");
         }
     }
 }
