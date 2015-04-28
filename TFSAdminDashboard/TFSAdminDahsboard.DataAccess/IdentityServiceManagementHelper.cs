@@ -8,19 +8,20 @@ using System.Text;
 using System.Threading.Tasks;
 using TFSAdminDashboard.DTO;
 
+
 namespace TFSAdminDashboard.DataAccess
 {
     public class IdentityServiceManagementHelper
     {
 
         /// <summary>
-        /// Gets all identity count.
+        /// Gets all identities (void email filtered, considered as services accounts).
         /// </summary>
         /// <remarks>Slow as hell though, we'll have to find a solution for this.</remarks>
         /// <param name="configurationServer">The configuration server.</param>
         /// <param name="TPCs">The list of TPCs to Query</param>
         /// <returns>the number of valid users</returns>
-        public static int GetAllIdentityCount(TfsConfigurationServer configurationServer, ICollection<ProjectCollectionDefinition> TPCs)
+        public static ICollection<User> GetAllIdentities(TfsConfigurationServer configurationServer, ICollection<ProjectCollectionDefinition> TPCs)
         {
             List<User> globalUserCollection = new List<User>();
 
@@ -37,7 +38,8 @@ namespace TFSAdminDashboard.DataAccess
                 globalUserCollection.AddRange(userCollection);
             }
 
-            return globalUserCollection.Select(x => x.Mail).Distinct().Count();
+            // distinct by non null email
+            return globalUserCollection.Where(x => !string.IsNullOrEmpty(x.Mail)).ToList();
         }
 
         public static void FeedIdentityData(ICollection<ApplicationGroupDefinition> applicationGroupCollection, ICollection<User> userCollection, IIdentityManagementService ims, string projectUri)
@@ -66,7 +68,8 @@ namespace TFSAdminDashboard.DataAccess
                                 Mail = applicationGroupMember.GetAttribute("Mail", string.Empty),
                                 Domain = applicationGroupMember.GetAttribute("Domain", string.Empty),
                                 Account = applicationGroupMember.GetAttribute("Account", string.Empty),
-                                DN = applicationGroupMember.GetAttribute("DN", string.Empty)
+                                DN = applicationGroupMember.GetAttribute("DN", string.Empty),
+                                SID = applicationGroupMember.Descriptor.Identifier
                             };
                             userCollection.Add(user);
                         }

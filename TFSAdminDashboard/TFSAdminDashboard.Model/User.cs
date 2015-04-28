@@ -36,5 +36,9 @@ namespace TFSAdminDashboard.DTO
         public string Account { get; set; }
 
         public string DN { get; set; }
+
+        public string OU { get; set; }
+
+        public string SID { get; set; }
     }
 }
