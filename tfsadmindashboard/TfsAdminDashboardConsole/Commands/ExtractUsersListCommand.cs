@@ -15,14 +15,10 @@ using MoreLinq;
 
 namespace TfsAdminDashboardConsole.Commands
 {
-    class ExtractUsersListCommand : iCommand
+    public class ExtractUsersListCommand : TFSAccessHelper, iCommand
     {
         private static Logger logger = LogManager.GetCurrentClassLogger();
         private bool extractOUOption;
-
-        private TfsConfigurationServer configurationServer = new TfsConfigurationServer(
-    new Uri(Environment.GetEnvironmentVariable("TfsUrl", EnvironmentVariableTarget.User)),
-    new NetworkCredential(Environment.GetEnvironmentVariable("TfsLoginName", EnvironmentVariableTarget.User), Environment.GetEnvironmentVariable("TfsPassword", EnvironmentVariableTarget.User)));
 
         public ExtractUsersListCommand(bool extractOU) 
         {
