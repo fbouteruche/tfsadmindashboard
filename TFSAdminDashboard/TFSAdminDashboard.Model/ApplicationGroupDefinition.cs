@@ -23,5 +23,10 @@ namespace TFSAdminDashboard.DTO
                 return users;
             }
         }
+
+        public void SortUsers()
+        {
+            users = users.OrderBy(x => x.Name).ToList();
+        }
     }
 }

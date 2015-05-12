@@ -49,7 +49,7 @@ namespace TFSAdminDashboard.DataAccess
                     }
                 }
             }
-            return projectList;
+            return projectList.OrderBy(x => x.Name).ToList();
         }
     }
 }

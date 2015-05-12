@@ -50,6 +50,8 @@ namespace TFSAdminDashboard.DataAccess
                 };
                 collection.Add(buildDef);
             }
+
+            collection = collection.OrderBy(x => x.Name).ToList();
         }
 
         private static void FeedBuildMachineData(ICollection<BuildServiceHostDefinition> serverHosts, IBuildServer bs)
@@ -110,6 +112,12 @@ namespace TFSAdminDashboard.DataAccess
                     buildServiceHostDefinitionForAgent.BuildAgents.Add(buildAgentDefinition);
                 }
             }
+
+            foreach(var buildDefinition in serverHosts)
+            {
+                buildDefinition.SortMachines();
+            }
+
         }
 
         public static ICollection<BuildServiceHostDefinition> GetAllBuildServiceHosts(TfsTeamProjectCollection tpc)

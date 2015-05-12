@@ -36,5 +36,11 @@ namespace TFSAdminDashboard.DTO
         }
 
         public string CollectionName { get; set; }
+
+        public void SortMachines()
+        {
+            buildAgents.OrderBy(x => x.Name);
+            buildControllers.OrderBy(x => x.Name);
+        }
     }
 }
