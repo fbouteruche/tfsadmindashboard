@@ -112,12 +112,6 @@ namespace TFSAdminDashboard.DataAccess
                     buildServiceHostDefinitionForAgent.BuildAgents.Add(buildAgentDefinition);
                 }
             }
-
-            foreach(var buildDefinition in serverHosts)
-            {
-                buildDefinition.SortMachines();
-            }
-
         }
 
         public static ICollection<BuildServiceHostDefinition> GetAllBuildServiceHosts(TfsTeamProjectCollection tpc)
