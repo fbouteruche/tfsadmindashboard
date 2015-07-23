@@ -42,6 +42,7 @@ namespace TfsAdminDashboardConsole.Commands
                             IP = GetIPFromHostName(buildServiceHostDefinition.Name),
                             CollectionName = buildServiceHostDefinition.CollectionName,
                             ServiceType = "Controller",
+                            Tags = string.Empty,
                             ServiceName = controller.Name,
                             Status = controller.Status
                             });
@@ -55,6 +56,7 @@ namespace TfsAdminDashboardConsole.Commands
                             IP = GetIPFromHostName(buildServiceHostDefinition.Name),
                             CollectionName = buildServiceHostDefinition.CollectionName,
                             ServiceType = "Agent",
+                            Tags = agent.Tags,
                             ServiceName = agent.Name,
                             Status = agent.Status
                         });

@@ -10,6 +10,16 @@ namespace TFSAdminDashboard.DTO
     {
         public string Name { get; set; }
 
+        public List<string> TagList { get; set; }
+
+        public string Tags
+        {
+            get
+            {
+                return string.Join( ",", this.TagList.ToArray() );
+            }
+        }
+
         public string Status { get; set; }
 
         public string RDPUri { get; set; }
