@@ -106,6 +106,7 @@ namespace TFSAdminDashboard.DataAccess
                     {
                         Name = agent.Name,
                         Status = agent.Status.ToString(),
+                        TagList = agent.Tags,
                         RDPUri = string.Format("rdp://{0}.{1}", buildServiceHostDefinitionForAgent.Name, Environment.GetEnvironmentVariable("RDPDomain", EnvironmentVariableTarget.User))
                     };
 
