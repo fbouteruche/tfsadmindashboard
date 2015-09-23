@@ -78,7 +78,7 @@ namespace TFSAdminDashboard.DataAccess
                 }
                 collection.Add(definition);
             }
-            return collection;
+            return collection.OrderBy(x => x.Name).ToList();
         }
 
         /// <summary>
@@ -258,7 +258,7 @@ namespace TFSAdminDashboard.DataAccess
                 definition.Uri = item.Resource.Properties["ProjectUri"];
                 collection.Add(definition);
             }
-            return collection;
+            return collection.OrderBy(x => x.Name).ToList();
         }
 
         /// <summary>

@@ -36,7 +36,7 @@ namespace TFSAdminDashboard.Controllers
                 });
             }
 
-            ViewBag.TpcList = tpcList;
+            ViewBag.TpcList = tpcList.OrderBy(x => x.Text).ToList();
 
             return View();
         }

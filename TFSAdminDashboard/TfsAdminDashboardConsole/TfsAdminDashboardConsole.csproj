@@ -136,6 +136,7 @@
     <Compile Include="Commands\ExtractUsersListCommand.cs" />
     <Compile Include="Commands\iCommand.cs" />
     <Compile Include="Commands\IO\FileNameTool.cs" />
+    <Compile Include="Commands\IO\SerializerService.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Commands\IO\ProjectDefinitionCsvMap.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

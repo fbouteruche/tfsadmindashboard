@@ -16,13 +16,9 @@ using NLog;
 
 namespace TfsAdminDashboardConsole.Commands
 {
-    class ExtractBuildMachineListCommand : iCommand
+    public class ExtractBuildMachineListCommand : TFSAccessHelper, iCommand
     {
         private static Logger logger = LogManager.GetCurrentClassLogger();
-
-        private TfsConfigurationServer configurationServer = new TfsConfigurationServer(
-            new Uri(Environment.GetEnvironmentVariable("TfsUrl", EnvironmentVariableTarget.User)),
-            new NetworkCredential(Environment.GetEnvironmentVariable("TfsLoginName", EnvironmentVariableTarget.User), Environment.GetEnvironmentVariable("TfsPassword", EnvironmentVariableTarget.User)));
 
         public ExtractBuildMachineListCommand() { }
 

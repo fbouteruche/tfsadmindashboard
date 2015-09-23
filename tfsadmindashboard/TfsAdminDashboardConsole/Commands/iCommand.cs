@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TfsAdminDashboardConsole.Commands
 {
-    interface iCommand
+    public interface iCommand
     {
         void Execute();
     }

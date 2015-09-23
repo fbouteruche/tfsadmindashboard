@@ -82,8 +82,8 @@ namespace TFSAdminDashboard.Controllers
                 tpcList.Add(new SelectListItem { Text = collectionNode.Resource.DisplayName, Value = collectionNode.Resource.Properties["InstanceId"], Selected = collectionNode.Resource.Properties["InstanceId"] == collectionId });
             }
 
-            ViewBag.TpcList = tpcList;
-            ViewBag.TpList = tpList;
+            ViewBag.TpcList = tpcList.OrderBy(x => x.Text).ToList();
+            ViewBag.TpList = tpList.OrderBy(x => x.Text).ToList();
 
             return View();
         }
@@ -106,7 +106,9 @@ namespace TFSAdminDashboard.Controllers
 
             }
 
-            return this.PartialView(teamProjecList);
+            var orderedProjects = teamProjecList.OrderBy(x => x.Key).ToDictionary(x => x.Key, x => x.Value);
+
+            return this.PartialView(orderedProjects);
         }
 
         

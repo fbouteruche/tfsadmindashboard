@@ -77,8 +77,13 @@ namespace TFSAdminDashboard.DataAccess
                         applicationGroupDefinition.UserCollection.Add(user);
                     }
                 }
+                
+                applicationGroupDefinition.SortUsers();
+
                 applicationGroupCollection.Add(applicationGroupDefinition);
             }
+
+            applicationGroupCollection = applicationGroupCollection.OrderBy(x => x.Name).ToList();
         }
     }
 }

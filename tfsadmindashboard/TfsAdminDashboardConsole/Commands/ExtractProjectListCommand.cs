@@ -18,13 +18,9 @@ using NLog;
 
 namespace TfsAdminDashboardConsole.Commands
 {
-    class ExtractProjectListCommand : iCommand
+    public class ExtractProjectListCommand : TFSAccessHelper, iCommand
     {
-        private static Logger logger = LogManager.GetCurrentClassLogger();
-
-        private TfsConfigurationServer configurationServer = new TfsConfigurationServer(
-            new Uri(Environment.GetEnvironmentVariable("TfsUrl", EnvironmentVariableTarget.User)),
-            new NetworkCredential(Environment.GetEnvironmentVariable("TfsLoginName", EnvironmentVariableTarget.User), Environment.GetEnvironmentVariable("TfsPassword", EnvironmentVariableTarget.User)));
+       private static Logger logger = LogManager.GetCurrentClassLogger();
 
        public ExtractProjectListCommand() {}
 
