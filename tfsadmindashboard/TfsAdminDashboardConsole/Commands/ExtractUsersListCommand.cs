@@ -12,6 +12,7 @@ using TfsAdminDashboardConsole.Commands.IO;
 using System.DirectoryServices;
 using NLog;
 using MoreLinq;
+using System.Xml.Serialization;
 
 namespace TfsAdminDashboardConsole.Commands
 {
@@ -31,10 +32,15 @@ namespace TfsAdminDashboardConsole.Commands
             var projectCollections = CatalogNodeBrowsingHelper.GetProjectCollections(configurationServer.CatalogNode);
             List<User> userList = IdentityServiceManagementHelper.GetAllIdentities(configurationServer, projectCollections).ToList();
 
+
+            // SerializerService.Serialize(@"D:\UnfilteredUserListWithoutOU.dat", userList);
+
+
             // Now get the "ou" attribute from the Active Directory (so as to gets a user's Service)
             if (this.extractOUOption)
             { 
-                logger.Info("Fetch the ou property in the AD");
+                logger.Info("Fetch the ou property in the AD for AD-SUBS users");
+                userList = userList.Where(x => x.Domain == "AD-SUBS" && !x.DN.Contains("Quarantaine") && !x.DN.Contains("TTTT")).ToList();
                 Fetch_OU_ADProperty(userList);
             }
 
@@ -47,7 +53,7 @@ namespace TfsAdminDashboardConsole.Commands
 
                 if (this.extractOUOption)
                 { 
-                    csv.WriteRecords(userList.Where(x => !string.IsNullOrEmpty(x.OU) && !x.OU.StartsWith(Environment.GetEnvironmentVariable("LDAP_OU_FILTER_OUT"))).DistinctBy(x => x.OU).OrderBy(x => x.Name));
+                    csv.WriteRecords(userList.OrderBy(x => x.Name).DistinctBy(x => x.Name).OrderBy(x => x.Name));
                 }
                 else
                 {

@@ -1,15 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{4014BFE8-D190-42E6-AA34-E78AA56AA615}</ProjectGuid>
+    <ProjectGuid>{76839BA5-A749-4C76-9201-E9CCFDDD2C2E}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>TfsAdminDashboardConsole.tests</RootNamespace>
-    <AssemblyName>TfsAdminDashboardConsole.tests</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <RootNamespace>TFSAdminDropFolderRights.Tests</RootNamespace>
+    <AssemblyName>TFSAdminDropFolderRights.Tests</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -39,8 +39,8 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="nunit.framework, Version=2.6.4.14350, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\NUnit.2.6.4\lib\nunit.framework.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="nunit.util, Version=2.6.4.14350, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
       <HintPath>..\packages\NUnitTestAdapter.2.0.0\lib\nunit.util.dll</HintPath>
@@ -56,10 +56,11 @@
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="TestCommands.cs" />
+    <Compile Include="DropFolderRightTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -69,14 +70,6 @@
     <ProjectReference Include="..\TFSAdminDahsboard.DataAccess\TFSAdminDashboard.DataAccess.csproj">
       <Project>{ee7ff479-448b-422e-a858-5dddbaf09766}</Project>
       <Name>TFSAdminDashboard.DataAccess</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\TFSAdminDashboard.Model\TFSAdminDashboard.DTO.csproj">
-      <Project>{8b7da413-1ac0-4295-b059-db0ebb89dd7c}</Project>
-      <Name>TFSAdminDashboard.DTO</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\TfsAdminDashboardConsole\TfsAdminDashboardConsole.csproj">
-      <Project>{69cfbae0-dbe4-4b3e-8c42-7098ec391a77}</Project>
-      <Name>TfsAdminDashboardConsole</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

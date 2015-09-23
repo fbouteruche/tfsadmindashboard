@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using NLog;
 using TFSAdminDashboard.DataAccess;
+using TFSAdminDashboard.DTO;
+using Microsoft.TeamFoundation.Framework.Client;
 
 namespace TFSAdminDropFolderRights
 {
@@ -18,7 +20,19 @@ namespace TFSAdminDropFolderRights
         /// </summary>
         public void SetDropRights()
         {
-            //ToDo
+            //Fetch each project
+            ICollection<ProjectDefinition> projectList = TeamProjectHelper.GetAllProjects(configurationServer);
+
+            IIdentityManagementService ims = configurationServer.GetService<IIdentityManagementService>();
+
+            foreach (ProjectDefinition proj in projectList)
+            {
+                ICollection<ApplicationGroupDefinition> applicationGroupCollection = new List<ApplicationGroupDefinition>();
+                ICollection<User> userCollection = new List<User>();
+
+                IdentityServiceManagementHelper.FeedIdentityData(applicationGroupCollection, userCollection, ims, proj.Uri);
+            }
+
         }
     }
 }

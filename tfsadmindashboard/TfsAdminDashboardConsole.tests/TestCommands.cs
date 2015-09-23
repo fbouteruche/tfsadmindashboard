@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using NUnit.Framework;
 using TfsAdminDashboardConsole.Commands;
+using TfsAdminDashboardConsole.Commands.IO;
+using TFSAdminDashboard.DTO;
 
 namespace TfsAdminDashboardConsole.tests
 {
@@ -31,8 +33,19 @@ namespace TfsAdminDashboardConsole.tests
         [Category("DevFacadeNoIC")]
         public void LaunchExportUsersCommand()
         {
-            iCommand command = new ExtractUsersListCommand(false);
+            iCommand command = new ExtractUsersListCommand(true);
             command.Execute();
+        }
+
+        [TestCase]
+        [Category("DevFacadeNoIC")]
+        public void TestFilterUserListCommand()
+        {
+            List<User> userList = (List < User >) SerializerService.Deserialize(@"D:\UnfilteredUserListWithoutOU.dat");
+
+
+            var results = userList.Where(x => x.Domain == "AD-SUBS" && !x.DN.Contains("Quarantaine") && !x.DN.Contains("TTTT")).OrderBy(x => x.Name).ToList();
+                   
         }
     }
 }
