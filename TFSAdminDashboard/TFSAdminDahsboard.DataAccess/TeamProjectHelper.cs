@@ -56,12 +56,14 @@ namespace TFSAdminDashboard.DataAccess
                                     projectDefinition.CollectionName = collection.Name;
                                     projectDefinition.UtcCreationDate = creationDate.ToUniversalTime();
 
-                                    // Now get Workitems data
+                                    // get Workitems data
                                     projectDefinition.WorkItemDefinitionCollection = DashWorkItemHelper.FeedWorkItemData(tpc, projectDefinition.Name);
 
-                                    // Now get build data
+                                    // get build data
                                     projectDefinition.BuildsDefinitionCollection = DashBuildHelper.FeedBuildData(tpc, projectDefinition.Name);
 
+                                    // get VCS data (only TFS 2010 TFSVC though)
+                                    projectDefinition.VersionControlData = DashVersionControlHelper.FeedVersionControlData(tpc, projectDefinition.Name);
 
                                     projectList.Add(projectDefinition);
                                 }

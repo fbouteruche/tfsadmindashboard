@@ -10,6 +10,10 @@ namespace TFSAdminDashboard.Models
     {
         private List<VersionControlItem> versionControlItemCollection = new List<VersionControlItem>();
 
+        public void SetVersionControlItemCollection(List<VersionControlItem> value)
+        {
+            versionControlItemCollection = value;
+        }
         public ICollection<VersionControlItem>  VersionControlItemCollection
         {
             get

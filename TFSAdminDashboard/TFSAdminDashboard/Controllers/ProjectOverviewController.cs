@@ -161,48 +161,9 @@ namespace TFSAdminDashboard.Controllers
             return DashBuildHelper.FeedBuildData(tpc, projectName);
         }
 
-        private static void FeedVersionControlData(ICollection<VersionControlItem> versionControlItemCollection, TfsTeamProjectCollection tpc, string projectName)
+        private static List<VersionControlItem> FeedVersionControlData(TfsTeamProjectCollection tpc, string projectName)
         {
-            VersionControlServer vcs = tpc.GetService<VersionControlServer>();
-            ItemSet items = vcs.GetItems("$/" + projectName + "/*", RecursionType.None);
-
-            foreach (Item item in items.Items)
-            {
-                int itemChangeSetId = item.ChangesetId;
-                DateTime lastInnerCheckInDate = DateTime.MinValue;
-                int lastInnerChangeSetId = 0;
-                IEnumerable history = vcs.QueryHistory(item.ServerItem, VersionSpec.Latest,
-                    item.DeletionId,
-                    RecursionType.Full,
-                    null,
-                    new ChangesetVersionSpec(itemChangeSetId),
-                    VersionSpec.Latest,
-                    Int32.MaxValue,
-                    false,
-                    false);
-                IEnumerator enumerator = history.GetEnumerator();
-                if (enumerator.MoveNext())
-                {
-                    Changeset lastChangeSet = enumerator.Current as Changeset;
-                    if (lastChangeSet != null)
-                    {
-                        lastInnerCheckInDate = lastChangeSet.CreationDate;
-                        lastInnerChangeSetId = lastChangeSet.ChangesetId;
-                    }
-                }
-
-                VersionControlItem vci = new VersionControlItem()
-                {
-                    DisplayName = item.ServerItem,
-                    ItemChangeSetId = itemChangeSetId,
-                    ItemLastCheckIn = item.CheckinDate,
-                    InnerChangeSetId = lastInnerChangeSetId,
-                    InnerLastCheckIn = lastInnerCheckInDate
-                };
-                versionControlItemCollection.Add(vci);
-
-
-            }
+            return DashVersionControlHelper.FeedVersionControlData(tpc, projectName);
         }
 
         public ActionResult WorkItemOverview(string id, string projectid)
@@ -257,7 +218,7 @@ namespace TFSAdminDashboard.Controllers
             {
                 projectName = teamProjectNodes[0].Resource.DisplayName;
 
-                FeedVersionControlData(vcom.VersionControlItemCollection, tpc, projectName);
+                vcom.SetVersionControlItemCollection(FeedVersionControlData(tpc, projectName));
             }
             return PartialView(vcom);
         }
