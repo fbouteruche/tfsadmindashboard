@@ -156,32 +156,9 @@ namespace TFSAdminDashboard.Controllers
             }
         }
 
-        private static void FeedBuildData(ICollection<BuildDefinition> buildDefinitionCollection, TfsTeamProjectCollection tpc, string projectName)
+        private static List<BuildDefinition> FeedBuildData(TfsTeamProjectCollection tpc, string projectName)
         {
-            IBuildServer bs = tpc.GetService<IBuildServer>();
-            IBuildDefinition[] buildDefinitions = bs.QueryBuildDefinitions(projectName, QueryOptions.All);
-            
-            foreach (IBuildDefinition buildDefinition in buildDefinitions)
-            {
-                IBuildDetail[] buildDetails = bs.QueryBuilds(buildDefinition);
-                int failedOrPartialCount = buildDetails.Count(x => x.Status == BuildStatus.Failed || x.Status == BuildStatus.PartiallySucceeded);
-                IBuildDetail lastFailedBuild = buildDetails.Where(x => x.Status == BuildStatus.Failed).OrderBy(x => x.FinishTime).LastOrDefault();
-                IBuildDetail lastSucceededBuild = buildDetails.Where(x => x.Status == BuildStatus.Succeeded).OrderBy(x => x.FinishTime).LastOrDefault();
-                int buildCount = buildDetails.Count();
-                
-                BuildDefinition buildDef = new BuildDefinition()
-                {
-                    Name = buildDefinition.Name,
-                    Enabled = buildDefinition.Enabled,
-                    ContinuousIntegrationType = buildDefinition.ContinuousIntegrationType.ToString(),
-                    FailedOrPartialRatio = failedOrPartialCount,
-                    RetainedBuild = buildCount,
-                    LastSuccess = lastSucceededBuild != null ? lastSucceededBuild.FinishTime : DateTime.MinValue,
-                    LastFail = lastFailedBuild != null ? lastFailedBuild.FinishTime : DateTime.MinValue
-
-                };
-                buildDefinitionCollection.Add(buildDef);
-            }
+            return DashBuildHelper.FeedBuildData(tpc, projectName);
         }
 
         private static void FeedVersionControlData(ICollection<VersionControlItem> versionControlItemCollection, TfsTeamProjectCollection tpc, string projectName)
@@ -303,11 +280,10 @@ namespace TFSAdminDashboard.Controllers
             {
                 projectName = teamProjectNodes[0].Resource.DisplayName;
 
-                FeedBuildData(bom.BuildDefinitionCollection, tpc, projectName);
+                bom.SetBuildDefinitionCollection(FeedBuildData(tpc, projectName));
             }
             return PartialView(bom);
         }
-
         public ActionResult TestManagementOverview(string id, string projectid)
         {
             TfsTeamProjectCollection tpc = configurationServer.GetTeamProjectCollection(new Guid(id));

@@ -10,6 +10,11 @@ namespace TFSAdminDashboard.Models
     {
         private List<BuildDefinition> buildDefinitionCollection = new List<BuildDefinition>();
 
+        public void SetBuildDefinitionCollection(List<BuildDefinition> value)
+        {
+            buildDefinitionCollection = value;
+        }
+
         public ICollection<BuildDefinition> BuildDefinitionCollection
         {
             get

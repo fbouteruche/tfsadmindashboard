@@ -27,6 +27,7 @@ namespace TFSAdminDashboard.DataAccess
             if (collectionService != null)
             {
                 IList<TeamProjectCollection> collections = collectionService.GetCollections();
+
                 foreach (TeamProjectCollection collection in collections)
                 {
                     if (collection.State == TeamFoundationServiceHostStatus.Started)
@@ -58,8 +59,18 @@ namespace TFSAdminDashboard.DataAccess
                                     // Now get Workitems data
                                     projectDefinition.WorkItemDefinitionCollection = DashWorkItemHelper.FeedWorkItemData(tpc, projectDefinition.Name);
 
+                                    // Now get build data
+                                    projectDefinition.BuildsDefinitionCollection = DashBuildHelper.FeedBuildData(tpc, projectDefinition.Name);
+
+
                                     projectList.Add(projectDefinition);
                                 }
+
+#if TEST
+                                // Break after 1 project for tests
+                                break;
+#endif
+
                             }
                         }
                         else
@@ -84,6 +95,12 @@ namespace TFSAdminDashboard.DataAccess
                             }
                         }
                     }
+
+
+#if TEST
+                    // Break after 1 project for tests
+                    break;
+#endif
                 }
             }
 

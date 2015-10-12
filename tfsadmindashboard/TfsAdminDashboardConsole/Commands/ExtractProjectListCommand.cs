@@ -46,11 +46,7 @@ namespace TfsAdminDashboardConsole.Commands
             }
             else
             {
-#if DEBUG
-                string json = JsonConvert.SerializeObject(projectList.First());
-#else
                 string json = JsonConvert.SerializeObject(projectList);
-#endif
                 File.WriteAllText(fileName, json);
             }
         }

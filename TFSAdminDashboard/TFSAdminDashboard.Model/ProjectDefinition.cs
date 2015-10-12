@@ -57,5 +57,6 @@ namespace TFSAdminDashboard.DTO
         }
 
         public List<WorkItemDefinition> WorkItemDefinitionCollection { get; set; }
+        public List<BuildDefinition> BuildsDefinitionCollection { get; set; }
     }
 }
