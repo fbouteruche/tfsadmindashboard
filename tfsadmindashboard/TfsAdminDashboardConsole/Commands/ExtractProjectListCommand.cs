@@ -15,6 +15,7 @@ using TFSAdminDashboard.DataAccess;
 using TFSAdminDashboard.DTO;
 using TfsAdminDashboardConsole.Commands.IO;
 using NLog;
+using Newtonsoft.Json;
 
 namespace TfsAdminDashboardConsole.Commands
 {
@@ -24,13 +25,16 @@ namespace TfsAdminDashboardConsole.Commands
 
        public ExtractProjectListCommand() {}
 
-        public void Execute()
+        public void Execute(string outFormat = "CSV")
         {
             logger.Info("Extract Project List in progress...");
             ICollection<ProjectDefinition> projectList = TeamProjectHelper.GetAllProjects(configurationServer);
 
-            string fileName = FileNameTool.GetFileName("TfsExtractProjectList");
+            string fileName = FileNameTool.GetFileName("TfsExtractProjectList", outFormat);
 
+
+            if(outFormat == "CSV")
+            { 
             using (CsvWriter csv = new CsvWriter(new StreamWriter(fileName)))
             {
                 csv.Configuration.RegisterClassMap<ProjectDefinitionCsvMap>();
@@ -39,6 +43,16 @@ namespace TfsAdminDashboardConsole.Commands
             }
 
             logger.Info("Extract Project done");
+            }
+            else
+            {
+#if DEBUG
+                string json = JsonConvert.SerializeObject(projectList.First());
+#else
+                string json = JsonConvert.SerializeObject(projectList);
+#endif
+                File.WriteAllText(fileName, json);
+            }
         }
     }
 }

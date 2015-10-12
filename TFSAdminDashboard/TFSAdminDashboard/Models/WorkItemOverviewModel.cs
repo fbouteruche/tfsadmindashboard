@@ -15,6 +15,10 @@ namespace TFSAdminDashboard.Models
 
         private Dictionary<string, IDictionary<string, int>> workItemStatistics = new Dictionary<string, IDictionary<string, int>>();
 
+        public void SetWorkItemDefinitionCollection(List<WorkItemDefinition> value)
+        {
+            workItemDefinitionCollection = value;
+        }
 
         public ICollection<WorkItemDefinition> WorkItemDefinitionCollection
         {

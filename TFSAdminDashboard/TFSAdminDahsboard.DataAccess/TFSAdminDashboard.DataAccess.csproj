@@ -124,6 +124,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TeamProjectHelper.cs" />
     <Compile Include="TFSAccessHelper.cs" />
+    <Compile Include="DashWorkItemHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TFSAdminDashboard.Model\TFSAdminDashboard.DTO.csproj">

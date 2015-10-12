@@ -8,6 +8,7 @@ namespace TfsAdminDashboardConsole
     using System.Threading.Tasks;
     using CommandLine;
     using CommandLine.Text;
+    using System.ComponentModel;
 
     /// <summary>
     /// The command line options class
@@ -49,7 +50,11 @@ namespace TfsAdminDashboardConsole
         HelpText = "Extract also the OU property for each user in the Active Directory")]
         public bool extractUOFromAD { get; set; }
 
-         /// <summary>
+        [Option('s', "SaveAs", Required = false,
+        HelpText = "'CSV' or 'JSON' output, default is CSV")]
+        public string OutputFormat { get; internal set; }
+
+        /// <summary>
         /// Gets the usage.
         /// </summary>
         /// <returns>the command line documentation</returns>

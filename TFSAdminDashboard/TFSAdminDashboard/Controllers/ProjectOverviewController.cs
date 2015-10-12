@@ -240,7 +240,7 @@ namespace TFSAdminDashboard.Controllers
             {
                 string projectName = teamProjectNodes[0].Resource.DisplayName;
 
-                FeedWorkItemData(wio.WorkItemDefinitionCollection, tpc, projectName);
+                wio.SetWorkItemDefinitionCollection(FeedWorkItemData(tpc, projectName));
             }
             return PartialView(wio);
         }
@@ -326,38 +326,9 @@ namespace TFSAdminDashboard.Controllers
             return PartialView(tmom);
         }
 
-        private static void FeedWorkItemData(ICollection<WorkItemDefinition> workItemDefinitionCollection,
-            TfsTeamProjectCollection tpc, string projectName)
+        private static List<WorkItemDefinition> FeedWorkItemData(TfsTeamProjectCollection tpc, string projectName)
         {
-            WorkItemStore wis = tpc.GetService<WorkItemStore>();
-            Microsoft.TeamFoundation.WorkItemTracking.Client.Project project = wis.Projects[projectName];
-
-            foreach (WorkItemType wit in project.WorkItemTypes)
-            {
-                WorkItemDefinition witDefinition = new WorkItemDefinition() { Name = wit.Name, Description = wit.Description };
-
-                IEnumerable<Category> categories = project.Categories.Where(x => x.WorkItemTypes.Contains(wit));
-                foreach (Category item in categories)
-	            {
-                    witDefinition.Categories.Add(item.Name);
-	            }
-
-                FieldDefinition systemState = wit.FieldDefinitions.TryGetByName("System.State");
-                foreach (string allowedValue in systemState.AllowedValues)
-                {
-                    int stateCount = wis.QueryCount("Select System.Id From WorkItems Where System.TeamProject = '"
-                        + projectName
-                        + "' And System.WorkItemType = '"
-                        + witDefinition.Name
-                        + "' And System.State = '"
-                        + allowedValue
-                        + "'");
-
-                    witDefinition.StateCollection.Add(allowedValue, stateCount);
-                }
-                workItemDefinitionCollection.Add(witDefinition);
-
-            }
+            return DashWorkItemHelper.FeedWorkItemData(tpc, projectName);
         }
 
     }

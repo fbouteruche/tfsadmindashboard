@@ -55,6 +55,7 @@ namespace TFSAdminDashboard.DTO
                 utcCreationDate = value;
             }
         }
-        
+
+        public List<WorkItemDefinition> WorkItemDefinitionCollection { get; set; }
     }
 }

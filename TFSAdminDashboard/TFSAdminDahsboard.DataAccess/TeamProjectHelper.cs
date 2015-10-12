@@ -34,7 +34,6 @@ namespace TFSAdminDashboard.DataAccess
                         TfsTeamProjectCollection tpc = configurationServer.GetTeamProjectCollection(collection.Id);
 
 
-
                         VersionControlServer vcs = tpc.GetService<VersionControlServer>();
                         Microsoft.TeamFoundation.VersionControl.Client.TeamProject[] projects = vcs.GetAllTeamProjects(true);
 
@@ -52,8 +51,13 @@ namespace TFSAdminDashboard.DataAccess
 
                                     ProjectDefinition projectDefinition = new ProjectDefinition();
                                     projectDefinition.Name = project.Name;
+                                    projectDefinition.Uri = project.ArtifactUri.Segments[3]; // TODO: maybe not the nicest way to get the URI
                                     projectDefinition.CollectionName = collection.Name;
                                     projectDefinition.UtcCreationDate = creationDate.ToUniversalTime();
+
+                                    // Now get Workitems data
+                                    projectDefinition.WorkItemDefinitionCollection = DashWorkItemHelper.FeedWorkItemData(tpc, projectDefinition.Name);
+
                                     projectList.Add(projectDefinition);
                                 }
                             }
@@ -72,14 +76,17 @@ namespace TFSAdminDashboard.DataAccess
                                     Name = p.Name,
                                     CollectionName = collection.Name,
                                     Uri = p.Uri,
-                                    UtcCreationDate = DateTime.MinValue // How to get the creation date...
+                                    UtcCreationDate = DateTime.MinValue // TODO: How to get the creation date...
                                 };
                                 projectList.Add(projectDefinition);
+                                
+                                // Here get witems data
                             }
                         }
                     }
                 }
             }
+
             return projectList.OrderBy(x => x.Name).ToList();
         }
     }

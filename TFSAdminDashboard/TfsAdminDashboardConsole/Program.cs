@@ -29,14 +29,14 @@ namespace TfsAdminDashboardConsole
                  {
                      logger.Info("Extract Projects");
                      iCommand command = new ExtractProjectListCommand();
-                     command.Execute();
+                     command.Execute(options.OutputFormat);
                  }
 
                  if (options.extractMachines == true)
                  {
                      logger.Info("Extract Build Machines");
                      iCommand command = new ExtractBuildMachineListCommand();
-                     command.Execute();
+                     command.Execute(options.OutputFormat);
                  }
 
                  if (options.extractUsers == true)
@@ -49,7 +49,7 @@ namespace TfsAdminDashboardConsole
                      }
 
                      iCommand command = new ExtractUsersListCommand(options.extractUOFromAD);
-                     command.Execute();
+                     command.Execute(options.OutputFormat);
                  }
              }
 

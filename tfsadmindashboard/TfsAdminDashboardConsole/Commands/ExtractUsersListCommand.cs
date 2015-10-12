@@ -26,7 +26,7 @@ namespace TfsAdminDashboardConsole.Commands
             this.extractOUOption = extractOU;
         }
 
-        public void Execute()
+        public void Execute(string outFormat = "CSV")
         {
             logger.Info("Extract Users List in progress...");
             var projectCollections = CatalogNodeBrowsingHelper.GetProjectCollections(configurationServer.CatalogNode);
@@ -44,7 +44,7 @@ namespace TfsAdminDashboardConsole.Commands
                 Fetch_OU_ADProperty(userList);
             }
 
-            string fileName = FileNameTool.GetFileName("TfsExtractUsersList");
+            string fileName = FileNameTool.GetFileName("TfsExtractUsersList", outFormat);
 
             using (CsvWriter csv = new CsvWriter(new StreamWriter(fileName)))
             {

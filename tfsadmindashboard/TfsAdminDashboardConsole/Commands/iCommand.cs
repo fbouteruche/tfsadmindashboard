@@ -8,6 +8,6 @@ namespace TfsAdminDashboardConsole.Commands
 {
     public interface iCommand
     {
-        void Execute();
+        void Execute(string outFormat);
     }
 }

@@ -18,7 +18,15 @@ namespace TfsAdminDashboardConsole.tests
         public void LaunchExportProjectCommand()
         {
             iCommand command = new ExtractProjectListCommand();
-            command.Execute();
+            command.Execute("CSV");
+        }
+
+        [TestCase]
+        [Category("DevFacadeNoIC")]
+        public void LaunchExportProjectCommandJson()
+        {
+            iCommand command = new ExtractProjectListCommand();
+            command.Execute("JSON");
         }
 
         [TestCase]
@@ -26,7 +34,7 @@ namespace TfsAdminDashboardConsole.tests
         public void LaunchExportMachinesCommand()
         {
             iCommand command = new ExtractBuildMachineListCommand();
-            command.Execute();
+            command.Execute("CSV");
         }
 
         [TestCase]
@@ -34,7 +42,7 @@ namespace TfsAdminDashboardConsole.tests
         public void LaunchExportUsersCommand()
         {
             iCommand command = new ExtractUsersListCommand(true);
-            command.Execute();
+            command.Execute("CSV");
         }
 
         [TestCase]

@@ -22,7 +22,7 @@ namespace TfsAdminDashboardConsole.Commands
 
         public ExtractBuildMachineListCommand() { }
 
-        public void Execute()
+        public void Execute(string outFormat = "CSV")
         {
             logger.Info("Extract Build Machines in progress...");
             ICollection<BuildServiceHostDefinition> buildServiceHostList = BuildServerHelper.GetAllBuildServiceHosts(configurationServer);
@@ -59,7 +59,7 @@ namespace TfsAdminDashboardConsole.Commands
                 }
             }
 
-            string fileName = FileNameTool.GetFileName("TfsExtractMachineList");
+            string fileName = FileNameTool.GetFileName("TfsExtractMachineList", outFormat);
 
             using (CsvWriter csv = new CsvWriter((new StreamWriter(fileName))))
             {
