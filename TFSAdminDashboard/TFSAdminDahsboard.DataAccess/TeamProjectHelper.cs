@@ -4,6 +4,7 @@ using Microsoft.TeamFoundation.Framework.Client.Catalog.Objects;
 using Microsoft.TeamFoundation.Framework.Common;
 using Microsoft.TeamFoundation.Server;
 using Microsoft.TeamFoundation.VersionControl.Client;
+using NLog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +16,8 @@ namespace TFSAdminDashboard.DataAccess
 {
     public class TeamProjectHelper
     {
+        static Logger logger = LogManager.GetCurrentClassLogger();
+
         /// <summary>
         /// Gets all projects using the ICommonStructureService.
         /// </summary>
@@ -33,7 +36,7 @@ namespace TFSAdminDashboard.DataAccess
                 foreach (TeamProjectCollection collection in collections)
                 {
                     ++processedColl;
-                    Console.WriteLine("Collection {2} - {0}/{1}", processedColl, collections.Count, collection.Name);
+                    logger.Info("Collection {2} - {0}/{1}", processedColl, collections.Count, collection.Name);
                     if (collection.State == TeamFoundationServiceHostStatus.Started)
                     {
                         TfsTeamProjectCollection tpc = configurationServer.GetTeamProjectCollection(collection.Id);
@@ -47,12 +50,12 @@ namespace TFSAdminDashboard.DataAccess
                         {
                             int processed = 0;
 
-                            Console.WriteLine("{0} project to extract in collection {1}", projects.Length, collection.Name);
+                            logger.Info("{0} project to extract in collection {1}", projects.Length, collection.Name);
                             foreach (Microsoft.TeamFoundation.VersionControl.Client.TeamProject project in projects)
                             {
                                 ++processed;
 
-                                Console.WriteLine("Process {2} - {0}/{1}", processed, projects.Length, project.Name);
+                                logger.Info("Process {2} - {0}/{1}", processed, projects.Length, project.Name);
                                 string name = project.Name;
                                 IEnumerable<Changeset> changesets = vcs.QueryHistory(project.ServerItem, VersionSpec.Latest, 0, RecursionType.None, String.Empty, null, VersionSpec.Latest, int.MaxValue, true, false, false, true).OfType<Changeset>();
                                 Changeset firstChangeset = changesets.FirstOrDefault();
