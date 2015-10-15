@@ -155,3 +155,6 @@ $RECYCLE.BIN/
 # Mac desktop service store files
 .DS_Store
 packages
+*/CustomNugetPackageSources/*
+tfsadmindashboard/TfsAdminDashboardConsole/Properties/VersionAssemblyInfo.cs
+tfsadmindashboard/.vs/config/applicationhost.config
