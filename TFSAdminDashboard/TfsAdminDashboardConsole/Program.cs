@@ -21,7 +21,11 @@ namespace TfsAdminDashboardConsole
              var options = new CommandLineOptions();
              bool processed = false;
 
-             if (CommandLine.Parser.Default.ParseArguments(args, options))
+            var assemblyName = System.Reflection.Assembly.GetExecutingAssembly().GetName();
+
+            logger.Info("{0} v.{1}", assemblyName.Name, assemblyName.Version);
+
+            if (CommandLine.Parser.Default.ParseArguments(args, options))
              {
                  processed = (options.extractProjects || options.extractMachines || options.extractUsers) == true;
 

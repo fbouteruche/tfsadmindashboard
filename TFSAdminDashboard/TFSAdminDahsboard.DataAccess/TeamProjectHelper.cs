@@ -48,7 +48,7 @@ namespace TFSAdminDashboard.DataAccess
                             {
                                 ++processed;
 
-                                Console.WriteLine("Process {0}/{1} project {2}", processed, projects.Length, project.Name);
+                                Console.WriteLine("Process {2} - {0}/{1}", processed, projects.Length, project.Name);
                                 string name = project.Name;
                                 IEnumerable<Changeset> changesets = vcs.QueryHistory(project.ServerItem, VersionSpec.Latest, 0, RecursionType.None, String.Empty, null, VersionSpec.Latest, int.MaxValue, true, false, false, true).OfType<Changeset>();
                                 Changeset firstChangeset = changesets.FirstOrDefault();
