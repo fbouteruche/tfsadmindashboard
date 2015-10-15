@@ -46,7 +46,7 @@ namespace TfsAdminDashboardConsole
 
         [Option('s', "SaveAs", Required = false,
         HelpText = "'CSV' or 'JSON' output, default is CSV")]
-        public string OutputFormat { get; internal set; }
+        public string OutputFormat { get; set; }
 
         /// <summary>
         /// Gets the usage.
