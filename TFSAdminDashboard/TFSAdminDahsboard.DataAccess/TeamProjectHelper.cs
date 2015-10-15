@@ -41,8 +41,14 @@ namespace TFSAdminDashboard.DataAccess
                         //e.g. TFSVC based project
                         if (projects.Length > 0)
                         {
+                            int processed = 0;
+
+                            Console.WriteLine("{0} project to extract in collection {1}", projects.Length, collection.Name);
                             foreach (Microsoft.TeamFoundation.VersionControl.Client.TeamProject project in projects)
                             {
+                                ++processed;
+
+                                Console.WriteLine("Process {0}/{1} project {2}", processed, projects.Length, project.Name);
                                 string name = project.Name;
                                 IEnumerable<Changeset> changesets = vcs.QueryHistory(project.ServerItem, VersionSpec.Latest, 0, RecursionType.None, String.Empty, null, VersionSpec.Latest, int.MaxValue, true, false, false, true).OfType<Changeset>();
                                 Changeset firstChangeset = changesets.FirstOrDefault();
