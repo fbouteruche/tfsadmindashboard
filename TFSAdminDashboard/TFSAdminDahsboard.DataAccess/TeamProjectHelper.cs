@@ -28,8 +28,12 @@ namespace TFSAdminDashboard.DataAccess
             {
                 IList<TeamProjectCollection> collections = collectionService.GetCollections();
 
+                int processedColl = 0;
+
                 foreach (TeamProjectCollection collection in collections)
                 {
+                    ++processedColl;
+                    Console.WriteLine("Collection {2} - {0}/{1}", processedColl, collections.Count, collection.Name);
                     if (collection.State == TeamFoundationServiceHostStatus.Started)
                     {
                         TfsTeamProjectCollection tpc = configurationServer.GetTeamProjectCollection(collection.Id);
