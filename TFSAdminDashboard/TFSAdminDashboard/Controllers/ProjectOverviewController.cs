@@ -131,29 +131,9 @@ namespace TFSAdminDashboard.Controllers
             NodeInfo[] nodeInfo = css.ListStructures(projectUri);
         }
 
-        private static void FeedTestManagementData(ICollection<TestPlanDefinition> testPlanDefinitionCollection, TfsTeamProjectCollection tpc, string projectName)
+        private static List<TestPlanDefinition> FeedTestManagementData(TfsTeamProjectCollection tpc, string projectName)
         {
-            ITestManagementService tms = tpc.GetService<ITestManagementService>();
-            ITestManagementTeamProject tmtp = tms.GetTeamProject(projectName);
-            ITestPlanHelper testPlanHelper = tmtp.TestPlans;
-            ITestPlanCollection testPlanCollection = testPlanHelper.Query("Select * From TestPlan");
-            foreach (ITestPlan testPlan in testPlanCollection)
-            {
-                TestPlanDefinition testPlanDefinition = new TestPlanDefinition()
-                {
-                    Name = testPlan.Name,
-                    AreaPath = testPlan.AreaPath,
-                    IterationPath = testPlan.Iteration,
-                    Description = testPlan.Description,
-                    Owner = testPlan.Owner.DisplayName,
-                    State = testPlan.State.ToString(),
-                    LastUpdate = testPlan.LastUpdated,
-                    StartDate = testPlan.StartDate,
-                    EndDate = testPlan.EndDate,
-                    Revision = testPlan.Revision
-                };
-                testPlanDefinitionCollection.Add(testPlanDefinition);
-            }
+            return DashTestPlanHelper.FeedTestPlanData(tpc, projectName);
         }
 
         private static List<BuildDefinition> FeedBuildData(TfsTeamProjectCollection tpc, string projectName)
@@ -258,7 +238,7 @@ namespace TFSAdminDashboard.Controllers
             {
                 projectName = teamProjectNodes[0].Resource.DisplayName;
 
-                FeedTestManagementData(tmom.TestPlanDefinitionCollection, tpc, projectName);
+                tmom.SetTestPlanDefinitionCollection(FeedTestManagementData(tpc, projectName));
             }
             return PartialView(tmom);
         }

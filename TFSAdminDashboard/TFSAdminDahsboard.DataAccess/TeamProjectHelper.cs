@@ -52,6 +52,7 @@ namespace TFSAdminDashboard.DataAccess
 
                                     ProjectDefinition projectDefinition = new ProjectDefinition();
                                     projectDefinition.Name = project.Name;
+                                    projectDefinition.CollectionDescription = collection.Description;
                                     projectDefinition.Uri = project.ArtifactUri.Segments[3]; // TODO: maybe not the nicest way to get the URI
                                     projectDefinition.CollectionName = collection.Name;
                                     projectDefinition.UtcCreationDate = creationDate.ToUniversalTime();
@@ -64,6 +65,11 @@ namespace TFSAdminDashboard.DataAccess
 
                                     // get VCS data (only TFS 2010 TFSVC though)
                                     projectDefinition.VersionControlData = DashVersionControlHelper.FeedVersionControlData(tpc, projectDefinition.Name);
+
+                                    projectDefinition.LastCheckinDate = projectDefinition.VersionControlData.Max(x=> x.InnerLastCheckIn);
+
+                                    // get test plan DAta
+                                    projectDefinition.TestPlanData = DashTestPlanHelper.FeedTestPlanData(tpc, projectDefinition.Name);
 
                                     projectList.Add(projectDefinition);
                                 }

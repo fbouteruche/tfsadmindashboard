@@ -121,6 +121,7 @@
     <Compile Include="BuildServerHelper.cs" />
     <Compile Include="CatalogNodeBrowsingHelper.cs" />
     <Compile Include="DashBuildHelper.cs" />
+    <Compile Include="DashTestPlanHelper.cs" />
     <Compile Include="DashVersionControlHelper.cs" />
     <Compile Include="IdentityServiceManagementHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

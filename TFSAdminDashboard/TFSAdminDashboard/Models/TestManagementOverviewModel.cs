@@ -18,5 +18,10 @@ namespace TFSAdminDashboard.Models
                 return testPlanDefinitionCollection;
             }
         }
+
+        internal void SetTestPlanDefinitionCollection(List<TestPlanDefinition> value)
+        {
+            testPlanDefinitionCollection = value;
+        }
     }
 }

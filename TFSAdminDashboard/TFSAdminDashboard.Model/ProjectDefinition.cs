@@ -59,5 +59,8 @@ namespace TFSAdminDashboard.DTO
         public List<WorkItemDefinition> WorkItemDefinitionCollection { get; set; }
         public List<BuildDefinition> BuildsDefinitionCollection { get; set; }
         public List<VersionControlItem> VersionControlData { get; set; }
+        public List<TestPlanDefinition> TestPlanData { get; set; }
+        public string CollectionDescription { get; set; }
+        public DateTime LastCheckinDate { get; set; }
     }
 }
