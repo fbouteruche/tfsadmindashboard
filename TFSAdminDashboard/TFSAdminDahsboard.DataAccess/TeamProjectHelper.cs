@@ -35,6 +35,12 @@ namespace TFSAdminDashboard.DataAccess
 
                 foreach (TeamProjectCollection collection in collections)
                 {
+                    if(collection.Name == "OBS")
+                    {
+                        logger.Info("Filter out this collection: {0}", collection.Name);
+                        continue;
+                    }
+
                     ++processedColl;
                     logger.Info("Collection {2} - {0}/{1}", processedColl, collections.Count, collection.Name);
                     if (collection.State == TeamFoundationServiceHostStatus.Started)
@@ -76,14 +82,19 @@ namespace TFSAdminDashboard.DataAccess
                                     // get build data
                                     projectDefinition.BuildsDefinitionCollection = DashBuildHelper.FeedBuildData(tpc, projectDefinition.Name);
 
+                                    projectDefinition.LastSuccessBuild = projectDefinition.BuildsDefinitionCollection.Max(x => x.LastSuccess);
+                                    projectDefinition.LastFailedBuild = projectDefinition.BuildsDefinitionCollection.Max(x => x.LastFail);
+
                                     // get VCS data (only TFS 2010 TFSVC though)
                                     projectDefinition.VersionControlData = DashVersionControlHelper.FeedVersionControlData(tpc, projectDefinition.Name);
 
-                                    projectDefinition.LastCheckinDate = projectDefinition.VersionControlData.Max(x=> x.InnerLastCheckIn);
+                                    projectDefinition.LastCheckinDate = projectDefinition.VersionControlData.Max(x => x.InnerLastCheckIn);
 
                                     // get test plan DAta
                                     projectDefinition.TestPlanData = DashTestPlanHelper.FeedTestPlanData(tpc, projectDefinition.Name);
 
+                                    projectDefinition.Platform = "TFS2010";
+                                    projectDefinition.ExtractDate = DateTime.Now;
                                     projectList.Add(projectDefinition);
                                 }
 
@@ -111,8 +122,10 @@ namespace TFSAdminDashboard.DataAccess
                                     UtcCreationDate = DateTime.MinValue // TODO: How to get the creation date...
                                 };
                                 projectList.Add(projectDefinition);
-                                
-                                // Here get witems data
+
+                                // Here get witems data, etc.
+                                projectDefinition.Platform = "TFS2013";
+                                projectDefinition.ExtractDate = DateTime.Now;
                             }
                         }
                     }
