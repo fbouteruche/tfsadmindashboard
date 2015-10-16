@@ -82,15 +82,18 @@ namespace TFSAdminDashboard.DataAccess
                                     // get build data
                                     projectDefinition.BuildsDefinitionCollection = DashBuildHelper.FeedBuildData(tpc, projectDefinition.Name);
 
-                                    projectDefinition.LastSuccessBuild = projectDefinition.BuildsDefinitionCollection.Max(x => x.LastSuccess);
-                                    projectDefinition.LastFailedBuild = projectDefinition.BuildsDefinitionCollection.Max(x => x.LastFail);
+                                    if(projectDefinition.BuildsDefinitionCollection.Count > 0)
+                                    { 
+                                        projectDefinition.LastSuccessBuild = projectDefinition.BuildsDefinitionCollection.Max(x => x.LastSuccess);
+                                        projectDefinition.LastFailedBuild = projectDefinition.BuildsDefinitionCollection.Max(x => x.LastFail);
+                                    }
 
                                     // get VCS data (only TFS 2010 TFSVC though)
                                     projectDefinition.VersionControlData = DashVersionControlHelper.FeedVersionControlData(tpc, projectDefinition.Name);
 
                                     projectDefinition.LastCheckinDate = projectDefinition.VersionControlData.Max(x => x.InnerLastCheckIn);
 
-                                    // get test plan DAta
+                                    // get test plan Data
                                     projectDefinition.TestPlanData = DashTestPlanHelper.FeedTestPlanData(tpc, projectDefinition.Name);
 
                                     projectDefinition.Platform = "TFS2010";
