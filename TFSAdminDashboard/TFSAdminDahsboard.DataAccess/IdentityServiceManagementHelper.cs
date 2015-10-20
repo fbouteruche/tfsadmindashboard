@@ -28,22 +28,30 @@ namespace TFSAdminDashboard.DataAccess
             foreach (var collection in TPCs)
             {
                 TfsTeamProjectCollection tpc = configurationServer.GetTeamProjectCollection(collection.InstanceId);
-                IIdentityManagementService ims = tpc.GetService<IIdentityManagementService>();
 
                 ICollection<ApplicationGroupDefinition> groupCollection = new List<ApplicationGroupDefinition>();
                 ICollection<User> userCollection = new List<User>();
 
-                IdentityServiceManagementHelper.FeedIdentityData(groupCollection, userCollection, ims, null);
+                var tuple = IdentityServiceManagementHelper.FeedIdentityData(tpc, null);
 
-                globalUserCollection.AddRange(userCollection);
+                globalUserCollection.AddRange(tuple.Item2);
             }
 
             // distinct by non null email
             return globalUserCollection.Where(x => !string.IsNullOrEmpty(x.Mail)).ToList();
         }
 
-        public static void FeedIdentityData(ICollection<ApplicationGroupDefinition> applicationGroupCollection, ICollection<User> userCollection, IIdentityManagementService ims, string projectUri)
+        public static Tuple<List<ApplicationGroupDefinition>, List<User>> FeedIdentityData(TfsTeamProjectCollection tpc, string projectUri)
         {
+            IIdentityManagementService ims = tpc.GetService<IIdentityManagementService>();
+            return FeedIdentityData(ims, projectUri);
+        }
+
+        public static Tuple<List<ApplicationGroupDefinition>, List<User>> FeedIdentityData(IIdentityManagementService ims, string projectUri)
+        {
+            List<ApplicationGroupDefinition> applicationGroupCollection = new List<ApplicationGroupDefinition>();
+            List<User> userCollection = new List<User>();
+
             //Get the project application groups
             TeamFoundationIdentity[] lightApplicationGroups = ims.ListApplicationGroups(projectUri, ReadIdentityOptions.IncludeReadFromSource);
             //Read the project application groups identities with an expended membership query to populate the Members properties
@@ -56,14 +64,15 @@ namespace TFSAdminDashboard.DataAccess
                 TeamFoundationIdentity[] applicationGroupMembers = ims.ReadIdentities(applicationGroup.Members, MembershipQuery.None, ReadIdentityOptions.None);
                 foreach (TeamFoundationIdentity applicationGroupMember in applicationGroupMembers)
                 {
-                    
+
                     if (!applicationGroupMember.IsContainer)
                     {
                         User user = userCollection.SingleOrDefault(x => x.Name == applicationGroupMember.DisplayName);
                         if (user == null)
                         {
-                            user = new User() { 
-                                Name = applicationGroupMember.DisplayName, 
+                            user = new User()
+                            {
+                                Name = applicationGroupMember.DisplayName,
                                 IsActive = applicationGroupMember.IsActive,
                                 Mail = applicationGroupMember.GetAttribute("Mail", string.Empty),
                                 Domain = applicationGroupMember.GetAttribute("Domain", string.Empty),
@@ -77,13 +86,15 @@ namespace TFSAdminDashboard.DataAccess
                         applicationGroupDefinition.UserCollection.Add(user);
                     }
                 }
-                
+
                 applicationGroupDefinition.SortUsers();
 
                 applicationGroupCollection.Add(applicationGroupDefinition);
             }
 
             applicationGroupCollection = applicationGroupCollection.OrderBy(x => x.Name).ToList();
+
+            return Tuple.Create(applicationGroupCollection, userCollection);
         }
     }
 }

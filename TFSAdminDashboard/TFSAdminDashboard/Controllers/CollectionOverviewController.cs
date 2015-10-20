@@ -47,9 +47,8 @@ namespace TFSAdminDashboard.Controllers
             if (!string.IsNullOrWhiteSpace(id))
             {
                 TfsTeamProjectCollection tpc = configurationServer.GetTeamProjectCollection(new Guid(id));
-                IIdentityManagementService ims = tpc.GetService<IIdentityManagementService>();
 
-                IdentityServiceManagementHelper.FeedIdentityData(iom.ApplicationGroupCollection, iom.UserCollection, ims, null);
+                iom.SetApplicationAndUserGroupCollection(IdentityServiceManagementHelper.FeedIdentityData(tpc, null));
             }
             return PartialView(iom);
         }

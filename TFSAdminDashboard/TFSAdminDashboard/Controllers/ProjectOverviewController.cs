@@ -180,7 +180,7 @@ namespace TFSAdminDashboard.Controllers
             if(teamProjectNodes.Count() == 1)
             {
                 projectUri = teamProjectNodes[0].Resource.Properties["ProjectUri"];
-                IdentityServiceManagementHelper.FeedIdentityData(iom.ApplicationGroupCollection, iom.UserCollection, ims, projectUri);
+                iom.SetApplicationAndUserGroupCollection(IdentityServiceManagementHelper.FeedIdentityData(tpc, projectUri));
             }
             return PartialView(iom);
         }

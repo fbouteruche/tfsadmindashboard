@@ -96,6 +96,9 @@ namespace TFSAdminDashboard.DataAccess
                                     // get test plan Data
                                     projectDefinition.TestPlanData = DashTestPlanHelper.FeedTestPlanData(tpc, projectDefinition.Name);
 
+                                    // get identities Data
+                                    ProjectDefinition.IdentityData = IdentityServiceManagementHelper.FeedIdentityData(tpc, projectDefinition.Uri).Item2;
+
                                     projectDefinition.Platform = "TFS2010";
                                     projectDefinition.ExtractDate = DateTime.Now;
                                     projectList.Add(projectDefinition);

@@ -12,6 +12,12 @@ namespace TFSAdminDashboard.Models
 
         private List<User> userCollection = new List<User>();
 
+        public void SetApplicationAndUserGroupCollection(Tuple<List<ApplicationGroupDefinition>, List<User>> value)
+        {
+            applicationGroupCollection = value.Item1;
+            userCollection = value.Item2;
+        }
+
         public ICollection<ApplicationGroupDefinition> ApplicationGroupCollection
         {
             get

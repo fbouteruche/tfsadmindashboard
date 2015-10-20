@@ -41,6 +41,14 @@ namespace TfsAdminDashboardConsole.tests
         [Category("DevFacadeNoIC")]
         public void LaunchExportUsersCommand()
         {
+            iCommand command = new ExtractUsersListCommand(false);
+            command.Execute("CSV");
+        }
+
+        [TestCase]
+        [Category("DevFacadeNoIC")]
+        public void LaunchExportUsersCommandWithOUFromAD()
+        {
             iCommand command = new ExtractUsersListCommand(true);
             command.Execute("CSV");
         }

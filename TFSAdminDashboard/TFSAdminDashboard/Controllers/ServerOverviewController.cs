@@ -113,7 +113,7 @@ namespace TFSAdminDashboard.Controllers
         {
             IIdentityManagementService serverIdentityManagementService = configurationServer.GetService<IIdentityManagementService>();
             IdentityOverviewModel iom = new IdentityOverviewModel();
-            IdentityServiceManagementHelper.FeedIdentityData(iom.ApplicationGroupCollection, iom.UserCollection, serverIdentityManagementService, null);
+            iom.SetApplicationAndUserGroupCollection(IdentityServiceManagementHelper.FeedIdentityData(serverIdentityManagementService, null));
             return PartialView(iom);
         }
 

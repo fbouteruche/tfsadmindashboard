@@ -66,5 +66,6 @@ namespace TFSAdminDashboard.DTO
         public DateTime LastFailedBuild { get; set; }
         public string Platform { get; set; }
         public DateTime ExtractDate { get; set; }
+        public static List<User> IdentityData { get; set; }
     }
 }

@@ -18,9 +18,11 @@ namespace TfsAdminDashboardConsole.tests
         {
             int yearToConsider = 2015;
 
-            string fileContent = File.ReadAllText(@"C: \Users\Vinzz\Desktop\Drop\2015_10_15_TFS2010_ExtractProject.json");
+            string fileContent = File.ReadAllText(@"C: \Users\Vinzz\Desktop\Drop\2015_10_16_TFS2010_ExtractProject.json");
 
             ICollection<ProjectDefinition> projectList = JsonConvert.DeserializeObject<ICollection<ProjectDefinition>>(fileContent);
+
+            int spy = projectList.Count();
 
             var filtered = projectList.Where(
                 x => x.BuildsDefinitionCollection.Where(
