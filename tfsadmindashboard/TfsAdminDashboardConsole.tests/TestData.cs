@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TFSAdminDashboard.DTO;
+using MoreLinq;
+using CsvHelper;
 
 namespace TfsAdminDashboardConsole.tests
 {
@@ -14,7 +16,25 @@ namespace TfsAdminDashboardConsole.tests
     public class TestData
     {
         [Test]
-        public void GetProjectInfosFromJSon()
+        public void GetUserInfosFromJSon()
+        {
+            string fileContent = File.ReadAllText(@"C:\Users\Vinzz\Desktop\Drop\2015_10_20_TFS2013_ExtractProject.json");
+
+            ICollection<ProjectDefinition> projectList = JsonConvert.DeserializeObject<ICollection<ProjectDefinition>>(fileContent);
+
+            List<User> listAll = new List<User>();
+
+            foreach (ProjectDefinition proj in projectList)
+            {
+                if (proj.IdentityData != null)
+                    listAll.AddRange(proj.IdentityData);
+            }
+
+            var filtered = listAll.DistinctBy(x => x.Mail).Count();
+        }
+
+        [Test]
+        public void GetActiveProjectInfosFromJSon()
         {
             int yearToConsider = 2015;
 

@@ -35,7 +35,7 @@ namespace TFSAdminDashboard.DataAccess
 
                 foreach (TeamProjectCollection collection in collections)
                 {
-                    if(collection.Name == "OBS")
+                    if (collection.Name == "OBS")
                     {
                         logger.Info("Filter out this collection: {0}", collection.Name);
                         continue;
@@ -82,8 +82,8 @@ namespace TFSAdminDashboard.DataAccess
                                     // get build data
                                     projectDefinition.BuildsDefinitionCollection = DashBuildHelper.FeedBuildData(tpc, projectDefinition.Name);
 
-                                    if(projectDefinition.BuildsDefinitionCollection.Count > 0)
-                                    { 
+                                    if (projectDefinition.BuildsDefinitionCollection.Count > 0)
+                                    {
                                         projectDefinition.LastSuccessBuild = projectDefinition.BuildsDefinitionCollection.Max(x => x.LastSuccess);
                                         projectDefinition.LastFailedBuild = projectDefinition.BuildsDefinitionCollection.Max(x => x.LastFail);
                                     }
@@ -97,7 +97,7 @@ namespace TFSAdminDashboard.DataAccess
                                     projectDefinition.TestPlanData = DashTestPlanHelper.FeedTestPlanData(tpc, projectDefinition.Name);
 
                                     // get identities Data
-                                    ProjectDefinition.IdentityData = IdentityServiceManagementHelper.FeedIdentityData(tpc, projectDefinition.Uri).Item2;
+                                    projectDefinition.IdentityData = IdentityServiceManagementHelper.FeedIdentityData(tpc, projectDefinition.Uri).Item2;
 
                                     projectDefinition.Platform = "TFS2010";
                                     projectDefinition.ExtractDate = DateTime.Now;
@@ -127,11 +127,45 @@ namespace TFSAdminDashboard.DataAccess
                                     Uri = p.Uri,
                                     UtcCreationDate = DateTime.MinValue // TODO: How to get the creation date...
                                 };
-                                projectList.Add(projectDefinition);
+                                
 
                                 // Here get witems data, etc.
+
+                                // get Workitems data
+                                projectDefinition.WorkItemDefinitionCollection = DashWorkItemHelper.FeedWorkItemData(tpc, projectDefinition.Name);
+
+                                // get build data
+                                projectDefinition.BuildsDefinitionCollection = DashBuildHelper.FeedBuildData(tpc, projectDefinition.Name);
+
+                                if (projectDefinition.BuildsDefinitionCollection.Count > 0)
+                                {
+                                    projectDefinition.LastSuccessBuild = projectDefinition.BuildsDefinitionCollection.Max(x => x.LastSuccess);
+                                    projectDefinition.LastFailedBuild = projectDefinition.BuildsDefinitionCollection.Max(x => x.LastFail);
+                                }
+
+                                // TODO get VCS data
+                                //projectDefinition.VersionControlData = null;
+                                //projectDefinition.LastCheckinDate = projectDefinition.VersionControlData.Max(x => x.InnerLastCheckIn);
+
+                                // get test plan Data
+                                projectDefinition.TestPlanData = DashTestPlanHelper.FeedTestPlanData(tpc, projectDefinition.Name);
+
+                                // get identities Data
+                                var ids = IdentityServiceManagementHelper.FeedIdentityData(tpc, projectDefinition.Uri).Item2;
+
+                                // Do not fetch all company identities
+                                if (ids.Count < 3000)
+                                    projectDefinition.IdentityData = ids;
+
                                 projectDefinition.Platform = "TFS2013";
                                 projectDefinition.ExtractDate = DateTime.Now;
+
+                                
+                                projectList.Add(projectDefinition);
+#if TEST
+                                // Break after 1 project for tests
+                                break;
+#endif
                             }
                         }
                     }
