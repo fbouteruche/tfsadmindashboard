@@ -72,7 +72,7 @@ namespace TFSAdminDashboard.DataAccess
                                     ProjectDefinition projectDefinition = new ProjectDefinition();
                                     projectDefinition.Name = project.Name;
                                     projectDefinition.CollectionDescription = collection.Description;
-                                    projectDefinition.Uri = project.ArtifactUri.Segments[3]; // TODO: maybe not the nicest way to get the URI
+                                    projectDefinition.Uri = project.ArtifactUri.ToString();
                                     projectDefinition.CollectionName = collection.Name;
                                     projectDefinition.UtcCreationDate = creationDate.ToUniversalTime();
 
@@ -127,7 +127,6 @@ namespace TFSAdminDashboard.DataAccess
                                     Uri = p.Uri,
                                     UtcCreationDate = DateTime.MinValue // TODO: How to get the creation date...
                                 };
-                                
 
                                 // Here get witems data, etc.
 
