@@ -22,8 +22,9 @@ namespace TFSAdminDashboard.DataAccess
         /// Gets all projects using the ICommonStructureService.
         /// </summary>
         /// <param name="configurationServer">The configuration server.</param>
-        /// <returns></returns>
-        public static ICollection<ProjectDefinition> GetAllProjects(TfsConfigurationServer configurationServer)
+        /// <param name="withIdentities">if set to <c>true</c> [with identities].</param>
+        /// <returns>the collection of projects definitions</returns>
+        public static ICollection<ProjectDefinition> GetAllProjects(TfsConfigurationServer configurationServer, bool withIdentities)
         {
             List<ProjectDefinition> projectList = new List<ProjectDefinition>();
             ITeamProjectCollectionService collectionService = configurationServer.GetService<ITeamProjectCollectionService>();
@@ -42,7 +43,7 @@ namespace TFSAdminDashboard.DataAccess
                     }
 
                     ++processedColl;
-                    logger.Info("Collection {2} - {0}/{1}", processedColl, collections.Count, collection.Name);
+                    logger.Info("OoO Collection {2} - {0}/{1}", processedColl, collections.Count, collection.Name);
                     if (collection.State == TeamFoundationServiceHostStatus.Started)
                     {
                         TfsTeamProjectCollection tpc = configurationServer.GetTeamProjectCollection(collection.Id);
@@ -56,12 +57,12 @@ namespace TFSAdminDashboard.DataAccess
                         {
                             int processed = 0;
 
-                            logger.Info("{0} project to extract in collection {1}", projects.Length, collection.Name);
+                            logger.Info("   {0} project to extract in collection {1}", projects.Length, collection.Name);
                             foreach (Microsoft.TeamFoundation.VersionControl.Client.TeamProject project in projects)
                             {
                                 ++processed;
 
-                                logger.Info("Process {2} - {0}/{1}", processed, projects.Length, project.Name);
+                                logger.Info("       Process {2} - {0}/{1}", processed, projects.Length, project.Name);
                                 string name = project.Name;
                                 IEnumerable<Changeset> changesets = vcs.QueryHistory(project.ServerItem, VersionSpec.Latest, 0, RecursionType.None, String.Empty, null, VersionSpec.Latest, int.MaxValue, true, false, false, true).OfType<Changeset>();
                                 Changeset firstChangeset = changesets.FirstOrDefault();
@@ -97,7 +98,10 @@ namespace TFSAdminDashboard.DataAccess
                                     projectDefinition.TestPlanData = DashTestPlanHelper.FeedTestPlanData(tpc, projectDefinition.Name);
 
                                     // get identities Data
-                                    projectDefinition.IdentityData = IdentityServiceManagementHelper.FeedIdentityData(tpc, projectDefinition.Uri).Item2;
+                                    if(withIdentities)
+                                        projectDefinition.IdentityData = IdentityServiceManagementHelper.FeedIdentityData(tpc, projectDefinition.Uri).Item2;
+
+                                    projectDefinition.DMOrigin = "AD"; // TODO extract from collection description
 
                                     projectDefinition.Platform = "TFS2010";
                                     projectDefinition.ExtractDate = DateTime.Now;
@@ -114,12 +118,18 @@ namespace TFSAdminDashboard.DataAccess
                         else
                         // Git based project
                         {
+                            int processed = 0;
+
                             ProjectCollection projCollect = (ProjectCollection)tpc.GetService(typeof(ProjectCollection));
 
                             var structService = tpc.GetService<ICommonStructureService>();
 
+                            logger.Info("   {0} project to extract in collection {1}", projects.Length, collection.Name);
                             foreach (ProjectInfo p in structService.ListAllProjects())
                             {
+                                ++processed;
+
+                                logger.Info("       Process {2} - {0}/{1}", processed, projects.Length, p.Name);
                                 ProjectDefinition projectDefinition = new ProjectDefinition()
                                 {
                                     Name = p.Name,
@@ -149,17 +159,22 @@ namespace TFSAdminDashboard.DataAccess
                                 // get test plan Data
                                 projectDefinition.TestPlanData = DashTestPlanHelper.FeedTestPlanData(tpc, projectDefinition.Name);
 
-                                // get identities Data
-                                var ids = IdentityServiceManagementHelper.FeedIdentityData(tpc, projectDefinition.Uri).Item2;
-
-                                // Do not fetch all company identities
-                                if (ids.Count < 3000)
-                                    projectDefinition.IdentityData = ids;
+                                if (withIdentities)
+                                { 
+                                    // get identities Data
+                                    var ids = IdentityServiceManagementHelper.FeedIdentityData(tpc, projectDefinition.Uri).Item2;
+                                
+                                    // Do not fetch all company identities
+                                    if (ids.Count < 3000)
+                                        projectDefinition.IdentityData = ids;
+                                }
 
                                 projectDefinition.Platform = "TFS2013";
+
+                                projectDefinition.DMOrigin = projectDefinition.CollectionName;
+
                                 projectDefinition.ExtractDate = DateTime.Now;
 
-                                
                                 projectList.Add(projectDefinition);
 #if TEST
                                 // Break after 1 project for tests

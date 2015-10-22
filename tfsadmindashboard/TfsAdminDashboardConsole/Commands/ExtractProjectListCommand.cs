@@ -28,7 +28,7 @@ namespace TfsAdminDashboardConsole.Commands
         public void Execute(string outFormat = "CSV")
         {
             logger.Info("Extract Project List in progress...");
-            ICollection<ProjectDefinition> projectList = TeamProjectHelper.GetAllProjects(configurationServer);
+            ICollection<ProjectDefinition> projectList = TeamProjectHelper.GetAllProjects(configurationServer, false);
 
             string fileName = FileNameTool.GetFileName("TfsExtractProjectList", outFormat);
 
