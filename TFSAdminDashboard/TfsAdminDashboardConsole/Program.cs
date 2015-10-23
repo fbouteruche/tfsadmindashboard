@@ -18,50 +18,58 @@ namespace TfsAdminDashboardConsole
         static void Main(string[] args)
         {
             Logger logger = LogManager.GetCurrentClassLogger();
-             var options = new CommandLineOptions();
-             bool processed = false;
+            try
+            {
+                var options = new CommandLineOptions();
+                bool processed = false;
 
-            var assemblyName = System.Reflection.Assembly.GetExecutingAssembly().GetName();
+                var assemblyName = System.Reflection.Assembly.GetExecutingAssembly().GetName();
 
-            logger.Info("{0} v.{1}", assemblyName.Name, assemblyName.Version);
+                logger.Info("{0} v.{1}", assemblyName.Name, assemblyName.Version);
 
-            if (CommandLine.Parser.Default.ParseArguments(args, options))
-             {
-                 processed = (options.extractProjects || options.extractMachines || options.extractUsers) == true;
+                if (CommandLine.Parser.Default.ParseArguments(args, options))
+                {
+                    processed = (options.extractProjects || options.extractMachines || options.extractUsers) == true;
 
-                 if (options.extractProjects == true)
-                 {
-                     logger.Info("Extract Projects");
-                     iCommand command = new ExtractProjectListCommand();
-                     command.Execute(options);
-                 }
+                    if (options.extractProjects == true)
+                    {
+                        logger.Info("Extract Projects");
+                        iCommand command = new ExtractProjectListCommand();
+                        command.Execute(options);
+                    }
 
-                 if (options.extractMachines == true)
-                 {
-                     logger.Info("Extract Build Machines");
-                     iCommand command = new ExtractBuildMachineListCommand();
-                     command.Execute(options);
-                 }
+                    if (options.extractMachines == true)
+                    {
+                        logger.Info("Extract Build Machines");
+                        iCommand command = new ExtractBuildMachineListCommand();
+                        command.Execute(options);
+                    }
 
-                 if (options.extractUsers == true)
-                 {
-                     logger.Info("Extract users");
-                     logger.Warn("that's a quite long process");
-                     if(options.extractUOFromAD)
-                     {
-                         logger.Warn("especially with the AD query");
-                     }
+                    if (options.extractUsers == true)
+                    {
+                        logger.Info("Extract users");
+                        logger.Warn("that's a quite long process");
+                        if (options.extractUOFromAD)
+                        {
+                            logger.Warn("especially with the AD query");
+                        }
 
-                     iCommand command = new ExtractUsersListCommand();
-                     command.Execute(options);
-                 }
-             }
+                        iCommand command = new ExtractUsersListCommand();
+                        command.Execute(options);
+                    }
+                }
 
-             if (processed == false)
-             {
-                 Console.Write(options.GetUsage());
-                 Console.ReadKey();
-             }
+                if (processed == false)
+                {
+                    Console.Write(options.GetUsage());
+                    Console.ReadKey();
+                }
+            }
+            catch (Exception e)
+            {
+                logger.Error<Exception>(e);
+                throw;
+            }
         }
     }
 }

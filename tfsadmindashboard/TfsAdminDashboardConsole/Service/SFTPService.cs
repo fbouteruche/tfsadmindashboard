@@ -19,7 +19,9 @@ namespace TfsAdminDashboardConsole.Service
             {
                 var fileStream = File.OpenRead(filePath);
                 sftp.Connect();
-                sftp.UploadFile(fileStream, Environment.GetEnvironmentVariable("TfsExtractSSH_Path", EnvironmentVariableTarget.User));
+                string uploadPath = string.Format("{0}/{1}", Environment.GetEnvironmentVariable("TfsExtractSSH_Path", EnvironmentVariableTarget.User), Path.GetFileName(filePath));
+
+                sftp.UploadFile(fileStream, uploadPath);
 
                 sftp.Disconnect();
 
