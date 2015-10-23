@@ -33,14 +33,14 @@ namespace TfsAdminDashboardConsole
                  {
                      logger.Info("Extract Projects");
                      iCommand command = new ExtractProjectListCommand();
-                     command.Execute(options.OutputFormat);
+                     command.Execute(options);
                  }
 
                  if (options.extractMachines == true)
                  {
                      logger.Info("Extract Build Machines");
                      iCommand command = new ExtractBuildMachineListCommand();
-                     command.Execute(options.OutputFormat);
+                     command.Execute(options);
                  }
 
                  if (options.extractUsers == true)
@@ -52,8 +52,8 @@ namespace TfsAdminDashboardConsole
                          logger.Warn("especially with the AD query");
                      }
 
-                     iCommand command = new ExtractUsersListCommand(options.extractUOFromAD);
-                     command.Execute(options.OutputFormat);
+                     iCommand command = new ExtractUsersListCommand();
+                     command.Execute(options);
                  }
              }
 

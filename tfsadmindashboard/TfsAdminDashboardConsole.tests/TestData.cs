@@ -13,6 +13,7 @@ namespace TfsAdminDashboardConsole.tests
     public class TestData
     {
         [Test]
+        [Category("DevFacadeNoIC")]
         public void GetUserInfosFromJSon()
         {
             string fileContent = File.ReadAllText(@"C:\Users\Vinzz\Desktop\Drop\2015_10_20_TFS2013_ExtractProject.json");
@@ -31,6 +32,7 @@ namespace TfsAdminDashboardConsole.tests
         }
 
         [Test]
+        [Category("DevFacadeNoIC")]
         public void GetActiveProjectInfosFromJSon()
         {
             int yearToConsider = 2015;

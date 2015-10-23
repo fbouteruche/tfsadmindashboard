@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TfsAdminDashboardConsole.Commands
+namespace TfsAdminDashboardConsole.Service
 {
-    public interface iCommand
+    interface ISFTPService
     {
-        void Execute(CommandLineOptions args);
+        void UploadFile(string filePath);
     }
 }

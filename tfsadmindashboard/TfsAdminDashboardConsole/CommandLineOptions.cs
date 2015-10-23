@@ -48,6 +48,10 @@ namespace TfsAdminDashboardConsole
         HelpText = "'CSV' or 'JSON' output, default is CSV")]
         public string OutputFormat { get; set; }
 
+        [Option('u', "UploadSFTP", Required = false,
+        HelpText = "Upload result file via SFTP")]
+        public bool UploadSFTP { get; set; }
+
         /// <summary>
         /// Gets the usage.
         /// </summary>

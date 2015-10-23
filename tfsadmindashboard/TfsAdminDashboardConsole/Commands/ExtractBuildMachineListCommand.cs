@@ -13,6 +13,8 @@ using TFSAdminDashboard.DTO;
 using System.Net.Sockets;
 using TfsAdminDashboardConsole.Commands.IO;
 using NLog;
+using Newtonsoft.Json;
+using TfsAdminDashboardConsole.Service;
 
 namespace TfsAdminDashboardConsole.Commands
 {
@@ -22,7 +24,7 @@ namespace TfsAdminDashboardConsole.Commands
 
         public ExtractBuildMachineListCommand() { }
 
-        public void Execute(string outFormat = "CSV")
+        public void Execute(CommandLineOptions args)
         {
             logger.Info("Extract Build Machines in progress...");
             ICollection<BuildServiceHostDefinition> buildServiceHostList = BuildServerHelper.GetAllBuildServiceHosts(configurationServer);
@@ -59,12 +61,27 @@ namespace TfsAdminDashboardConsole.Commands
                 }
             }
 
-            string fileName = FileNameTool.GetFileName("TfsExtractMachineList", outFormat);
+            string fileName = FileNameTool.GetFileName("TfsExtractMachineList", args.OutputFormat);
 
-            using (CsvWriter csv = new CsvWriter((new StreamWriter(fileName))))
+            if (args.OutputFormat == "CSV")
             {
-                csv.WriteExcelSeparator();
-                csv.WriteRecords(records);
+                using (CsvWriter csv = new CsvWriter((new StreamWriter(fileName))))
+                {
+                    csv.WriteExcelSeparator();
+                    csv.WriteRecords(records);
+                }
+            }
+            else
+            {
+                string json = JsonConvert.SerializeObject(records);
+                File.WriteAllText(fileName, json);
+            }
+
+            if (args.UploadSFTP)
+            {
+                logger.Info("STFP Upload");
+                ISFTPService sftp = new SFTPService();
+                sftp.UploadFile(fileName);
             }
 
             logger.Info("Extract Build Machines done");

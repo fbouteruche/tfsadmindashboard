@@ -16,6 +16,11 @@
 [Environment]::SetEnvironmentVariable("LDAPPassword", (Read-Host -Prompt LDAPPassword), "User")
 [Environment]::SetEnvironmentVariable("LDAP_OU_FILTER_OUT", (Read-Host -Prompt LDAP_OU_FILTER_OUT), "User")
 
+# In case of SFTP upload of the JSON extracts
+[Environment]::SetEnvironmentVariable("TfsExtractSSH_Host", (Read-Host -Prompt TfsExtractSSH_Host), "User")
+[Environment]::SetEnvironmentVariable("TfsExtractSSH_User", (Read-Host -Prompt TfsExtractSSH_Host), "User")
+[Environment]::SetEnvironmentVariable("TfsExtractSSH_Password", (Read-Host -Prompt TfsExtractSSH_Host), "User")
+[Environment]::SetEnvironmentVariable("TfsExtractSSH_Path", (Read-Host -Prompt TfsExtractSSH_Host), "User")
 
 
 

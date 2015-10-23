@@ -13,12 +13,15 @@ namespace TfsAdminDashboardConsole.tests
     [TestFixture]
     public class TestCommands
     {
+        CommandLineOptions options = new CommandLineOptions();
+
         [TestCase]
         [Category("DevFacadeNoIC")]
         public void LaunchExportProjectCommand()
         {
             iCommand command = new ExtractProjectListCommand();
-            command.Execute("CSV");
+            options.OutputFormat = "CSV";
+            command.Execute(options);
         }
 
         [TestCase]
@@ -26,7 +29,8 @@ namespace TfsAdminDashboardConsole.tests
         public void LaunchExportProjectCommandJson()
         {
             iCommand command = new ExtractProjectListCommand();
-            command.Execute("JSON");
+            options.OutputFormat = "JSON";
+            command.Execute(options);
         }
 
         [TestCase]
@@ -34,34 +38,39 @@ namespace TfsAdminDashboardConsole.tests
         public void LaunchExportMachinesCommand()
         {
             iCommand command = new ExtractBuildMachineListCommand();
-            command.Execute("CSV");
+            options.OutputFormat = "CSV";
+            command.Execute(options);
         }
 
         [TestCase]
         [Category("DevFacadeNoIC")]
         public void LaunchExportUsersCommand()
         {
-            iCommand command = new ExtractUsersListCommand(false);
-            command.Execute("CSV");
+            iCommand command = new ExtractUsersListCommand();
+            options.OutputFormat = "CSV";
+            options.extractUOFromAD = false;
+            command.Execute(options);
         }
 
         [TestCase]
         [Category("DevFacadeNoIC")]
         public void LaunchExportUsersCommandWithOUFromAD()
         {
-            iCommand command = new ExtractUsersListCommand(true);
-            command.Execute("CSV");
+            iCommand command = new ExtractUsersListCommand();
+            options.OutputFormat = "CSV";
+            options.extractUOFromAD = true;
+            command.Execute(options);
         }
 
         [TestCase]
         [Category("DevFacadeNoIC")]
         public void TestFilterUserListCommand()
         {
-            List<User> userList = (List < User >) SerializerService.Deserialize(@"D:\UnfilteredUserListWithoutOU.dat");
+            List<User> userList = (List<User>)SerializerService.Deserialize(@"D:\UnfilteredUserListWithoutOU.dat");
 
 
             var results = userList.Where(x => x.Domain == "AD-SUBS" && !x.DN.Contains("Quarantaine") && !x.DN.Contains("TTTT")).OrderBy(x => x.Name).ToList();
-                   
+
         }
     }
 }
