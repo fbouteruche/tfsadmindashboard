@@ -111,7 +111,9 @@ namespace TFSAdminDashboard.DataAccess
                                         projectDefinition.DMOrigin = match.Groups[1].ToString();
                                     }
 
-                                    projectDefinition.Platform = "TFS2010";
+                                    projectDefinition.ProjectCode = "N/A";
+
+                                   projectDefinition.Platform = "TFS2010";
                                     projectDefinition.ExtractDate = DateTime.Now;
                                     projectList.Add(projectDefinition);
                                 }
@@ -182,6 +184,7 @@ namespace TFSAdminDashboard.DataAccess
                                 projectDefinition.Platform = "TFS2013";
 
                                 projectDefinition.DMOrigin = projectDefinition.CollectionName;
+                                projectDefinition.ProjectCode = projectDefinition.Name;
 
                                 projectDefinition.ExtractDate = DateTime.Now;
 

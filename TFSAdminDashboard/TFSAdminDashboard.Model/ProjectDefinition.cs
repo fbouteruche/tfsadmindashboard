@@ -68,5 +68,6 @@ namespace TFSAdminDashboard.DTO
         public DateTime ExtractDate { get; set; }
         public List<User> IdentityData { get; set; }
         public string DMOrigin { get; set; }
+        public string ProjectCode { get; set; }
     }
 }
