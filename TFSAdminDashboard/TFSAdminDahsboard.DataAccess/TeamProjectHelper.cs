@@ -72,8 +72,10 @@ namespace TFSAdminDashboard.DataAccess
 
                                     ProjectDefinition projectDefinition = new ProjectDefinition();
                                     projectDefinition.Name = project.Name;
+                                    projectDefinition.Id = new Guid(project.ArtifactUri.Segments[3]);
                                     projectDefinition.CollectionDescription = collection.Description;
                                     projectDefinition.Uri = project.ArtifactUri.ToString();
+                                    projectDefinition.State = "N/A"; // Todo retrieve this
                                     projectDefinition.CollectionName = collection.Name;
                                     projectDefinition.UtcCreationDate = creationDate.ToUniversalTime();
 
@@ -132,9 +134,11 @@ namespace TFSAdminDashboard.DataAccess
                                 logger.Info("       Process {2} - {0}/{1}", processed, projects.Length, p.Name);
                                 ProjectDefinition projectDefinition = new ProjectDefinition()
                                 {
+                                    Id = new Guid(new Uri(p.Uri).Segments[3]),
                                     Name = p.Name,
                                     CollectionName = collection.Name,
                                     Uri = p.Uri,
+                                    State = p.Status.ToString(),
                                     UtcCreationDate = DateTime.MinValue // TODO: How to get the creation date...
                                 };
 
