@@ -28,7 +28,7 @@ namespace TfsAdminDashboardConsole.Service
                 fileStream.Close();
             }
 
-            logger.Info("File uploaded");
+            logger.Info("File {0} uploaded", Path.GetFileName(filePath));
         }
 
         private ConnectionInfo CreateConnectionInfo(AuthentMethod authent)
