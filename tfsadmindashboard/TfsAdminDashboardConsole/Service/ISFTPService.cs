@@ -8,6 +8,6 @@ namespace TfsAdminDashboardConsole.Service
 {
     interface ISFTPService
     {
-        void UploadFile(string filePath);
+        void UploadFile(string filePath, AuthentMethod authent);
     }
 }

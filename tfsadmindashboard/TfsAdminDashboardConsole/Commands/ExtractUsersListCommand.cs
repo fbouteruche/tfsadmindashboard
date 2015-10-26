@@ -1,19 +1,16 @@
-﻿using System;
+﻿using CsvHelper;
+using MoreLinq;
+using Newtonsoft.Json;
+using NLog;
+using System;
 using System.Collections.Generic;
+using System.DirectoryServices;
 using System.IO;
 using System.Linq;
-using System.Net;
-using System.Text;
-using CsvHelper;
-using Microsoft.TeamFoundation.Client;
 using TFSAdminDashboard.DataAccess;
 using TFSAdminDashboard.DTO;
 using TfsAdminDashboardConsole.Commands.IO;
-using System.DirectoryServices;
-using NLog;
-using MoreLinq;
-using System.Xml.Serialization;
-using Newtonsoft.Json;
+using TfsAdminDashboardConsole.ExtensionsMethods;
 using TfsAdminDashboardConsole.Service;
 
 namespace TfsAdminDashboardConsole.Commands
@@ -73,7 +70,7 @@ namespace TfsAdminDashboardConsole.Commands
             {
                 logger.Info("STFP Upload");
                 ISFTPService sftp = new SFTPService();
-                sftp.UploadFile(fileName);
+                sftp.UploadFile(fileName, args.SFTPAuthentMode.ToEnum<AuthentMethod>());
             }
 
             logger.Info("Extract Users done");

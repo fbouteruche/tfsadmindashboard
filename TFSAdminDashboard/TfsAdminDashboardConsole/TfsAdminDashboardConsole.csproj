@@ -148,9 +148,11 @@
     <Compile Include="Commands\iCommand.cs" />
     <Compile Include="Commands\IO\FileNameTool.cs" />
     <Compile Include="Commands\IO\SerializerService.cs" />
+    <Compile Include="ExtensionsMethods\StringExtensions.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Commands\IO\ProjectDefinitionCsvMap.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Service\AuthentMethod.cs" />
     <Compile Include="Service\ISFTPService.cs" />
     <Compile Include="Service\SFTPService.cs" />
   </ItemGroup>
@@ -160,7 +162,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <SubType>Designer</SubType>
     </Content>
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="variable.ps1" />
   </ItemGroup>
   <ItemGroup>

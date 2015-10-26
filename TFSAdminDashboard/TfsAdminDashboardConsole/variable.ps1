@@ -18,9 +18,19 @@
 
 # In case of SFTP upload of the JSON extracts
 [Environment]::SetEnvironmentVariable("TfsExtractSSH_Host", (Read-Host -Prompt TfsExtractSSH_Host), "User")
-[Environment]::SetEnvironmentVariable("TfsExtractSSH_User", (Read-Host -Prompt TfsExtractSSH_Host), "User")
-[Environment]::SetEnvironmentVariable("TfsExtractSSH_Password", (Read-Host -Prompt TfsExtractSSH_Host), "User")
-[Environment]::SetEnvironmentVariable("TfsExtractSSH_Path", (Read-Host -Prompt TfsExtractSSH_Host), "User")
+
+# remote Path
+[Environment]::SetEnvironmentVariable("TfsExtractSSH_Path", (Read-Host -Prompt TfsExtractSSH_Path), "User")
+[Environment]::SetEnvironmentVariable("TfsExtractSSH_User", (Read-Host -Prompt TfsExtractSSH_User), "User")
+
+# Case of a certificate based SSH Authentication
+[Environment]::SetEnvironmentVariable("TfsExtractSSH_KeyPath", (Read-Host -Prompt TfsExtractSSH_KeyPath), "User")
+
+#  Case of a User / pwd SSH authentication
+[Environment]::SetEnvironmentVariable("TfsExtractSSH_Password", (Read-Host -Prompt TfsExtractSSH_Password), "User")
+
+
+
 
 
 

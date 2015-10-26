@@ -3,6 +3,7 @@ namespace TfsAdminDashboardConsole
 {
     using CommandLine;
     using CommandLine.Text;
+    using Service;
 
     /// <summary>
     /// The command line options class
@@ -15,7 +16,7 @@ namespace TfsAdminDashboardConsole
         /// <value>
         ///   <c>true</c> if [extract machines]; otherwise, <c>false</c>.
         /// </value>
-        [Option('m', "ExtractBuildMachineList", Required = false,
+        [Option("ExtractBuildMachineList", Required = false,
         HelpText = "Extract the TFS Platform Build controllers and agent list")]
         public bool extractMachines { get; set; }
 
@@ -26,7 +27,7 @@ namespace TfsAdminDashboardConsole
         /// <value>
         ///   <c>true</c> if [extract projects]; otherwise, <c>false</c>.
         /// </value>
-        [Option('p', "ExtractProjectList", Required = false,
+        [Option("ExtractProjectList", Required = false,
         HelpText = "Extract the TFS Platform Team Projects list")]
         public bool extractProjects { get; set; }
 
@@ -36,21 +37,25 @@ namespace TfsAdminDashboardConsole
         /// <value>
         ///   <c>true</c> if [extract projects]; otherwise, <c>false</c>.
         /// </value>
-        [Option('u', "ExtractUsers", Required = false,
+        [Option("ExtractUsers", Required = false,
         HelpText = "Extract the TFS Platform Users list")]
         public bool extractUsers { get; set; }
 
-        [Option('o', "ExtractOUFromAD", Required = false,
+        [Option("ExtractOUFromAD", Required = false,
         HelpText = "Extract also the OU property for each user in the Active Directory")]
         public bool extractUOFromAD { get; set; }
 
-        [Option('s', "SaveAs", Required = false,
+        [Option("SaveAs", Required = false,
         HelpText = "'CSV' or 'JSON' output, default is CSV")]
         public string OutputFormat { get; set; }
 
-        [Option('u', "UploadSFTP", Required = false,
+        [Option("UploadSFTP", Required = false,
         HelpText = "Upload result file via SFTP")]
         public bool UploadSFTP { get; set; }
+
+        [Option("SFTPAuthent", Required = false,
+       HelpText = "ByLoginPassword or ByCertificate")]
+        public string SFTPAuthentMode { get; set; }
 
         /// <summary>
         /// Gets the usage.

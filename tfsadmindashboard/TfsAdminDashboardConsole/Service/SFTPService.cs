@@ -13,9 +13,9 @@ namespace TfsAdminDashboardConsole.Service
     {
         private static Logger logger = LogManager.GetCurrentClassLogger();
 
-        public void UploadFile(string filePath)
+        public void UploadFile(string filePath, AuthentMethod authent)
         {
-            using (var sftp = new SftpClient(CreateConnectionInfo()))
+            using (var sftp = new SftpClient(CreateConnectionInfo(authent)))
             {
                 var fileStream = File.OpenRead(filePath);
                 sftp.Connect();
@@ -31,14 +31,28 @@ namespace TfsAdminDashboardConsole.Service
             logger.Info("File uploaded");
         }
 
-        private ConnectionInfo CreateConnectionInfo()
+        private ConnectionInfo CreateConnectionInfo(AuthentMethod authent)
         {
             ConnectionInfo connectionInfo;
+            AuthenticationMethod authenticationMethod = null;
 
-            AuthenticationMethod authenticationMethod =
+            if (authent == AuthentMethod.ByLoginPassword)
+            { 
+                authenticationMethod =
                    new PasswordAuthenticationMethod(
                        Environment.GetEnvironmentVariable("TfsExtractSSH_User", EnvironmentVariableTarget.User),
                        Environment.GetEnvironmentVariable("TfsExtractSSH_Password", EnvironmentVariableTarget.User));
+            }
+            else
+            {
+               
+                using (var stream = new FileStream(Environment.GetEnvironmentVariable("TfsExtractSSH_KeyPath", EnvironmentVariableTarget.User), FileMode.Open, FileAccess.Read))
+                {
+                    var privateKeyFile = new PrivateKeyFile(stream);
+                    authenticationMethod =
+                        new PrivateKeyAuthenticationMethod(Environment.GetEnvironmentVariable("TfsExtractSSH_User", EnvironmentVariableTarget.User), privateKeyFile); 
+                }
+            }
 
             connectionInfo = new ConnectionInfo(
             Environment.GetEnvironmentVariable("TfsExtractSSH_Host", EnvironmentVariableTarget.User),
