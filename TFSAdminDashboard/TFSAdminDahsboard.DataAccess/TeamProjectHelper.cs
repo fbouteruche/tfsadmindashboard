@@ -125,13 +125,13 @@ namespace TFSAdminDashboard.DataAccess
                             ProjectCollection projCollect = (ProjectCollection)tpc.GetService(typeof(ProjectCollection));
 
                             var structService = tpc.GetService<ICommonStructureService>();
-
-                            logger.Info("   {0} project to extract in collection {1}", projects.Length, collection.Name);
-                            foreach (ProjectInfo p in structService.ListAllProjects())
+                            var totalProjects = structService.ListAllProjects();
+                            logger.Info("   {0} project to extract in collection {1}", totalProjects.Length, collection.Name);
+                            foreach (ProjectInfo p in totalProjects)
                             {
                                 ++processed;
 
-                                logger.Info("       Process {2} - {0}/{1}", processed, projects.Length, p.Name);
+                                logger.Info("       Process {2} - {0}/{1}", processed, totalProjects.Length, p.Name);
                                 ProjectDefinition projectDefinition = new ProjectDefinition()
                                 {
                                     Id = new Guid(new Uri(p.Uri).Segments[3]),
