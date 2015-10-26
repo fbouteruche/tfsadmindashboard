@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using TFSAdminDashboard.DTO;
 using MoreLinq;
+using System.Text.RegularExpressions;
 
 namespace TfsAdminDashboardConsole.tests
 {
@@ -56,6 +57,26 @@ namespace TfsAdminDashboardConsole.tests
             }
 
             File.WriteAllText(@"C:\Users\Vinzz\Desktop\ProjectsActiveIn2015.csv", ans.ToString());
+        }
+
+        [Test]
+        public void extractDM()
+        {
+            Regex reg = new Regex(@"\[(.{2,4})\]");
+
+        List<string> li = new List<string>();
+            li.Add(@"[MTM] Collection de projets du centre de compétences SCM de l'UO Grand Est");
+            li.Add(@"[AD] Collection de projets d'équipe du CC PROJ de la Direction Métier AD");
+            li.Add(@"[AD]Collection migrée du serveur itl-obs104c2.aql.fr hébérgé à Rennes
+
+Collection de projets destinée au CO Portal Mobility Multimedia");
+            li.Add(@"[ISBI] Collection de projet du CC MITS");
+
+            foreach(string st in li)
+            {
+                var DM = reg.Match(st).Groups[1].ToString();
+            }
+
         }
     }
 }

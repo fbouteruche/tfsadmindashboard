@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using TFSAdminDashboard.DTO;
 
@@ -17,7 +18,7 @@ namespace TFSAdminDashboard.DataAccess
     public class TeamProjectHelper
     {
         static Logger logger = LogManager.GetCurrentClassLogger();
-
+        private static Regex DMReg = new Regex(@"\[(.{2,4})\]");
         /// <summary>
         /// Gets all projects using the ICommonStructureService.
         /// </summary>
@@ -75,7 +76,7 @@ namespace TFSAdminDashboard.DataAccess
                                     projectDefinition.Id = new Guid(project.ArtifactUri.Segments[3]);
                                     projectDefinition.CollectionDescription = collection.Description;
                                     projectDefinition.Uri = project.ArtifactUri.ToString();
-                                    projectDefinition.State = "N/A"; // Todo retrieve this
+                                    projectDefinition.State = "N/A";
                                     projectDefinition.CollectionName = collection.Name;
                                     projectDefinition.UtcCreationDate = creationDate.ToUniversalTime();
 
@@ -103,7 +104,12 @@ namespace TFSAdminDashboard.DataAccess
                                     if(withIdentities)
                                         projectDefinition.IdentityData = IdentityServiceManagementHelper.FeedIdentityData(tpc, projectDefinition.Uri).Item2;
 
-                                    projectDefinition.DMOrigin = "AD"; // TODO extract from collection description
+                                    var match = DMReg.Match(collection.Description);
+
+                                    if(match.Groups.Count > 0)
+                                    { 
+                                        projectDefinition.DMOrigin = match.Groups[1].ToString();
+                                    }
 
                                     projectDefinition.Platform = "TFS2010";
                                     projectDefinition.ExtractDate = DateTime.Now;
