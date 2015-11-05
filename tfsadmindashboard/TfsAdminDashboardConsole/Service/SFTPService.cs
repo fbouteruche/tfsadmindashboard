@@ -9,10 +9,23 @@ using System.Threading.Tasks;
 
 namespace TfsAdminDashboardConsole.Service
 {
+    /// <summary>
+    /// SSH.Net implementation of the ISFTPService
+    /// </summary>
     public class SFTPService : ISFTPService
     {
+
+        /// <summary>
+        /// The logger
+        /// </summary>
         private static Logger logger = LogManager.GetCurrentClassLogger();
 
+
+        /// <summary>
+        /// Uploads the file via SFTP.
+        /// </summary>
+        /// <param name="filePath">The file path.</param>
+        /// <param name="authent">The chosen SSH authent method</param>
         public void UploadFile(string filePath, AuthentMethod authent)
         {
             using (var sftp = new SftpClient(CreateConnectionInfo(authent)))
@@ -31,6 +44,11 @@ namespace TfsAdminDashboardConsole.Service
             logger.Info("File {0} uploaded", Path.GetFileName(filePath));
         }
 
+        /// <summary>
+        /// Creates the connection information.
+        /// </summary>
+        /// <param name="authent">The chosen SSH authent method</param>
+        /// <returns>The ConnectionInfo object</returns>
         private ConnectionInfo CreateConnectionInfo(AuthentMethod authent)
         {
             ConnectionInfo connectionInfo;
