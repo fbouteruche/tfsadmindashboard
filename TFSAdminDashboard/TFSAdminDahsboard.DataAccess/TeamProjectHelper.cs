@@ -88,8 +88,18 @@ namespace TFSAdminDashboard.DataAccess
 
                                     if (projectDefinition.BuildsDefinitionCollection.Count > 0)
                                     {
-                                        projectDefinition.LastSuccessBuild = projectDefinition.BuildsDefinitionCollection.Max(x => x.LastSuccess);
-                                        projectDefinition.LastFailedBuild = projectDefinition.BuildsDefinitionCollection.Max(x => x.LastFail);
+                                        var lastSuccess = projectDefinition.BuildsDefinitionCollection.Max(x => x.LastSuccess);
+                                        var lastfail = projectDefinition.BuildsDefinitionCollection.Max(x => x.LastFail);
+
+                                        if(lastSuccess != DateTime.MinValue)
+                                        { 
+                                            projectDefinition.LastSuccessBuild = lastSuccess;
+                                        }
+
+                                        if(lastfail != DateTime.MinValue)
+                                        { 
+                                            projectDefinition.LastFailedBuild = lastfail;
+                                        }
                                     }
 
                                     // get VCS data (only TFS 2010 TFSVC though)
@@ -160,8 +170,18 @@ namespace TFSAdminDashboard.DataAccess
 
                                 if (projectDefinition.BuildsDefinitionCollection.Count > 0)
                                 {
-                                    projectDefinition.LastSuccessBuild = projectDefinition.BuildsDefinitionCollection.Max(x => x.LastSuccess);
-                                    projectDefinition.LastFailedBuild = projectDefinition.BuildsDefinitionCollection.Max(x => x.LastFail);
+                                    var lastSuccess = projectDefinition.BuildsDefinitionCollection.Max(x => x.LastSuccess);
+                                    var lastfail = projectDefinition.BuildsDefinitionCollection.Max(x => x.LastFail);
+
+                                    if (lastSuccess != DateTime.MinValue)
+                                    {
+                                        projectDefinition.LastSuccessBuild = lastSuccess;
+                                    }
+
+                                    if (lastfail != DateTime.MinValue)
+                                    {
+                                        projectDefinition.LastFailedBuild = lastfail;
+                                    }
                                 }
 
                                 // TODO get VCS data

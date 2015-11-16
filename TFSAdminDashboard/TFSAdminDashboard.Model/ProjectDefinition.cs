@@ -62,8 +62,8 @@ namespace TFSAdminDashboard.DTO
         public List<TestPlanDefinition> TestPlanData { get; set; }
         public string CollectionDescription { get; set; }
         public DateTime LastCheckinDate { get; set; }
-        public DateTime LastSuccessBuild { get; set; }
-        public DateTime LastFailedBuild { get; set; }
+        public DateTime? LastSuccessBuild { get; set; }
+        public DateTime? LastFailedBuild { get; set; }
         public string Platform { get; set; }
         public DateTime ExtractDate { get; set; }
         public List<User> IdentityData { get; set; }
