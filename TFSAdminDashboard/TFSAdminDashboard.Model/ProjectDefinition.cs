@@ -43,17 +43,10 @@ namespace TFSAdminDashboard.DTO
             set;
         }
 
-        private DateTime utcCreationDate;
-        public DateTime UtcCreationDate
+        public DateTime? UtcCreationDate
         {
-            get
-            {
-                return utcCreationDate.ToUniversalTime();
-            }
-            set
-            {
-                utcCreationDate = value;
-            }
+            get;
+            set;
         }
 
         public List<WorkItemDefinition> WorkItemDefinitionCollection { get; set; }

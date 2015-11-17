@@ -30,8 +30,8 @@ namespace TFSAdminDashboard.DTO
 
         public int RetainedBuild { get; set; }
 
-        public DateTime LastSuccess { get; set; }
+        public DateTime? LastSuccess { get; set; }
 
-        public DateTime LastFail { get; set; }
+        public DateTime? LastFail { get; set; }
     }
 }

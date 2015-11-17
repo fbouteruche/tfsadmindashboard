@@ -33,10 +33,18 @@ namespace TFSAdminDashboard.DataAccess
                     ContinuousIntegrationType = buildDefinition.ContinuousIntegrationType.ToString(),
                     FailedOrPartialRatio = failedOrPartialCount,
                     RetainedBuild = buildCount,
-                    LastSuccess = lastSucceededBuild != null ? lastSucceededBuild.FinishTime : DateTime.MinValue,
-                    LastFail = lastFailedBuild != null ? lastFailedBuild.FinishTime : DateTime.MinValue
-
                 };
+
+                if (lastSucceededBuild != null)
+                {
+                    buildDef.LastSuccess = lastSucceededBuild.FinishTime;
+                }
+
+                if (lastFailedBuild != null)
+                {
+                    buildDef.LastFail = lastFailedBuild.FinishTime;
+                }
+
                 buildDefinitionCollection.Add(buildDef);
             }
 

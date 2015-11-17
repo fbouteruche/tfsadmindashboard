@@ -157,7 +157,7 @@ namespace TFSAdminDashboard.DataAccess
                                     CollectionName = collection.Name,
                                     Uri = p.Uri,
                                     State = p.Status.ToString(),
-                                    UtcCreationDate = DateTime.MinValue // TODO: How to get the creation date...
+                                    UtcCreationDate = null // TODO: How to get the creation date...
                                 };
 
                                 // Here get witems data, etc.

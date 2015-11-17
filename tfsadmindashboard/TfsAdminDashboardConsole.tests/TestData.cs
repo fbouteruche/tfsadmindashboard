@@ -46,8 +46,8 @@ namespace TfsAdminDashboardConsole.tests
 
             var filtered = projectList.Where(
                 x => x.BuildsDefinitionCollection.Where(
-                    y => (y.LastFail.Year == yearToConsider || y.LastSuccess.Year == yearToConsider)).Count() > 0 ||
-                    x.LastCheckinDate.Year == yearToConsider).Select(x => new { Name = x.Name, CollectionName = x.CollectionName }).ToList();
+                    y => (y.LastFail.GetValueOrDefault().Year == yearToConsider || y.LastSuccess.GetValueOrDefault().Year == yearToConsider)).Count() > 0 ||
+                    x.LastCheckinDate.GetValueOrDefault().Year == yearToConsider).Select(x => new { Name = x.Name, CollectionName = x.CollectionName }).ToList();
 
             StringBuilder ans = new StringBuilder();
             ans.AppendLine("Collection;Project");
