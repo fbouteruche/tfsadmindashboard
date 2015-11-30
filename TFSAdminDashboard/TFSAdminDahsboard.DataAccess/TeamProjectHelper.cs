@@ -140,8 +140,6 @@ namespace TFSAdminDashboard.DataAccess
                         {
                             int processed = 0;
 
-                            ProjectCollection projCollect = (ProjectCollection)tpc.GetService(typeof(ProjectCollection));
-
                             var structService = tpc.GetService<ICommonStructureService>();
                             var totalProjects = structService.ListAllProjects();
                             logger.Info("   {0} project to extract in collection {1}", totalProjects.Length, collection.Name);
