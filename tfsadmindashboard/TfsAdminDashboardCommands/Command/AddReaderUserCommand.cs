@@ -47,6 +47,7 @@ namespace TfsAdminDashboardCommands.Command
                     IdentityDescriptor userSid = null;
                     if (user != null)
                     {
+                        logger.Info("   resolved user is {0}", user.DisplayName);
                         userSid = user.Descriptor;
                     }
 
