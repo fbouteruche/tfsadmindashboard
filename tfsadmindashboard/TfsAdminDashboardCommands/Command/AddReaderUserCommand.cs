@@ -1,17 +1,12 @@
 ﻿using Microsoft.TeamFoundation.Client;
 using Microsoft.TeamFoundation.Framework.Client;
-using Microsoft.TeamFoundation.Framework.Client.Catalog.Objects;
 using Microsoft.TeamFoundation.Framework.Common;
 using Microsoft.TeamFoundation.Server;
 using NLog;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TFSAdminDashboard.DataAccess;
 using TFSAdminDashboard.DTO;
-using TfsAdminDashboardCommands.Service;
 
 namespace TfsAdminDashboardCommands.Command
 {
@@ -23,15 +18,10 @@ namespace TfsAdminDashboardCommands.Command
 
         public void Execute(CommandLineOptions args)
         {
-            string userSid = ADService.GetUserSiD(args.addTeamCollectionReader);
-
-            IdentityDescriptor tfsUserDescriptor = new IdentityDescriptor("System.Security.Principal.WindowsIdentity", userSid);
-
-
-            AddUserAsReader(args, tfsUserDescriptor);
+            AddUserAsReader(args);
         }
 
-        private void AddUserAsReader(CommandLineOptions args, IdentityDescriptor userSid)
+        private void AddUserAsReader(CommandLineOptions args)
         {
             ITeamProjectCollectionService collectionService = configurationServer.GetService<ITeamProjectCollectionService>();
 
@@ -46,28 +36,47 @@ namespace TfsAdminDashboardCommands.Command
                     var structService = tpc.GetService<ICommonStructureService>();
                     IIdentityManagementService ims = tpc.GetService<IIdentityManagementService>();
 
-                    var totalProjects = structService.ListAllProjects();
+                    // List all users in collection valid users
+                    var validUsers = ims.ReadIdentities(IdentitySearchFactor.AccountName, new[] { "Project Collection Valid Users" }, MembershipQuery.Expanded, ReadIdentityOptions.None)[0][0].Members;
+                    var users = ims.ReadIdentities(validUsers, MembershipQuery.None, ReadIdentityOptions.None).Where(x => !x.IsContainer).ToArray();
 
-                    logger.Info("   {0} project to process in collection {1}", totalProjects.Length, collection.Name);
-                    foreach (ProjectInfo p in totalProjects)
+                    // Find the user we are interested in
+                    var user = users.Where(x => x.UniqueName.ToLowerInvariant() == args.addTeamCollectionReader.ToLowerInvariant()).FirstOrDefault();
+
+                    // Get it's descriptor
+                    IdentityDescriptor userSid = null;
+                    if (user != null)
                     {
-                        logger.Info("       Process project {0}", p.Name);
+                        userSid = user.Descriptor;
+                    }
 
-                        List<ApplicationGroupDefinition> applicationGroupCollection = new List<ApplicationGroupDefinition>();
+                    if (userSid != null)
+                    {
+                        var totalProjects = structService.ListAllProjects();
 
-                        //Get the project application groups
-                        TeamFoundationIdentity[] lightApplicationGroups = ims.ListApplicationGroups(p.Uri, ReadIdentityOptions.IncludeReadFromSource);
-                        //Read the project application groups identities with an expended membership query to populate the Members properties
-                        TeamFoundationIdentity[] fullApplicationGroups = ims.ReadIdentities(lightApplicationGroups.Select(x => x.Descriptor).ToArray(), MembershipQuery.Expanded, ReadIdentityOptions.None);
-
-
-                        foreach (TeamFoundationIdentity applicationGroup in fullApplicationGroups)
+                        logger.Info("   {0} project to process in collection {1}", totalProjects.Length, collection.Name);
+                        foreach (ProjectInfo p in totalProjects)
                         {
-                            if (applicationGroup.DisplayName.Contains("Readers"))
-                            {
-                                logger.Info("           Add user to Group {0}", applicationGroup.DisplayName);
+                            logger.Info("       Process project {0}", p.Name);
 
-                                ims.AddMemberToApplicationGroup(applicationGroup.Descriptor, userSid);
+                            List<ApplicationGroupDefinition> applicationGroupCollection = new List<ApplicationGroupDefinition>();
+
+                            //Get the project application groups
+                            TeamFoundationIdentity[] lightApplicationGroups = ims.ListApplicationGroups(p.Uri, ReadIdentityOptions.IncludeReadFromSource);
+                            //Read the project application groups identities with an expended membership query to populate the Members properties
+                            TeamFoundationIdentity[] fullApplicationGroups = ims.ReadIdentities(lightApplicationGroups.Select(x => x.Descriptor).ToArray(), MembershipQuery.Expanded, ReadIdentityOptions.None);
+
+
+                            foreach (TeamFoundationIdentity applicationGroup in fullApplicationGroups)
+                            {
+                                if (applicationGroup.DisplayName.Contains("Readers"))
+                                {
+                                    if(!ims.IsMember(applicationGroup.Descriptor, userSid))
+                                    {
+                                        logger.Info("           Add user to Group {0}", applicationGroup.DisplayName);
+                                        ims.AddMemberToApplicationGroup(applicationGroup.Descriptor, userSid);
+                                    }
+                                }
                             }
                         }
                     }
