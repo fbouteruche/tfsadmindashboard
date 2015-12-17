@@ -52,9 +52,10 @@ namespace TFSAdminDashboard.DataAccess
             List<ApplicationGroupDefinition> applicationGroupCollection = new List<ApplicationGroupDefinition>();
             List<User> userCollection = new List<User>();
 
-            //Get the project application groups
+            //Get the Project Collection application groups
             TeamFoundationIdentity[] lightApplicationGroups = ims.ListApplicationGroups(projectUri, ReadIdentityOptions.IncludeReadFromSource);
-            //Read the project application groups identities with an expended membership query to populate the Members properties
+
+            //Read the Project Collection application groups identities with an expanded membership query to populate the Members properties
             TeamFoundationIdentity[] fullApplicationGroups = ims.ReadIdentities(lightApplicationGroups.Select(x => x.Descriptor).ToArray(), MembershipQuery.Expanded, ReadIdentityOptions.None);
 
 
