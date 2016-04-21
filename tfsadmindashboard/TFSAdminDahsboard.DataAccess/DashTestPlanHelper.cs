@@ -27,13 +27,23 @@ namespace TFSAdminDashboard.DataAccess
                     AreaPath = testPlan.AreaPath,
                     IterationPath = testPlan.Iteration,
                     Description = testPlan.Description,
-                    Owner = testPlan.Owner.DisplayName,
+
                     State = testPlan.Status,
                     LastUpdate = testPlan.LastUpdated,
                     StartDate = testPlan.StartDate,
                     EndDate = testPlan.EndDate,
                     Revision = testPlan.Revision
                 };
+
+                if (testPlan.Owner != null)
+                {
+                    testPlanDefinition.Owner = testPlan.Owner.DisplayName;
+                }
+                else
+                {
+                    testPlanDefinition.Owner = "None";
+                }
+
                 ans.Add(testPlanDefinition);
             }
 
