@@ -183,7 +183,7 @@ namespace TFSAdminDashboard.DataAccess
                                 }
 
                                 // TODO get VCS data
-                                //projectDefinition.VersionControlData = null;
+                                projectDefinition.VersionControlData = DashGitHelper.FeedGitData(tpc, projectDefinition.Name);
                                 //projectDefinition.LastCheckinDate = projectDefinition.VersionControlData.Max(x => x.InnerLastCheckIn);
 
                                 // get test plan Data
