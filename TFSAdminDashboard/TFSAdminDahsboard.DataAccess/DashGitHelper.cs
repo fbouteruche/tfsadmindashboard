@@ -22,14 +22,25 @@ namespace TFSAdminDashboard.DataAccess
                     DisplayName = repo.name
                 };
 
-                var lastcommit = DataService.GitCommits(collectionName, projectName, repo.name).OrderByDescending(x => x.author.date).First();
+                var commits = DataService.GitCommits(collectionName, projectName, repo.name);
+                if(commits.Count > 0)
+                { 
+                    var lastcommit = commits.OrderByDescending(x => x.author.date).First();
 
-                v.InnerChangeSetId = lastcommit.commitId;
-                v.InnerLastCheckIn = lastcommit.author.date;
+                    v.InnerChangeSetId = lastcommit.commitId;
+                    v.InnerLastCheckIn = lastcommit.author.date;
 
-                v.ItemChangeSetId = v.InnerChangeSetId;
-                v.ItemLastCheckIn = v.InnerLastCheckIn;
+                    v.ItemChangeSetId = v.InnerChangeSetId;
+                    v.ItemLastCheckIn = v.InnerLastCheckIn;
+                }
+                else
+                {
+                    v.InnerChangeSetId = "Void repo";
+                    v.InnerLastCheckIn = DateTime.MinValue;
 
+                    v.ItemChangeSetId = v.InnerChangeSetId;
+                    v.ItemLastCheckIn = v.InnerLastCheckIn;
+                }
                 versionControlItemCollection.Add(v);
             }
            
