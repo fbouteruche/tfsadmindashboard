@@ -14,7 +14,7 @@ namespace TFSAdminDashboard.DTO
             set;
         }
 
-        public int ItemChangeSetId
+        public string ItemChangeSetId
         {
             get;
             set;
@@ -26,7 +26,7 @@ namespace TFSAdminDashboard.DTO
             set;
         }
 
-        public int InnerChangeSetId
+        public string InnerChangeSetId
         {
             get;
             set;
