@@ -9,6 +9,8 @@ I created this branch to toy with the TFS API so as to get infos about git commi
 I ended up creating my own TFS REST API client, covering so far Git and Builds.
 
 
+IMPORTANT: Now depends on the REST API, so not anymore compatible with TFS 2010.
+
 ## Authors and Contributors
 
 This project has been originally initiated by François Bouteruche (@fbouteruche) with the invaluable support of Vincent Tollu (@Vinzz).
