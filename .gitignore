@@ -158,3 +158,4 @@ packages
 */CustomNugetPackageSources/*
 tfsadmindashboard/TfsAdminDashboardConsole/Properties/VersionAssemblyInfo.cs
 tfsadmindashboard/.vs/config/applicationhost.config
+*.GhostDoc.xml
