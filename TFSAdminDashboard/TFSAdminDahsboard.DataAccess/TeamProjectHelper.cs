@@ -20,12 +20,10 @@ namespace TFSAdminDashboard.DataAccess
         static Logger logger = LogManager.GetCurrentClassLogger();
         private static Regex DMReg = new Regex(@"\[(.{2,4})\]");
         /// <summary>
-        /// Gets all projects using the ICommonStructureService.
+        /// Gets all projects using the REST API
         /// </summary>
-        /// <param name="configurationServer">The configuration server.</param>
-        /// <param name="withIdentities">if set to <c>true</c> [with identities].</param>
         /// <returns>the collection of projects definitions</returns>
-        public static ICollection<ProjectDefinition> GetAllProjects(TfsConfigurationServer configurationServer, bool withIdentities)
+        public static ICollection<ProjectDefinition> GetAllProjects()
         {
             List<ProjectDefinition> projectList = new List<ProjectDefinition>();
             ITeamProjectCollectionService collectionService = configurationServer.GetService<ITeamProjectCollectionService>();
