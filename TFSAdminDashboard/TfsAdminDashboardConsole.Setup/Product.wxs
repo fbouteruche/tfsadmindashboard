@@ -98,13 +98,16 @@
         <File Id="TFSAdminDashboard.DataAccess.dll"  Source="..\TfsAdminDashboardConsole\bin\$(var.Configuration)\TFSAdminDashboard.DataAccess.dll"/>
         <File Id="TFSAdminDashboard.DTO.dll"  Source="..\TfsAdminDashboardConsole\bin\$(var.Configuration)\TFSAdminDashboard.DTO.dll"/>
         <File Id="TFSDataService.dll"  Source="..\TfsAdminDashboardConsole\bin\$(var.Configuration)\TFSDataService.dll"/>
-        <File Id="NLog.config"  Source="..\TfsAdminDashboardConsole\bin\$(var.Configuration)\NLog.config"/>
         <File Id="TfsAdminDashboardConsole.exe.config"  Source="..\TfsAdminDashboardConsole\bin\$(var.Configuration)\TfsAdminDashboardConsole.exe.config"/>
         <File Id="CsvHelper.pdb"  Source="..\TfsAdminDashboardConsole\bin\$(var.Configuration)\CsvHelper.pdb"/>
         <File Id="TFSAdminDashboard.DataAccess.pdb"  Source="..\TfsAdminDashboardConsole\bin\$(var.Configuration)\TFSAdminDashboard.DataAccess.pdb"/>
         <File Id="TFSAdminDashboard.DTO.pdb"  Source="..\TfsAdminDashboardConsole\bin\$(var.Configuration)\TFSAdminDashboard.DTO.pdb"/>
         <File Id="TfsAdminDashboardConsole.pdb"  Source="..\TfsAdminDashboardConsole\bin\$(var.Configuration)\TfsAdminDashboardConsole.pdb"/>
       </Component>
+      <Component Id="NlogConfig" Guid="*" Permanent="yes">
+        <File Id="NLog.config"  Source="..\TfsAdminDashboardConsole\bin\$(var.Configuration)\NLog.config"/>
+      </Component>
+      
 		</ComponentGroup>
 	</Fragment>
 </Wix>
