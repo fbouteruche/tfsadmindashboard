@@ -6,44 +6,39 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TFSAdminDashboard.DTO;
+using TFSDataService;
 
 namespace TFSAdminDashboard.DataAccess
 {
     public class DashBuildHelper
     {
-        public static List<BuildDefinition> FeedBuildData(TfsTeamProjectCollection tpc, string projectName)
+        public static List<BuildDefinition> FeedBuildData(string collectionName, string projectName)
         {
             List<BuildDefinition> buildDefinitionCollection = new List<BuildDefinition>();
 
-            IBuildServer bs = tpc.GetService<IBuildServer>();
-            IBuildDefinition[] buildDefinitions = bs.QueryBuildDefinitions(projectName, QueryOptions.All);
-
-            foreach (IBuildDefinition buildDefinition in buildDefinitions)
+            foreach (TFSDataService.JsonBusinessObjects.BuildDefinition def in DataService.BuildDefinitions(collectionName, projectName))
             {
-                IBuildDetail[] buildDetails = bs.QueryBuilds(buildDefinition);
-                int failedOrPartialCount = buildDetails.Count(x => x.Status == BuildStatus.Failed || x.Status == BuildStatus.PartiallySucceeded);
-                IBuildDetail lastFailedBuild = buildDetails.Where(x => x.Status == BuildStatus.Failed).OrderBy(x => x.FinishTime).LastOrDefault();
-                IBuildDetail lastSucceededBuild = buildDetails.Where(x => x.Status == BuildStatus.Succeeded).OrderBy(x => x.FinishTime).LastOrDefault();
-                int buildCount = buildDetails.Count();
-
                 BuildDefinition buildDef = new BuildDefinition()
                 {
-                    Name = buildDefinition.Name,
-                    Enabled = buildDefinition.QueueStatus == DefinitionQueueStatus.Enabled,
-                    ContinuousIntegrationType = buildDefinition.ContinuousIntegrationType.ToString(),
-                    FailedOrPartialRatio = failedOrPartialCount,
-                    RetainedBuild = buildCount,
+                    Name = def.name,
+                    type = def.type
                 };
 
-                if (lastSucceededBuild != null)
-                {
-                    buildDef.LastSuccess = lastSucceededBuild.FinishTime;
-                }
+                var builds = DataService.Builds(collectionName, projectName).Where(x => x.definition.name == def.name).OrderByDescending(x => x.finishTime);
 
-                if (lastFailedBuild != null)
-                {
-                    buildDef.LastFail = lastFailedBuild.FinishTime;
-                }
+                var success = builds.FirstOrDefault(x => x.result == "succeeded");
+                if (success != null)
+                    buildDef.LastSuccess = success.finishTime;
+                else
+                    buildDef.LastSuccess = DateTime.MinValue;
+
+                var fail = builds.FirstOrDefault(x => x.result == "failed");
+                if (fail != null)
+                    buildDef.LastFail = fail.finishTime;
+                else
+                    buildDef.LastFail = DateTime.MinValue;
+
+                buildDef.Health = builds.Take(5).Count(x => x.result == "succeeded") * 20;
 
                 buildDefinitionCollection.Add(buildDef);
             }

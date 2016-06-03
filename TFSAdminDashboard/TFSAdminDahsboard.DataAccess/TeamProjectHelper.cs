@@ -84,7 +84,7 @@ namespace TFSAdminDashboard.DataAccess
                                     projectDefinition.WorkItemDefinitionCollection = DashWorkItemHelper.FeedWorkItemData(tpc, projectDefinition.Name);
 
                                     // get build data
-                                    projectDefinition.BuildsDefinitionCollection = DashBuildHelper.FeedBuildData(tpc, projectDefinition.Name);
+                                    projectDefinition.BuildsDefinitionCollection = DashBuildHelper.FeedBuildData(collection.Name, projectDefinition.Name);
 
                                     if (projectDefinition.BuildsDefinitionCollection.Count > 0)
                                     {
@@ -100,6 +100,8 @@ namespace TFSAdminDashboard.DataAccess
                                         { 
                                             projectDefinition.LastFailedBuild = lastfail;
                                         }
+
+                                        projectDefinition.BuildHealth = projectDefinition.BuildsDefinitionCollection.Average(x => x.Health);
                                     }
 
                                     // get VCS data (only TFS 2010 TFSVC though)
@@ -162,7 +164,7 @@ namespace TFSAdminDashboard.DataAccess
                                 projectDefinition.WorkItemDefinitionCollection = DashWorkItemHelper.FeedWorkItemData(tpc, projectDefinition.Name);
 
                                 // get build data
-                                projectDefinition.BuildsDefinitionCollection = DashBuildHelper.FeedBuildData(tpc, projectDefinition.Name);
+                                projectDefinition.BuildsDefinitionCollection = DashBuildHelper.FeedBuildData(collection.Name, projectDefinition.Name);
 
                                 if (projectDefinition.BuildsDefinitionCollection.Count > 0)
                                 {

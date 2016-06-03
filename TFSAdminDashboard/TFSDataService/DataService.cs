@@ -78,20 +78,25 @@ namespace TFSDataService
 
             if(string.IsNullOrEmpty(repoName))
             {
-                gitR = gitRepos.First(x => x.name == projectName);
+                gitR = gitRepos.FirstOrDefault(x => x.name == projectName);
             }
             else
             {
                 gitR = gitRepos.First(x => x.name == repoName);
             }
 
-            string gitCommitsUrl = string.Format("{0}/{1}/_apis/git/repositories/{2}/commits?api-version=1.0", tfsServer, collectionName, gitR.id);
+            if (gitR != null)
+            {
+                string gitCommitsUrl = string.Format("{0}/{1}/_apis/git/repositories/{2}/commits?api-version=1.0", tfsServer, collectionName, gitR.id);
 
-            string json = JsonRequest.GetRestResponse(gitCommitsUrl);
+                string json = JsonRequest.GetRestResponse(gitCommitsUrl);
 
-            GitCommitRootobject o = JsonConvert.DeserializeObject<GitCommitRootobject>(json);
+                GitCommitRootobject o = JsonConvert.DeserializeObject<GitCommitRootobject>(json);
 
-            return o.value.ToList();
+                return o.value.ToList();
+            }
+            else
+                return new List<GitCommit>();
         }
 
         public static List<GitBranch> GitBranches(string collectionName, string projectName, string repoName)
