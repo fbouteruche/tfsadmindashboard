@@ -42,7 +42,7 @@ namespace TFSAdminDashboard.DataAccess
                     Name = buildDefinition.Name,
                     Enabled = buildDefinition.Enabled,
                     ContinuousIntegrationType = buildDefinition.ContinuousIntegrationType.ToString(),
-                    FailedOrPartialRatio = buildCount != 0 ? failedOrPartialCount / buildCount : 0,
+                    Health = buildCount != 0 ? failedOrPartialCount / buildCount : 0,
                     RetainedBuild = buildCount,
                     LastSuccess = lastSucceededBuild != null ? lastSucceededBuild.FinishTime : DateTime.MinValue,
                     LastFail = lastFailedBuild != null ? lastFailedBuild.FinishTime : DateTime.MinValue

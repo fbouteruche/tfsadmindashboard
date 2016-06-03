@@ -39,19 +39,10 @@
                 Name
             </th>
             <th>
-                Enabled
+                Type
             </th>
             <th>
-                Continuous Integration Type
-            </th>
-            <th>
-                Retained Build Count
-            </th>
-            <th>
-                Failed Ratio
-            </th>
-            <th>
-                %
+                Build health %
             </th>
             <th>
                 Last Success Date
@@ -67,17 +58,10 @@
                     @bd.Name
                 </td>
                 <td>
-                    @bd.Enabled
+                    @bd.type
                 </td>
                 <td>
-                    @bd.ContinuousIntegrationType
-                </td>
-                <td>
-                    @bd.RetainedBuild
-                </td>
-                <td class="gauge" id="@bd.Name" value="@bd.FailedOrPartialRatio"></td>
-                <td>
-                    @bd.FailedOrPartialRatio
+                    @bd.Health
                 </td>
                 <td>
                     @bd.LastSuccess

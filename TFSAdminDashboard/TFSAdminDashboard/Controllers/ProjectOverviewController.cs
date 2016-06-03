@@ -111,26 +111,6 @@ namespace TFSAdminDashboard.Controllers
             return this.PartialView(orderedProjects);
         }
 
-        
-
-        /// <summary>
-        /// Feed project properties
-        /// </summary>
-        /// <remarks>keep in the source code for futur use</remarks>
-        /// <param name="tpc"></param>
-        /// <param name="teamProjectNodes"></param>
-        private static void FeedProjectPropertiesData(TfsTeamProjectCollection tpc, string projectUri)
-        {
-            ICommonStructureService css = tpc.GetService<ICommonStructureService3>();
-            string projectName2;
-            int templateId;
-            string state;
-            ProjectProperty[] properties;
-            css.GetProjectProperties(projectUri, out projectName2, out state, out templateId, out properties);
-            ProjectInfo projectInfo = css.GetProject(projectUri);
-            NodeInfo[] nodeInfo = css.ListStructures(projectUri);
-        }
-
         private static List<TestPlanDefinition> FeedTestManagementData(TfsTeamProjectCollection tpc, string projectName)
         {
             return DashTestPlanHelper.FeedTestPlanData(tpc, projectName);
@@ -138,12 +118,12 @@ namespace TFSAdminDashboard.Controllers
 
         private static List<BuildDefinition> FeedBuildData(TfsTeamProjectCollection tpc, string projectName)
         {
-            return DashBuildHelper.FeedBuildData(tpc, projectName);
+            return DashBuildHelper.FeedBuildData(tpc.DisplayName.Split('\\')[1], projectName);
         }
 
         private static List<VersionControlItem> FeedVersionControlData(TfsTeamProjectCollection tpc, string projectName)
         {
-            return DashVersionControlHelper.FeedVersionControlData(tpc, projectName);
+            return DashGitHelper.FeedGitData(tpc.DisplayName.Split('\\')[1], projectName);
         }
 
         public ActionResult WorkItemOverview(string id, string projectid)

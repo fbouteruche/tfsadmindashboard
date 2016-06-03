@@ -13,16 +13,10 @@
                 Name
             </th>
             <th>
-                Enabled
+                Type
             </th>
             <th>
-                Continuous Integration Type
-            </th>
-            <th>
-                Retained Build Count
-            </th>
-            <th>
-                Failed or Partial Ratio
+                Build Health
             </th>
             <th>
                 Last Success Date
@@ -38,16 +32,10 @@
                     @bd.Name
                 </td>
                 <td>
-                    @bd.Enabled
+                    @bd.type
                 </td>
                 <td>
-                    @bd.ContinuousIntegrationType
-                </td>
-                <td>
-                    @bd.RetainedBuild
-                </td>
-                <td>
-                    @bd.FailedOrPartialRatio
+                    @bd.Health
                 </td>
                 <td>
                     @bd.LastSuccess

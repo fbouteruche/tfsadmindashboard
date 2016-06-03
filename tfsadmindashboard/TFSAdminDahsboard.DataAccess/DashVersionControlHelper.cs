@@ -47,9 +47,9 @@ namespace TFSAdminDashboard.DataAccess
                 VersionControlItem vci = new VersionControlItem()
                 {
                     DisplayName = item.ServerItem,
-                    ItemChangeSetId = itemChangeSetId,
+                    ItemChangeSetId = itemChangeSetId.ToString(),
                     ItemLastCheckIn = item.CheckinDate,
-                    InnerChangeSetId = lastInnerChangeSetId,
+                    InnerChangeSetId = lastInnerChangeSetId.ToString(),
                     InnerLastCheckIn = lastInnerCheckInDate
                 };
                 versionControlItemCollection.Add(vci);

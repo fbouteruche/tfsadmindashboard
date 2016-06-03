@@ -84,7 +84,7 @@ namespace TFSAdminDashboard.DataAccess
                                     projectDefinition.WorkItemDefinitionCollection = DashWorkItemHelper.FeedWorkItemData(tpc, projectDefinition.Name);
 
                                     // get build data
-                                    projectDefinition.BuildsDefinitionCollection = DashBuildHelper.FeedBuildData(tpc, projectDefinition.Name);
+                                    projectDefinition.BuildsDefinitionCollection = DashBuildHelper.FeedBuildData(collection.Name, projectDefinition.Name);
 
                                     if (projectDefinition.BuildsDefinitionCollection.Count > 0)
                                     {
@@ -155,16 +155,14 @@ namespace TFSAdminDashboard.DataAccess
                                     CollectionName = collection.Name,
                                     Uri = p.Uri,
                                     State = p.Status.ToString(),
-                                    UtcCreationDate = null // TODO: How to get the creation date...
+                                    UtcCreationDate = DashGitHelper.GetCreationDate(collection.Name, p.Name)
                                 };
-
-                                // Here get witems data, etc.
 
                                 // get Workitems data
                                 projectDefinition.WorkItemDefinitionCollection = DashWorkItemHelper.FeedWorkItemData(tpc, projectDefinition.Name);
 
                                 // get build data
-                                projectDefinition.BuildsDefinitionCollection = DashBuildHelper.FeedBuildData(tpc, projectDefinition.Name);
+                                projectDefinition.BuildsDefinitionCollection = DashBuildHelper.FeedBuildData(collection.Name, projectDefinition.Name);
 
                                 if (projectDefinition.BuildsDefinitionCollection.Count > 0)
                                 {
@@ -182,9 +180,9 @@ namespace TFSAdminDashboard.DataAccess
                                     }
                                 }
 
-                                // TODO get VCS data
-                                //projectDefinition.VersionControlData = null;
-                                //projectDefinition.LastCheckinDate = projectDefinition.VersionControlData.Max(x => x.InnerLastCheckIn);
+                                // get VCS data
+                                projectDefinition.VersionControlData = DashGitHelper.FeedGitData(collection.Name, projectDefinition.Name);
+                                projectDefinition.LastCheckinDate = projectDefinition.VersionControlData.Max(x => x.InnerLastCheckIn);
 
                                 // get test plan Data
                                 projectDefinition.TestPlanData = DashTestPlanHelper.FeedTestPlanData(tpc, projectDefinition.Name);
