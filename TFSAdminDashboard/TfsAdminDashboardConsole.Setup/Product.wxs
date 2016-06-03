@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?define VERSION=!(bind.FileVersion.TfsAdminDashboardConsole.exe)?>
+
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+	<Product 
+    Id="*" 
+    Name="TfsAdminDashboardConsole.Setup" 
+    Language="1033" 
+    Version="$(var.VERSION)" 
+    Manufacturer="Vinzz" 
+    UpgradeCode="ee499bf3-5dab-43c1-af1b-18a0e1b9e68a">
+    
+		<Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
+
+		<MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
+		<MediaTemplate />
+
+		<Feature Id="ProductFeature" Title="TfsAdminDashboardConsole.Setup" Level="1">
+			<ComponentGroupRef Id="ProductComponents" />
+		</Feature>
+	</Product>
+
+	<Fragment>
+		<Directory Id="TARGETDIR" Name="SourceDir">
+			<Directory Id="ProgramFilesFolder">
+				<Directory Id="INSTALLFOLDER" Name="TfsAdminDashboardConsole.Setup" />
+			</Directory>
+		</Directory>
+	</Fragment>
+
+	<Fragment>
+		<ComponentGroup Id="ProductComponents" Directory="INSTALLFOLDER">
+      <Component Id="ProductComponent">
+        <File Id="TfsAdminDashboardConsole.exe"  Source="..\TfsAdminDashboardConsole\bin\$(var.Configuration)\TfsAdminDashboardConsole.exe"/>
+      </Component>
+		</ComponentGroup>
+	</Fragment>
+</Wix>

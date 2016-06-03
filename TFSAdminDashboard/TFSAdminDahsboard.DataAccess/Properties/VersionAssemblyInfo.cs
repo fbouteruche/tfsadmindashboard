@@ -1,5 +1,5 @@
 // This is a generated file.  Do not commit it to version control and do not modify it.
 using System.Reflection;
-[assembly: AssemblyVersion("1.0.42.0")]
-[assembly: AssemblyFileVersion("1.0.42.0")]
-[assembly: AssemblyInformationalVersion("1.0.42.0")]
+[assembly: AssemblyVersion("1.0.45.0")]
+[assembly: AssemblyFileVersion("1.0.45.0")]
+[assembly: AssemblyInformationalVersion("1.0.45.0")]
