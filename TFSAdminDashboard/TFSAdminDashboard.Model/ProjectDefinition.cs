@@ -66,7 +66,14 @@ namespace TFSAdminDashboard.DTO
         {
             get
             {
-                return BuildsDefinitionCollection.Average(x => x.Health);
+                if (BuildsDefinitionCollection.Count > 0)
+                {
+                    return BuildsDefinitionCollection.Average(x => x.Health);
+                }
+                else
+                {
+                    return 0;
+                }
             }
         }
     }
