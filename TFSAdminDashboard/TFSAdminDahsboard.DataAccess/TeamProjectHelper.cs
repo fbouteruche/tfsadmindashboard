@@ -100,8 +100,6 @@ namespace TFSAdminDashboard.DataAccess
                                         { 
                                             projectDefinition.LastFailedBuild = lastfail;
                                         }
-
-                                        projectDefinition.BuildHealth = projectDefinition.BuildsDefinitionCollection.Average(x => x.Health);
                                     }
 
                                     // get VCS data (only TFS 2010 TFSVC though)

@@ -62,6 +62,12 @@ namespace TFSAdminDashboard.DTO
         public List<User> IdentityData { get; set; }
         public string DMOrigin { get; set; }
         public string ProjectCode { get; set; }
-        public double BuildHealth { get; set; }
+        public double BuildHealth
+        {
+            get
+            {
+                return BuildsDefinitionCollection.Average(x => x.Health);
+            }
+        }
     }
 }
