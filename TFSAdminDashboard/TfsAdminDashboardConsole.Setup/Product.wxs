@@ -13,10 +13,19 @@
     
 		<Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
 
-		<MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
-		<MediaTemplate />
+    <Upgrade Id="ee499bf3-5dab-43c1-af1b-18a0e1b9e68a">
+      <UpgradeVersion OnlyDetect="yes" Minimum="0.1.0.0" Property="NEWERVERSIONDETECTED" IncludeMinimum="no" />
+      <UpgradeVersion OnlyDetect="no" Maximum="9.9.9.9" Property="OLDERVERSIONBEINGUPGRADED" IncludeMaximum="no" />
+    </Upgrade>
 
-		<Feature Id="ProductFeature" Title="TfsAdminDashboardConsole.Setup" Level="1">
+    <InstallExecuteSequence>
+      <RemoveExistingProducts After="InstallInitialize" />
+    </InstallExecuteSequence>
+
+    <!-- Embed the cab in the msi-->
+    <Media Id="1" Cabinet="Cab1.cab" EmbedCab="yes" />
+
+    <Feature Id="ProductFeature" Title="TfsAdminDashboardConsole.Setup" Level="1">
 			<ComponentGroupRef Id="ProductComponents" />
 		</Feature>
 	</Product>
