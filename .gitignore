@@ -159,3 +159,7 @@ packages
 tfsadmindashboard/TfsAdminDashboardConsole/Properties/VersionAssemblyInfo.cs
 tfsadmindashboard/.vs/config/applicationhost.config
 *.GhostDoc.xml
+/TFSAdminDashboard/TFSAdminDahsboard.DataAccess/Properties/VersionAssemblyInfo.cs
+/TFSAdminDashboard/TFSAdminDashboard.Model/Properties/VersionAssemblyInfo.cs
+/TFSAdminDashboard/TFSDataService/Properties/VersionAssemblyInfo.cs
+/TFSAdminDashboard/TfsAdminDashboardCommands/Properties/VersionAssemblyInfo.cs
