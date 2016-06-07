@@ -7,7 +7,7 @@ using TFSDataService.Tool;
 
 namespace TFSDataService
 {
-    public class DataService
+    public static class DataService
     {
         private static string tfsServer = Environment.GetEnvironmentVariable("TfsUrl", EnvironmentVariableTarget.User);
 
