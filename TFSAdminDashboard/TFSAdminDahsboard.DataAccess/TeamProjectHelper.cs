@@ -23,17 +23,17 @@ namespace TFSAdminDashboard.DataAccess
 
             int processedColl = 0;
 
-            List<TeamProjectCollection> collections = new List<TeamProjectCollection>();
+            var collections = DataService.ProjectCollections().Where(x => x.state == "Started");
 
-            foreach (TeamProjectCollection collection in DataService.ProjectCollections().Where(x => x.state == "started"))
+            foreach (TeamProjectCollection currCollection in collections)
             {
                 ++processedColl;
-                logger.Info("OoO Collection {2} - {0}/{1}", processedColl, collections.Count, collection.name);
+                logger.Info("OoO Collection {0} - {1}/{2}", currCollection.name, processedColl, collections.Count());
 
-                var collProjects = DataService.TeamProjects(collection.name);
+                var collProjects = DataService.TeamProjects(currCollection.name);
                 int processed = 0;
 
-                logger.Info("   {0} project to extract in collection {1}", collProjects.Count, collection.name);
+                logger.Info("   {0} project to extract in collection {1}", collProjects.Count, currCollection.name);
                 foreach (TeamProject project in collProjects)
                 {
                     ++processed;
@@ -43,17 +43,17 @@ namespace TFSAdminDashboard.DataAccess
                     // General data
                     projectDefinition.Name = project.name;
                     projectDefinition.Id = project.id;
-                    projectDefinition.CollectionDescription = collection.description;
+                    projectDefinition.CollectionDescription = currCollection.description;
                     projectDefinition.Uri = project.url;
                     projectDefinition.State = project.state;
-                    projectDefinition.CollectionName = collection.name;
-                    projectDefinition.UtcCreationDate = DataService.GitFirstDate(collection.name, project.name);
+                    projectDefinition.CollectionName = currCollection.name;
+                    projectDefinition.UtcCreationDate = DataService.GitFirstDate(currCollection.name, project.name);
 
                     // get Workitems data
-                    projectDefinition.WorkItemDefinitionCollection = DashWorkItemHelper.FeedWorkItemData(collection.name, project.name);
+                    projectDefinition.WorkItemDefinitionCollection = DashWorkItemHelper.FeedWorkItemData(currCollection.name, project.name);
 
                     // get build data
-                    projectDefinition.BuildsDefinitionCollection = DashBuildHelper.FeedBuildData(collection.name, project.name);
+                    projectDefinition.BuildsDefinitionCollection = DashBuildHelper.FeedBuildData(currCollection.name, project.name);
 
                     if (projectDefinition.BuildsDefinitionCollection.Count > 0)
                     {
@@ -72,15 +72,15 @@ namespace TFSAdminDashboard.DataAccess
                     }
 
                     // get VCS data
-                    projectDefinition.VersionControlData = DashGitHelper.FeedGitData(collection.name, project.name);
+                    projectDefinition.VersionControlData = DashGitHelper.FeedGitData(currCollection.name, project.name);
                     projectDefinition.LastCheckinDate = projectDefinition.VersionControlData.Max(x => x.InnerLastCheckIn);
 
                     // get test plan Data
-                    projectDefinition.TestPlanData = DashTestPlanHelper.FeedTestPlanData(collection.name, project.name);
+                    projectDefinition.TestPlanData = DashTestPlanHelper.FeedTestPlanData(currCollection.name, project.name);
 
                     projectDefinition.Platform = "TFS2013";
 
-                    projectDefinition.DMOrigin = collection.name;
+                    projectDefinition.DMOrigin = currCollection.name;
                     projectDefinition.ProjectCode = project.name;
 
                     projectDefinition.ExtractDate = DateTime.Now;

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TFSAdminDashboard.DTO;
+using TFSDataService;
 
 namespace TFSAdminDashboard.DataAccess
 {
@@ -13,37 +14,31 @@ namespace TFSAdminDashboard.DataAccess
         {
             List<TestPlanDefinition> ans = new List<TestPlanDefinition>();
 
-            //ITestManagementService tms = tpc.GetService<ITestManagementService>();
-            //ITestManagementTeamProject tmtp = tms.GetTeamProject(projectName);
-            //ITestPlanHelper testPlanHelper = tmtp.TestPlans;
-            //ITestPlanCollection testPlanCollection = testPlanHelper.Query("Select * From TestPlan");
-            //foreach (ITestPlan2 testPlan in testPlanCollection)
-            //{
-            //    TestPlanDefinition testPlanDefinition = new TestPlanDefinition()
-            //    {
-            //        Name = testPlan.Name,
-            //        AreaPath = testPlan.AreaPath,
-            //        IterationPath = testPlan.Iteration,
-            //        Description = testPlan.Description,
+            foreach(var testPlan in DataService.TestPlans(collectionName, projectName))
+            {
+                TestPlanDefinition testPlanDefinition = new TestPlanDefinition()
+                {
+                    Name = testPlan.name,
+                    AreaPath = testPlan.area.name,
+                    IterationPath = testPlan.iteration,
 
-            //        State = testPlan.Status,
-            //        LastUpdate = testPlan.LastUpdated,
-            //        StartDate = testPlan.StartDate,
-            //        EndDate = testPlan.EndDate,
-            //        Revision = testPlan.Revision
-            //    };
+                    State = testPlan.state,
+                    LastUpdate = testPlan.rootSuiteObject.lastUpdatedDate,
+                    
+                    Revision = testPlan.revision
+                };
 
-            //    if (testPlan.Owner != null)
-            //    {
-            //        testPlanDefinition.Owner = testPlan.Owner.DisplayName;
-            //    }
-            //    else
-            //    {
-            //        testPlanDefinition.Owner = "None";
-            //    }
+                if (testPlan.owner != null)
+                {
+                    testPlanDefinition.Owner = testPlan.owner.ToString();
+                }
+                else
+                {
+                    testPlanDefinition.Owner = "None";
+                }
 
-            //    ans.Add(testPlanDefinition);
-            //}
+                ans.Add(testPlanDefinition);
+            }
 
             return ans;
         }
