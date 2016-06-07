@@ -11,17 +11,6 @@ namespace TfsAdminDashboardConsole
     public class CommandLineOptions
     {
         /// <summary>
-        /// Gets or sets a value indicating whether [extract machines] is needed or not.
-        /// </summary>
-        /// <value>
-        ///   <c>true</c> if [extract machines]; otherwise, <c>false</c>.
-        /// </value>
-        [Option("ExtractBuildMachineList", Required = false,
-        HelpText = "Extract the TFS Platform Build controllers and agent list")]
-        public bool extractMachines { get; set; }
-
-
-        /// <summary>
         /// Gets or sets a value indicating whether [extract projects] is needed or not.
         /// </summary>
         /// <value>

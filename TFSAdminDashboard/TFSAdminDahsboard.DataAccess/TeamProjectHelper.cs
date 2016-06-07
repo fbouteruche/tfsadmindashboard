@@ -1,24 +1,18 @@
-﻿using Microsoft.TeamFoundation.Client;
-using Microsoft.TeamFoundation.Framework.Client;
-using Microsoft.TeamFoundation.Framework.Client.Catalog.Objects;
-using Microsoft.TeamFoundation.Framework.Common;
-using Microsoft.TeamFoundation.Server;
-using Microsoft.TeamFoundation.VersionControl.Client;
-using NLog;
+﻿using NLog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using TFSAdminDashboard.DTO;
+using TFSDataService;
+using TFSDataService.JsonBusinessObjects;
 
 namespace TFSAdminDashboard.DataAccess
 {
     public class TeamProjectHelper
     {
         static Logger logger = LogManager.GetCurrentClassLogger();
-        private static Regex DMReg = new Regex(@"\[(.{2,4})\]");
+
         /// <summary>
         /// Gets all projects using the REST API
         /// </summary>
@@ -26,199 +20,72 @@ namespace TFSAdminDashboard.DataAccess
         public static ICollection<ProjectDefinition> GetAllProjects()
         {
             List<ProjectDefinition> projectList = new List<ProjectDefinition>();
-            ITeamProjectCollectionService collectionService = configurationServer.GetService<ITeamProjectCollectionService>();
-            if (collectionService != null)
+
+            int processedColl = 0;
+
+            List<TeamProjectCollection> collections = new List<TeamProjectCollection>();
+
+            foreach (TeamProjectCollection collection in DataService.ProjectCollections().Where(x => x.state == "started"))
             {
-                IList<TeamProjectCollection> collections = collectionService.GetCollections();
+                ++processedColl;
+                logger.Info("OoO Collection {2} - {0}/{1}", processedColl, collections.Count, collection.name);
 
-                int processedColl = 0;
+                var collProjects = DataService.TeamProjects(collection.name);
+                int processed = 0;
 
-                foreach (TeamProjectCollection collection in collections)
+                logger.Info("   {0} project to extract in collection {1}", collProjects.Count, collection.name);
+                foreach (TeamProject project in collProjects)
                 {
-                    if (collection.Name == "OBS")
+                    ++processed;
+                    logger.Info("       Process {2} - {0}/{1}", processed, collProjects.Count, project.name);
+                    ProjectDefinition projectDefinition = new ProjectDefinition();
+
+                    // General data
+                    projectDefinition.Name = project.name;
+                    projectDefinition.Id = project.id;
+                    projectDefinition.CollectionDescription = collection.description;
+                    projectDefinition.Uri = project.url;
+                    projectDefinition.State = project.state;
+                    projectDefinition.CollectionName = collection.name;
+                    projectDefinition.UtcCreationDate = DataService.GitFirstDate(collection.name, project.name);
+
+                    // get Workitems data
+                    projectDefinition.WorkItemDefinitionCollection = DashWorkItemHelper.FeedWorkItemData(collection.name, project.name);
+
+                    // get build data
+                    projectDefinition.BuildsDefinitionCollection = DashBuildHelper.FeedBuildData(collection.name, project.name);
+
+                    if (projectDefinition.BuildsDefinitionCollection.Count > 0)
                     {
-                        logger.Info("Filter out this collection: {0}", collection.Name);
-                        continue;
-                    }
+                        var lastSuccess = projectDefinition.BuildsDefinitionCollection.Max(x => x.LastSuccess);
+                        var lastfail = projectDefinition.BuildsDefinitionCollection.Max(x => x.LastFail);
 
-                    ++processedColl;
-                    logger.Info("OoO Collection {2} - {0}/{1}", processedColl, collections.Count, collection.Name);
-                    if (collection.State == TeamFoundationServiceHostStatus.Started)
-                    {
-                        TfsTeamProjectCollection tpc = configurationServer.GetTeamProjectCollection(collection.Id);
-
-
-                        VersionControlServer vcs = tpc.GetService<VersionControlServer>();
-                        Microsoft.TeamFoundation.VersionControl.Client.TeamProject[] projects = vcs.GetAllTeamProjects(true);
-
-                        //e.g. TFSVC based project
-                        if (projects.Length > 0)
+                        if (lastSuccess != DateTime.MinValue)
                         {
-                            int processed = 0;
-
-                            logger.Info("   {0} project to extract in collection {1}", projects.Length, collection.Name);
-                            foreach (Microsoft.TeamFoundation.VersionControl.Client.TeamProject project in projects)
-                            {
-                                ++processed;
-
-                                logger.Info("       Process {2} - {0}/{1}", processed, projects.Length, project.Name);
-                                string name = project.Name;
-                                IEnumerable<Changeset> changesets = vcs.QueryHistory(project.ServerItem, VersionSpec.Latest, 0, RecursionType.None, String.Empty, null, VersionSpec.Latest, int.MaxValue, true, false, false, true).OfType<Changeset>();
-                                Changeset firstChangeset = changesets.FirstOrDefault();
-                                if (firstChangeset != null)
-                                {
-                                    DateTime creationDate = firstChangeset.CreationDate;
-
-                                    ProjectDefinition projectDefinition = new ProjectDefinition();
-                                    projectDefinition.Name = project.Name;
-                                    projectDefinition.Id = new Guid(project.ArtifactUri.Segments[3]);
-                                    projectDefinition.CollectionDescription = collection.Description;
-                                    projectDefinition.Uri = project.ArtifactUri.ToString();
-                                    projectDefinition.State = "N/A";
-                                    projectDefinition.CollectionName = collection.Name;
-                                    projectDefinition.UtcCreationDate = creationDate.ToUniversalTime();
-
-                                    // get Workitems data
-                                    projectDefinition.WorkItemDefinitionCollection = DashWorkItemHelper.FeedWorkItemData(tpc, projectDefinition.Name);
-
-                                    // get build data
-                                    projectDefinition.BuildsDefinitionCollection = DashBuildHelper.FeedBuildData(collection.Name, projectDefinition.Name);
-
-                                    if (projectDefinition.BuildsDefinitionCollection.Count > 0)
-                                    {
-                                        var lastSuccess = projectDefinition.BuildsDefinitionCollection.Max(x => x.LastSuccess);
-                                        var lastfail = projectDefinition.BuildsDefinitionCollection.Max(x => x.LastFail);
-
-                                        if(lastSuccess != DateTime.MinValue)
-                                        { 
-                                            projectDefinition.LastSuccessBuild = lastSuccess;
-                                        }
-
-                                        if(lastfail != DateTime.MinValue)
-                                        { 
-                                            projectDefinition.LastFailedBuild = lastfail;
-                                        }
-                                    }
-
-                                    // get VCS data (only TFS 2010 TFSVC though)
-                                    projectDefinition.VersionControlData = DashVersionControlHelper.FeedVersionControlData(tpc, projectDefinition.Name);
-
-                                    projectDefinition.LastCheckinDate = projectDefinition.VersionControlData.Max(x => x.InnerLastCheckIn);
-
-                                    // get test plan Data
-                                    projectDefinition.TestPlanData = DashTestPlanHelper.FeedTestPlanData(tpc, projectDefinition.Name);
-
-                                    // get identities Data
-                                    if(withIdentities)
-                                        projectDefinition.IdentityData = IdentityServiceManagementHelper.FeedIdentityData(tpc, projectDefinition.Uri).Item2;
-
-                                    var match = DMReg.Match(collection.Description);
-
-                                    if(match.Groups.Count > 0)
-                                    { 
-                                        projectDefinition.DMOrigin = match.Groups[1].ToString();
-                                    }
-
-                                    projectDefinition.ProjectCode = "N/A";
-
-                                   projectDefinition.Platform = "TFS2010";
-                                    projectDefinition.ExtractDate = DateTime.Now;
-                                    projectList.Add(projectDefinition);
-                                }
-
-#if TEST
-                                // Break after 1 project for tests
-                                break;
-#endif
-
-                            }
+                            projectDefinition.LastSuccessBuild = lastSuccess;
                         }
-                        else
-                        // Git based project
+
+                        if (lastfail != DateTime.MinValue)
                         {
-                            int processed = 0;
-
-                            var structService = tpc.GetService<ICommonStructureService>();
-                            var totalProjects = structService.ListAllProjects();
-                            logger.Info("   {0} project to extract in collection {1}", totalProjects.Length, collection.Name);
-                            foreach (ProjectInfo p in totalProjects)
-                            {
-                                ++processed;
-
-                                logger.Info("       Process {2} - {0}/{1}", processed, totalProjects.Length, p.Name);
-                                ProjectDefinition projectDefinition = new ProjectDefinition()
-                                {
-                                    Id = new Guid(new Uri(p.Uri).Segments[3]),
-                                    Name = p.Name,
-                                    CollectionName = collection.Name,
-                                    Uri = p.Uri,
-                                    State = p.Status.ToString(),
-                                    UtcCreationDate = DashGitHelper.GetCreationDate(collection.Name, p.Name)
-                                };
-
-                                // get Workitems data
-                                projectDefinition.WorkItemDefinitionCollection = DashWorkItemHelper.FeedWorkItemData(tpc, projectDefinition.Name);
-
-                                // get build data
-                                projectDefinition.BuildsDefinitionCollection = DashBuildHelper.FeedBuildData(collection.Name, projectDefinition.Name);
-
-                                if (projectDefinition.BuildsDefinitionCollection.Count > 0)
-                                {
-                                    var lastSuccess = projectDefinition.BuildsDefinitionCollection.Max(x => x.LastSuccess);
-                                    var lastfail = projectDefinition.BuildsDefinitionCollection.Max(x => x.LastFail);
-
-                                    if (lastSuccess != DateTime.MinValue)
-                                    {
-                                        projectDefinition.LastSuccessBuild = lastSuccess;
-                                    }
-
-                                    if (lastfail != DateTime.MinValue)
-                                    {
-                                        projectDefinition.LastFailedBuild = lastfail;
-                                    }
-                                }
-
-                                // get VCS data
-                                projectDefinition.VersionControlData = DashGitHelper.FeedGitData(collection.Name, projectDefinition.Name);
-                                projectDefinition.LastCheckinDate = projectDefinition.VersionControlData.Max(x => x.InnerLastCheckIn);
-
-                                // get test plan Data
-                                projectDefinition.TestPlanData = DashTestPlanHelper.FeedTestPlanData(tpc, projectDefinition.Name);
-
-                                if (withIdentities)
-                                { 
-                                    // get identities Data
-                                    var ids = IdentityServiceManagementHelper.FeedIdentityData(tpc, projectDefinition.Uri).Item2;
-                                
-                                    // Do not fetch all company identities
-                                    if (ids.Count < 3000)
-                                        projectDefinition.IdentityData = ids;
-                                }
-
-                                projectDefinition.Platform = "TFS2015";
-
-                                projectDefinition.DMOrigin = projectDefinition.CollectionName;
-                                projectDefinition.ProjectCode = projectDefinition.Name;
-
-                                projectDefinition.ExtractDate = DateTime.Now;
-
-                                projectList.Add(projectDefinition);
-#if TEST
-                                // Break after 1 project for tests
-                                break;
-#endif
-                            }
+                            projectDefinition.LastFailedBuild = lastfail;
                         }
                     }
 
+                    // get VCS data
+                    projectDefinition.VersionControlData = DashGitHelper.FeedGitData(collection.name, project.name);
+                    projectDefinition.LastCheckinDate = projectDefinition.VersionControlData.Max(x => x.InnerLastCheckIn);
 
-#if TEST
-                    // Break after 1 project for tests
-                    break;
-#endif
+                    // get test plan Data
+                    projectDefinition.TestPlanData = DashTestPlanHelper.FeedTestPlanData(collection.name, project.name);
+
+                    projectDefinition.Platform = "TFS2013";
+
+                    projectDefinition.DMOrigin = collection.name;
+                    projectDefinition.ProjectCode = project.name;
+
+                    projectDefinition.ExtractDate = DateTime.Now;
                 }
             }
-
             return projectList.OrderBy(x => x.Name).ToList();
         }
     }

@@ -20,19 +20,12 @@ namespace TfsAdminDashboardConsole
 
                 if (CommandLine.Parser.Default.ParseArguments(args, options))
                 {
-                    processed = (options.extractProjects || options.extractMachines || options.extractUsers) == true;
+                    processed = (options.extractProjects || options.extractUsers) == true;
 
                     if (options.extractProjects == true)
                     {
                         logger.Info("Extract Projects");
                         iCommand command = new ExtractProjectListCommand();
-                        command.Execute(options);
-                    }
-
-                    if (options.extractMachines == true)
-                    {
-                        logger.Info("Extract Build Machines");
-                        iCommand command = new ExtractBuildMachineListCommand();
                         command.Execute(options);
                     }
 

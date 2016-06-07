@@ -246,7 +246,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CommandLineOptions.cs" />
-    <Compile Include="Commands\ExtractBuildMachineListCommand.cs" />
     <Compile Include="Commands\ExtractProjectListCommand.cs" />
     <Compile Include="Commands\ExtractUsersListCommand.cs" />
     <Compile Include="Commands\iCommand.cs" />

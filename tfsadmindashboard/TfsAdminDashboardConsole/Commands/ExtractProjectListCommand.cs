@@ -11,7 +11,7 @@ using TfsAdminDashboardConsole.Service;
 
 namespace TfsAdminDashboardConsole.Commands
 {
-    public class ExtractProjectListCommand : TFSAccessHelper, iCommand
+    public class ExtractProjectListCommand : iCommand
     {
         private static Logger logger = LogManager.GetCurrentClassLogger();
 

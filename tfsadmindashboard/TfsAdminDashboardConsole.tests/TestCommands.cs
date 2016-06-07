@@ -35,15 +35,6 @@ namespace TfsAdminDashboardConsole.tests
 
         [TestCase]
         [Category("DevFacadeNoIC")]
-        public void LaunchExportMachinesCommand()
-        {
-            iCommand command = new ExtractBuildMachineListCommand();
-            options.OutputFormat = "CSV";
-            command.Execute(options);
-        }
-
-        [TestCase]
-        [Category("DevFacadeNoIC")]
         public void LaunchExportUsersCommand()
         {
             iCommand command = new ExtractUsersListCommand();
