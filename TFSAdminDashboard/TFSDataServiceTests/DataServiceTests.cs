@@ -85,6 +85,12 @@ namespace TFSDataService.Tests
             Assert.IsTrue(states["Resolved"] > 1);
         }
 
+        [Test()]
+        public void RestGetTestPlansTest()
+        {
+            var testPlans = DataService.TestPlans("DT", "DemoCMMI");
 
+            Assert.IsTrue(testPlans.First().name == "Plan 0.2");
+        }
     }
 }

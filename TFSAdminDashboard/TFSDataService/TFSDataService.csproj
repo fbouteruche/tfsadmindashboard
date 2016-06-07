@@ -56,6 +56,8 @@
     <Compile Include="JsonBusinessObjects\SurfaceTeamProjectCollections.cs" />
     <Compile Include="JsonBusinessObjects\TeamProjectCollection.cs" />
     <Compile Include="JsonBusinessObjects\TeamProjects.cs" />
+    <Compile Include="JsonBusinessObjects\TestPlan.cs" />
+    <Compile Include="JsonBusinessObjects\TestSuite.cs" />
     <Compile Include="JsonBusinessObjects\wiQuery.cs" />
     <Compile Include="JsonBusinessObjects\WorkItem.cs" />
     <Compile Include="JsonBusinessObjects\WorkItemCategory.cs" />
