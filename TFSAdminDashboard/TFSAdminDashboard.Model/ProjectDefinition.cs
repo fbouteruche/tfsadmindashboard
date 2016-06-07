@@ -25,7 +25,7 @@ namespace TFSAdminDashboard.DTO
             set;
         }
 
-        public Guid Id
+        public string Id
         {
             get;
             set;
