@@ -15,7 +15,7 @@ namespace TFSDataService.JsonBusinessObjects
 
     public class Build
     {
-        public _Links _links { get; set; }
+        public _Links2 _links { get; set; }
         public int id { get; set; }
         public string buildNumber { get; set; }
         public string status { get; set; }
@@ -45,7 +45,7 @@ namespace TFSDataService.JsonBusinessObjects
         public Orchestrationplan orchestrationPlan { get; set; }
     }
 
-    public class _Links
+    public class _Links2
     {
         public Self self { get; set; }
         public Web web { get; set; }

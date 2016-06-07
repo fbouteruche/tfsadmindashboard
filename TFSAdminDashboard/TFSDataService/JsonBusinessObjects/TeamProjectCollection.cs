@@ -14,6 +14,6 @@ namespace TFSDataService.JsonBusinessObjects
         public string url { get; set; }
         public string description { get; set; }
         public string state { get; set; }
-        public _Links _links { get; set; }
+        public _Links2 _links { get; set; }
     }
 }

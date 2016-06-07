@@ -13,7 +13,7 @@ namespace TFSDataService
 
         public static List<Build> Builds(string collectionName, string projectName)
         {
-            string buildsUrl = string.Format("{0}/{1}/{2}/_apis/build/builds?api-version=2.0", tfsServer, collectionName,projectName);
+            string buildsUrl = string.Format("{0}/{1}/{2}/_apis/build/builds?api-version=2.0", tfsServer, collectionName, projectName);
 
             string json = JsonRequest.GetRestResponse(buildsUrl);
 
@@ -43,13 +43,13 @@ namespace TFSDataService
 
             SurfaceTeamProjectCollectionRootobject o = JsonConvert.DeserializeObject<SurfaceTeamProjectCollectionRootobject>(json);
 
-            foreach(SurfaceTeamProjectCollection stpc in o.value.ToList())
+            foreach (SurfaceTeamProjectCollection stpc in o.value.ToList())
             {
-                
+
                 string tpcUrl = string.Format("{0}/_apis/projectcollections/{1}", tfsServer, stpc.id);
                 string json2 = JsonRequest.GetRestResponse(tpcUrl);
 
-                ans.Add(JsonConvert.DeserializeObject<TeamProjectCollection>(json));
+                ans.Add(JsonConvert.DeserializeObject<TeamProjectCollection>(json2));
             }
 
             return ans;
@@ -70,8 +70,8 @@ namespace TFSDataService
         {
             List<GitCommit> commits = GitCommits(collectionName, projectName);
 
-            if(commits.Count > 0)
-            { 
+            if (commits.Count > 0)
+            {
                 DateTime ans = commits.OrderBy(x => x.author.date).First().author.date;
                 return ans;
             }
@@ -87,7 +87,7 @@ namespace TFSDataService
 
             GitRepository gitR;
 
-            if(string.IsNullOrEmpty(repoName))
+            if (string.IsNullOrEmpty(repoName))
             {
                 gitR = gitRepos.FirstOrDefault(x => x.name == projectName);
             }
@@ -164,23 +164,30 @@ namespace TFSDataService
         {
             Dictionary<string, int> ans = new Dictionary<string, int>();
 
-            string witQueryURL = string.Format("{0}/{1}/apis/wit/wiql?api-version=1.0", tfsServer, collectionName);
+            string witQueryURL = string.Format("{0}/{1}/{2}/_apis/wit/wiql?api-version=1.0", tfsServer, collectionName, projectName);
             WiQuery q = new WiQuery()
             {
-                query = string.Format("SELECT [System.Id],[System.Title],[System.State] FROM WorkItems WHERE [System.TeamProject] = '{0]' AND [System.WorkItemType] = '{1}'", projectName,workitemType)
+                query = string.Format("SELECT [System.Id],[System.Title],[System.State] FROM WorkItems WHERE [System.TeamProject] = '{0}' AND [System.WorkItemType] = '{1}'", projectName, workitemType)
             };
 
             string json = JsonRequest.PostData(witQueryURL, JsonConvert.SerializeObject(q));
 
             wiQueryResult queryResult = JsonConvert.DeserializeObject<wiQueryResult>(json);
 
-            foreach(queryWorkitem wi in queryResult.workItems)
+            foreach (queryWorkitem wi in queryResult.workItems)
             {
                 string witJson = JsonRequest.GetRestResponse(wi.url);
 
                 WorkItem workitem = JsonConvert.DeserializeObject<WorkItem>(witJson);
 
-                ans[workitem.fields.SystemState] += 1;
+                if (ans.ContainsKey(workitem.fields.SystemState))
+                { 
+                    ans[workitem.fields.SystemState] += 1;
+                }
+                else
+                { 
+                    ans[workitem.fields.SystemState] = 1;
+                }
             }
 
             return ans;
