@@ -196,8 +196,11 @@ namespace TFSDataService
             return ans;
         }
 
+
         public static List<TestPlan> TestPlans(string collectionName, string projectName)
         {
+            // TODO: Expose also test results
+
             List<TestPlan> ans = new List<TestPlan>();
 
             string testPlansURL = string.Format("{0}/{1}/{2}/_apis/test/plans", tfsServer, collectionName, projectName);
