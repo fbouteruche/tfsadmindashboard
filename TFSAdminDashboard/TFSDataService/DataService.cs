@@ -35,13 +35,24 @@ namespace TFSDataService
 
         public static List<TeamProjectCollection> ProjectCollections()
         {
-            string tpcUrl = string.Format("{0}/_apis/projectcollections", tfsServer);
+            List<TeamProjectCollection> ans = new List<TeamProjectCollection>();
 
-            string json = JsonRequest.GetRestResponse(tpcUrl);
+            string surfacetpcUrl = string.Format("{0}/_apis/projectcollections", tfsServer);
 
-            TeamProjectCollectionRootobject o = JsonConvert.DeserializeObject<TeamProjectCollectionRootobject>(json);
+            string json = JsonRequest.GetRestResponse(surfacetpcUrl);
 
-            return o.value.ToList();
+            SurfaceTeamProjectCollectionRootobject o = JsonConvert.DeserializeObject<SurfaceTeamProjectCollectionRootobject>(json);
+
+            foreach(SurfaceTeamProjectCollection stpc in o.value.ToList())
+            {
+                
+                string tpcUrl = string.Format("{0}/_apis/projectcollections/{1}", tfsServer, stpc.id);
+                string json2 = JsonRequest.GetRestResponse(tpcUrl);
+
+                ans.Add(JsonConvert.DeserializeObject<TeamProjectCollection>(json));
+            }
+
+            return ans;
         }
 
         public static List<TeamProject> TeamProjects(string collection)
@@ -136,6 +147,43 @@ namespace TFSDataService
             GitRepositoryRootobject o = JsonConvert.DeserializeObject<GitRepositoryRootobject>(json);
 
             return o.value.ToList();
+        }
+
+        public static List<WorkItemType> WorkItemTypes(string collectionName, string projectName)
+        {
+            string witTypesURL = string.Format("{0}/{1}/{2}/_apis/wit/workItemTypes", tfsServer, collectionName, projectName);
+
+            string json = JsonRequest.GetRestResponse(witTypesURL);
+
+            WorkItemTypesRootobject o = JsonConvert.DeserializeObject<WorkItemTypesRootobject>(json);
+
+            return o.value.ToList();
+        }
+
+        public static Dictionary<string, int> WorkitemStates(string collectionName, string projectName, string workitemType)
+        {
+            Dictionary<string, int> ans = new Dictionary<string, int>();
+
+            string witQueryURL = string.Format("{0}/{1}/apis/wit/wiql?api-version=1.0", tfsServer, collectionName);
+            WiQuery q = new WiQuery()
+            {
+                query = string.Format("SELECT [System.Id],[System.Title],[System.State] FROM WorkItems WHERE [System.TeamProject] = '{0]' AND [System.WorkItemType] = '{1}'", projectName,workitemType)
+            };
+
+            string json = JsonRequest.PostData(witQueryURL, JsonConvert.SerializeObject(q));
+
+            wiQueryResult queryResult = JsonConvert.DeserializeObject<wiQueryResult>(json);
+
+            foreach(queryWorkitem wi in queryResult.workItems)
+            {
+                string witJson = JsonRequest.GetRestResponse(wi.url);
+
+                WorkItem workitem = JsonConvert.DeserializeObject<WorkItem>(witJson);
+
+                ans[workitem.fields.SystemState] += 1;
+            }
+
+            return ans;
         }
     }
 }

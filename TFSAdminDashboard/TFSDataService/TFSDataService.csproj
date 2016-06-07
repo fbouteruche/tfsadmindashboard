@@ -53,10 +53,15 @@
     <Compile Include="JsonBusinessObjects\GitRepository.cs" />
     <Compile Include="DataService.cs" />
     <Compile Include="JsonBusinessObjects\GitTags.cs" />
-    <Compile Include="JsonBusinessObjects\TeamProjectCollections.cs" />
+    <Compile Include="JsonBusinessObjects\SurfaceTeamProjectCollections.cs" />
+    <Compile Include="JsonBusinessObjects\TeamProjectCollection.cs" />
     <Compile Include="JsonBusinessObjects\TeamProjects.cs" />
+    <Compile Include="JsonBusinessObjects\wiQuery.cs" />
+    <Compile Include="JsonBusinessObjects\WorkItem.cs" />
+    <Compile Include="JsonBusinessObjects\WorkItemCategory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tool\JsonRequest.cs" />
+    <Compile Include="JsonBusinessObjects\wiResults.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
