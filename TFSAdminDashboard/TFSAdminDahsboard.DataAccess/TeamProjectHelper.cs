@@ -86,10 +86,16 @@ namespace TFSAdminDashboard.DataAccess
                     projectDefinition.ExtractDate = DateTime.Now;
 
                     projectList.Add(projectDefinition);
+#if QUICKTEST
+                    //Stop after the first project in QUICKTEST mode.
+                    logger.Info("QUICKTEST mode, stop after the first project");
+                    break;
+#endif
                 }
 
 #if TEST
-//Stop after the first collection in TEST mode.
+                //Stop after the first collection in TEST mode.
+                logger.Info("TEST mode, stop after the first collection");
 break;
 #endif
             }

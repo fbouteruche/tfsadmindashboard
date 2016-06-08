@@ -24,7 +24,9 @@ namespace TFSAdminDashboard.DataAccess
                     witDefinition.StateCollection.Add(kvp.Key, kvp.Value);
                 }
 
-                workItemDefinitionCollection.Add(witDefinition);
+                // only mention wit types which are indeed used in the project
+                if(witDefinition.StateCollection.Count > 1)
+                    workItemDefinitionCollection.Add(witDefinition);
             }
 
             return workItemDefinitionCollection;
