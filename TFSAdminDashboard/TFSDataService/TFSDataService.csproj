@@ -54,8 +54,10 @@
     <Compile Include="DataService.cs" />
     <Compile Include="JsonBusinessObjects\GitTags.cs" />
     <Compile Include="JsonBusinessObjects\SurfaceTeamProjectCollections.cs" />
+    <Compile Include="JsonBusinessObjects\TeamMember.cs" />
     <Compile Include="JsonBusinessObjects\TeamProjectCollection.cs" />
     <Compile Include="JsonBusinessObjects\TeamProjects.cs" />
+    <Compile Include="JsonBusinessObjects\Teams.cs" />
     <Compile Include="JsonBusinessObjects\TestPlan.cs" />
     <Compile Include="JsonBusinessObjects\TestSuite.cs" />
     <Compile Include="JsonBusinessObjects\wiQuery.cs" />
