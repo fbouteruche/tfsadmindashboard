@@ -197,7 +197,7 @@ namespace TFSAdminDashboard.DataAccess
                                         projectDefinition.IdentityData = ids;
                                 }
 
-                                projectDefinition.Platform = "TFS2013";
+                                projectDefinition.Platform = "TFS2015";
 
                                 projectDefinition.DMOrigin = projectDefinition.CollectionName;
                                 projectDefinition.ProjectCode = projectDefinition.Name;
