@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NLog;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -11,6 +12,8 @@ namespace TFSDataService.Tool
 {
     public class JsonRequest
     {
+        private static Logger logger = LogManager.GetCurrentClassLogger();
+
         internal static string GetRestResponse(string requestUrl)
         {
             string json;
@@ -39,7 +42,7 @@ namespace TFSDataService.Tool
                 }
                 catch (WebException e)
                 {
-                    Console.WriteLine("Error encountered {0}, let's retry in a few seconds", e.Message);
+                    logger.Warn("Error encountered {0}, let's retry in a few seconds", e.Message);
                     request = null;
                     Thread.Sleep(2000);
                     request = CreateRequest(requestUrl);
