@@ -84,7 +84,14 @@ namespace TFSAdminDashboard.DataAccess
                     projectDefinition.ProjectCode = project.name;
 
                     projectDefinition.ExtractDate = DateTime.Now;
+
+                    projectList.Add(projectDefinition);
                 }
+
+#if TEST
+//Stop after the first collection in TEST mode.
+break;
+#endif
             }
             return projectList.OrderBy(x => x.Name).ToList();
         }
