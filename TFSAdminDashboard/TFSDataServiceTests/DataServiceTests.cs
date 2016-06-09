@@ -92,5 +92,22 @@ namespace TFSDataService.Tests
 
             Assert.IsTrue(testPlans.First().name == "Plan 0.2");
         }
+
+        [Test()]
+        public void RestGetDefaultTeamMembersTest()
+        {
+            var teamMembers = DataServiceTeams.DefaultMembers("DT", "DemoCMMI");
+
+            Assert.IsTrue(teamMembers.Count(x => x.displayName.Contains("TOLLU")) == 1);
+        }
+
+        [Test()]
+        public void RestGetTeamsTest()
+        {
+            var teams = DataServiceTeams.List("DT", "DemoCMMI");
+
+            Assert.IsTrue(teams.Count(x => x.name.Contains("DemoCMMI")) == 1);
+        }
+        
     }
 }

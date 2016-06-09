@@ -44,5 +44,20 @@ namespace TFSDataService
             return o.value.ToList();
         }
 
+        public static List<TeamProject> AllProjects()
+        {
+            List<TeamProject> ans = new List<TeamProject>();
+
+            foreach (var collection in Collections())
+            {
+                foreach(TeamProject p in Projects(collection.name))
+                {
+                    p.collectionName = collection.name;
+                    ans.Add(p);
+                }
+            }
+
+            return ans;
+        }
     }
 }

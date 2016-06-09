@@ -279,6 +279,10 @@
       <Project>{8b7da413-1ac0-4295-b059-db0ebb89dd7c}</Project>
       <Name>TFSAdminDashboard.DTO</Name>
     </ProjectReference>
+    <ProjectReference Include="..\TFSDataService\TFSDataService.csproj">
+      <Project>{330A12DF-EC38-4357-8F83-0D912F71FC1F}</Project>
+      <Name>TFSDataService</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Zoltu.Versioning.1.2.24.0\build\Zoltu.Versioning.targets" Condition="Exists('..\packages\Zoltu.Versioning.1.2.24.0\build\Zoltu.Versioning.targets')" />

@@ -53,6 +53,7 @@
     <Compile Include="DataServiceBuild.cs" />
     <Compile Include="DataServiceGit.cs" />
     <Compile Include="DataServiceTeamProjects.cs" />
+    <Compile Include="DataServiceTeams.cs" />
     <Compile Include="DataServiceTests.cs" />
     <Compile Include="DataServiceWorkItems.cs" />
     <Compile Include="JsonBusinessObjects\BuildDefinitions.cs" />
