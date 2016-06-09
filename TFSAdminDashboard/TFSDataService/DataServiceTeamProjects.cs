@@ -11,7 +11,7 @@ namespace TFSDataService
     {
         private static string tfsServer = Environment.GetEnvironmentVariable("TfsUrl", EnvironmentVariableTarget.User);
 
-        public static List<TeamProjectCollection> ProjectCollections()
+        public static List<TeamProjectCollection> Collections()
         {
             List<TeamProjectCollection> ans = new List<TeamProjectCollection>();
 
@@ -33,7 +33,7 @@ namespace TFSDataService
             return ans;
         }
 
-        public static List<TeamProject> TeamProjects(string collection)
+        public static List<TeamProject> Projects(string collection)
         {
             string tpcUrl = string.Format("{0}/{1}/_apis/projects?api-version=1.0", tfsServer, collection);
 

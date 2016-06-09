@@ -11,7 +11,7 @@ namespace TFSDataService
     {
         private static string tfsServer = Environment.GetEnvironmentVariable("TfsUrl", EnvironmentVariableTarget.User);
 
-        public static List<WorkItemType> WorkItemTypes(string collectionName, string projectName)
+        public static List<WorkItemType> Types(string collectionName, string projectName)
         {
             string witTypesURL = string.Format("{0}/{1}/{2}/_apis/wit/workItemTypes", tfsServer, collectionName, projectName);
 
@@ -22,7 +22,7 @@ namespace TFSDataService
             return o.value.ToList();
         }
 
-        public static Dictionary<string, int> WorkitemStates(string collectionName, string projectName, string workitemType)
+        public static Dictionary<string, int> States(string collectionName, string projectName, string workitemType)
         {
             Dictionary<string, int> ans = new Dictionary<string, int>();
 

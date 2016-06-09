@@ -14,7 +14,7 @@ namespace TFSAdminDashboard.DataAccess
         {
             List<VersionControlItem> versionControlItemCollection = new List<VersionControlItem>();
 
-            foreach(GitRepository repo in DataServiceGit.GitRepositories(collectionName, projectName))
+            foreach(GitRepository repo in DataServiceGit.Repositories(collectionName, projectName))
             {
                 VersionControlItem v = new VersionControlItem()
                 {
@@ -22,7 +22,7 @@ namespace TFSAdminDashboard.DataAccess
                     isGit = true
                 };
 
-                var commits = DataServiceGit.GitCommits(collectionName, projectName, repo.name);
+                var commits = DataServiceGit.Commits(collectionName, projectName, repo.name);
                 if(commits.Count > 0)
                 { 
                     var lastcommit = commits.OrderByDescending(x => x.author.date).First();
@@ -43,7 +43,7 @@ namespace TFSAdminDashboard.DataAccess
 
         internal static DateTime? GetCreationDate(string collectionName, string projectName)
         {
-            return DataServiceGit.GitFirstDate(collectionName, projectName);
+            return DataServiceGit.FirstDate(collectionName, projectName);
         }
     }
 }

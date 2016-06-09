@@ -12,7 +12,7 @@ namespace TFSDataService
 
         // TODO: Expose also test results
 
-        public static List<TestPlan> TestPlans(string collectionName, string projectName)
+        public static List<TestPlan> Plans(string collectionName, string projectName)
         {
 
             List<TestPlan> ans = new List<TestPlan>();

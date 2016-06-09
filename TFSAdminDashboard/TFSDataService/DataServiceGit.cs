@@ -13,9 +13,9 @@ namespace TFSDataService
     {
         private static string tfsServer = Environment.GetEnvironmentVariable("TfsUrl", EnvironmentVariableTarget.User);
 
-        public static DateTime GitFirstDate(string collectionName, string projectName)
+        public static DateTime FirstDate(string collectionName, string projectName)
         {
-            List<GitCommit> commits = GitCommits(collectionName, projectName);
+            List<GitCommit> commits = Commits(collectionName, projectName);
 
             if (commits.Count > 0)
             {
@@ -28,9 +28,9 @@ namespace TFSDataService
             }
         }
 
-        public static List<GitCommit> GitCommits(string collectionName, string projectName, string repoName = null)
+        public static List<GitCommit> Commits(string collectionName, string projectName, string repoName = null)
         {
-            var gitRepos = GitRepositories(collectionName, projectName);
+            var gitRepos = Repositories(collectionName, projectName);
 
             GitRepository gitR;
 
@@ -57,9 +57,9 @@ namespace TFSDataService
                 return new List<GitCommit>();
         }
 
-        public static List<GitBranch> GitBranches(string collectionName, string projectName, string repoName)
+        public static List<GitBranch> Branches(string collectionName, string projectName, string repoName)
         {
-            var gitRepos = GitRepositories(collectionName, projectName);
+            var gitRepos = Repositories(collectionName, projectName);
             GitRepository gitR = gitRepos.First(x => x.name == repoName);
 
             string gitBranchesURL = string.Format("{0}/{1}/_apis/git/repositories/{2}/refs/heads?api-version=1.0", tfsServer, collectionName, gitR.id);
@@ -71,9 +71,9 @@ namespace TFSDataService
             return o.value.ToList();
         }
 
-        public static List<GitTag> GitTags(string collectionName, string projectName, string repoName)
+        public static List<GitTag> Tags(string collectionName, string projectName, string repoName)
         {
-            var gitRepos = GitRepositories(collectionName, projectName);
+            var gitRepos = Repositories(collectionName, projectName);
             GitRepository gitR = gitRepos.First(x => x.name == repoName);
 
             string gitBranchesURL = string.Format("{0}/{1}/_apis/git/repositories/{2}/refs/tags?api-version=1.0", tfsServer, collectionName, gitR.id);
@@ -85,7 +85,7 @@ namespace TFSDataService
             return o.value.ToList();
         }
 
-        public static List<GitRepository> GitRepositories(string collectionName, string projectName)
+        public static List<GitRepository> Repositories(string collectionName, string projectName)
         {
             string gitReposURL = string.Format("{0}/{1}/{2}/_apis/git/repositories", tfsServer, collectionName, projectName);
 
@@ -95,6 +95,5 @@ namespace TFSDataService
 
             return o.value.ToList();
         }
-
     }
 }

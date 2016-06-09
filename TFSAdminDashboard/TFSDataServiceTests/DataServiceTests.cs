@@ -14,47 +14,47 @@ namespace TFSDataService.Tests
         [Test()]
         public void RestGetGitRepositoriesTest()
         {
-            Assert.IsTrue(DataServiceGit.GitRepositories("DT", "TFSAdminTool").Count > 8);
+            Assert.IsTrue(DataServiceGit.Repositories("DT", "TFSAdminTool").Count > 8);
         }
 
         [Test()]
         public void RestGetGitBranchesTest()
         {
-            Assert.IsTrue(DataServiceGit.GitBranches("DT", "TFSAdminTool", "TFSMigrationTool").Count(x => x.branchname == "develop") == 1 );
+            Assert.IsTrue(DataServiceGit.Branches("DT", "TFSAdminTool", "TFSMigrationTool").Count(x => x.branchname == "develop") == 1 );
         }
 
         [Test()]
         public void RestGetGitTagsTest()
         {
-            Assert.IsTrue(DataServiceGit.GitTags("DT", "TFSAdminTool", "TFSMigrationTool").Count(x => x.tagname == "v1.0") == 1);
+            Assert.IsTrue(DataServiceGit.Tags("DT", "TFSAdminTool", "TFSMigrationTool").Count(x => x.tagname == "v1.0") == 1);
         }
 
         [Test()]
         public void RestGetGitCommitsTest()
         {
-            Assert.IsTrue(DataServiceGit.GitCommits("DT", "TFSAdminTool").Count > 99);
+            Assert.IsTrue(DataServiceGit.Commits("DT", "TFSAdminTool").Count > 99);
         }
 
         [Test()]
         public void RestGitFirstDateTest()
         {
-            Assert.IsTrue(DataServiceGit.GitFirstDate("DT", "DemoCMMI").Year == 2016);
-            Assert.IsTrue(DataServiceGit.GitFirstDate("DT", "DemoCMMI").Month == 1);
-            Assert.IsTrue(DataServiceGit.GitFirstDate("DT", "DemoCMMI").Day == 25);
+            Assert.IsTrue(DataServiceGit.FirstDate("DT", "DemoCMMI").Year == 2016);
+            Assert.IsTrue(DataServiceGit.FirstDate("DT", "DemoCMMI").Month == 1);
+            Assert.IsTrue(DataServiceGit.FirstDate("DT", "DemoCMMI").Day == 25);
         }
 
         [Test()]
         public void RestGetCollectionsTest()
         {
-            var spy = DataServiceTeamProjects.ProjectCollections();
-            Assert.IsTrue(DataServiceTeamProjects.ProjectCollections().Count(x => x.name == "DT") == 1);
+            var spy = DataServiceTeamProjects.Collections();
+            Assert.IsTrue(DataServiceTeamProjects.Collections().Count(x => x.name == "DT") == 1);
         }
 
 
         [Test()]
         public void RestGetProjectsTest()
         {
-            Assert.IsTrue(DataServiceTeamProjects.TeamProjects("DT").Count(x => x.name == "TFSAdminTool") == 1);
+            Assert.IsTrue(DataServiceTeamProjects.Projects("DT").Count(x => x.name == "TFSAdminTool") == 1);
         }
 
         [Test()]
@@ -72,15 +72,15 @@ namespace TFSDataService.Tests
         [Test()]
         public void RestGetWitTypesTest()
         {
-            Assert.IsTrue(DataServiceWorkItems.WorkItemTypes("DT", "DemoCMMI").Count > 4);
+            Assert.IsTrue(DataServiceWorkItems.Types("DT", "DemoCMMI").Count > 4);
         }
 
         [Test()]
         public void RestGetWitStatesTest()
         {
-            var types = DataServiceWorkItems.WorkItemTypes("DT", "DemoCMMI");
+            var types = DataServiceWorkItems.Types("DT", "DemoCMMI");
 
-            var states = DataServiceWorkItems.WorkitemStates("DT", "DemoCMMI", types.First().name);
+            var states = DataServiceWorkItems.States("DT", "DemoCMMI", types.First().name);
 
             Assert.IsTrue(states["Resolved"] > 1);
         }
@@ -88,7 +88,7 @@ namespace TFSDataService.Tests
         [Test()]
         public void RestGetTestPlansTest()
         {
-            var testPlans = DataServiceTests.TestPlans("DT", "DemoCMMI");
+            var testPlans = DataServiceTests.Plans("DT", "DemoCMMI");
 
             Assert.IsTrue(testPlans.First().name == "Plan 0.2");
         }

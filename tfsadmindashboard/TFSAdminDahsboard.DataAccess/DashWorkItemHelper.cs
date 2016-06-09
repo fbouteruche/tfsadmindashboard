@@ -15,11 +15,11 @@ namespace TFSAdminDashboard.DataAccess
         {
             List<WorkItemDefinition> workItemDefinitionCollection = new List<WorkItemDefinition>();
 
-            foreach (WorkItemType wit in DataServiceWorkItems.WorkItemTypes(collectionName, projectName))
+            foreach (WorkItemType wit in DataServiceWorkItems.Types(collectionName, projectName))
             {
                 WorkItemDefinition witDefinition = new WorkItemDefinition() { Name = wit.name, Description = wit.description };
 
-                foreach (KeyValuePair<string, int> kvp in DataServiceWorkItems.WorkitemStates(collectionName, projectName, wit.name))
+                foreach (KeyValuePair<string, int> kvp in DataServiceWorkItems.States(collectionName, projectName, wit.name))
                 { 
                     witDefinition.StateCollection.Add(kvp.Key, kvp.Value);
                 }
