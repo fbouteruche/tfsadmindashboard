@@ -26,22 +26,7 @@ namespace TfsAdminDashboardConsole.Commands
             logger.Info("Extract Users List in progress...");
             string fileName = FileNameTool.GetFileName("TfsExtractUserList", args.OutputFormat);
 
-
-            List<TeamProject> projects = DataServiceTeamProjects.AllProjects();
-
-            List<User> userList = new List<User>();
-
-            foreach(TeamProject proj in projects)
-            {
-                foreach(TeamMember member in DataServiceTeams.DefaultMembers(proj.collectionName, proj.name))
-                {
-                    userList.Add(new User()
-                    { Name = member.displayName,
-                    Account = member.uniqueName});
-                }
-            }
-
-            var filteredUsers = userList.DistinctBy(x => x.Name);
+            var filteredUsers = DashIdentityManagementHelper.GetAllIdentities();
 
             if (args.OutputFormat == "CSV")
             {

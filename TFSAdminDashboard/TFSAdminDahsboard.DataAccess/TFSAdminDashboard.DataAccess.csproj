@@ -60,7 +60,7 @@
     <Compile Include="DashGitHelper.cs" />
     <Compile Include="DashTestPlanHelper.cs" />
     <Compile Include="DashVersionControlHelper.cs" />
-    <Compile Include="IdentityServiceManagementHelper.cs" />
+    <Compile Include="DashIdentityManagementHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TeamProjectHelper.cs" />
     <Compile Include="DashWorkItemHelper.cs" />
