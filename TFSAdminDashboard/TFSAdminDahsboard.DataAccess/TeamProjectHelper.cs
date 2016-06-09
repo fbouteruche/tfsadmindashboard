@@ -23,14 +23,14 @@ namespace TFSAdminDashboard.DataAccess
 
             int processedColl = 0;
 
-            var collections = DataService.ProjectCollections().Where(x => x.state == "Started");
+            var collections = DataServiceTeamProjects.ProjectCollections().Where(x => x.state == "Started");
 
             foreach (TeamProjectCollection currCollection in collections)
             {
                 ++processedColl;
                 logger.Info("OoO Collection {0} - {1}/{2}", currCollection.name, processedColl, collections.Count());
 
-                var collProjects = DataService.TeamProjects(currCollection.name);
+                var collProjects = DataServiceTeamProjects.TeamProjects(currCollection.name);
                 int processed = 0;
 
                 logger.Info("   {0} project to extract in collection {1}", collProjects.Count, currCollection.name);
@@ -47,7 +47,7 @@ namespace TFSAdminDashboard.DataAccess
                     projectDefinition.Uri = project.url;
                     projectDefinition.State = project.state;
                     projectDefinition.CollectionName = currCollection.name;
-                    projectDefinition.UtcCreationDate = DataService.GitFirstDate(currCollection.name, project.name);
+                    projectDefinition.UtcCreationDate = DataServiceGit.GitFirstDate(currCollection.name, project.name);
 
                     // get Workitems data
                     projectDefinition.WorkItemDefinitionCollection = DashWorkItemHelper.FeedWorkItemData(currCollection.name, project.name);

@@ -50,12 +50,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataServiceBuild.cs" />
+    <Compile Include="DataServiceGit.cs" />
+    <Compile Include="DataServiceTeamProjects.cs" />
+    <Compile Include="DataServiceTests.cs" />
+    <Compile Include="DataServiceWorkItems.cs" />
     <Compile Include="JsonBusinessObjects\BuildDefinitions.cs" />
     <Compile Include="JsonBusinessObjects\Builds.cs" />
     <Compile Include="JsonBusinessObjects\GitBranches.cs" />
     <Compile Include="JsonBusinessObjects\GitCommit.cs" />
     <Compile Include="JsonBusinessObjects\GitRepository.cs" />
-    <Compile Include="DataService.cs" />
     <Compile Include="JsonBusinessObjects\GitTags.cs" />
     <Compile Include="JsonBusinessObjects\SurfaceTeamProjectCollections.cs" />
     <Compile Include="JsonBusinessObjects\TeamMember.cs" />

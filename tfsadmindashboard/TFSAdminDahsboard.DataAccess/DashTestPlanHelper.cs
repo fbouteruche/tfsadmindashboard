@@ -14,7 +14,7 @@ namespace TFSAdminDashboard.DataAccess
         {
             List<TestPlanDefinition> ans = new List<TestPlanDefinition>();
 
-            foreach(var testPlan in DataService.TestPlans(collectionName, projectName))
+            foreach(var testPlan in DataServiceTests.TestPlans(collectionName, projectName))
             {
                 TestPlanDefinition testPlanDefinition = new TestPlanDefinition()
                 {

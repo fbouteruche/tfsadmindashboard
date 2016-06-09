@@ -13,7 +13,7 @@ namespace TFSAdminDashboard.DataAccess
         {
             List<BuildDefinition> buildDefinitionCollection = new List<BuildDefinition>();
 
-            foreach (TFSDataService.JsonBusinessObjects.BuildDefinition def in DataService.BuildDefinitions(collectionName, projectName))
+            foreach (TFSDataService.JsonBusinessObjects.BuildDefinition def in DataServiceBuild.BuildDefinitions(collectionName, projectName))
             {
                 BuildDefinition buildDef = new BuildDefinition()
                 {
@@ -21,7 +21,7 @@ namespace TFSAdminDashboard.DataAccess
                     type = def.type
                 };
 
-                var builds = DataService.Builds(collectionName, projectName).Where(x => x.definition.name == def.name).OrderByDescending(x => x.finishTime);
+                var builds = DataServiceBuild.Builds(collectionName, projectName).Where(x => x.definition.name == def.name).OrderByDescending(x => x.finishTime);
 
                 var success = builds.FirstOrDefault(x => x.result == "succeeded");
                 if (success != null)
