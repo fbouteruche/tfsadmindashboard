@@ -41,7 +41,7 @@ namespace TfsAdminDashboardConsole.Commands
 
             if(args.UploadSFTP)
             {
-                logger.Info("STFP Upload");
+                logger.Info("STFP Upload for file {1}", fileName);
                 ISFTPService sftp = new SFTPService();
                 sftp.UploadFile(fileName, args.SFTPAuthentMode.ToEnum<AuthentMethod>());
             }
