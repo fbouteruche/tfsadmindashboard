@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using NLog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +13,7 @@ namespace TFSDataService
     public static class DataServiceTeams
     {
         private static string tfsServer = Environment.GetEnvironmentVariable("TfsUrl", EnvironmentVariableTarget.User);
+        private static Logger logger = LogManager.GetCurrentClassLogger();
 
         public static List<Team> List(string collection, string projectName)
         {
@@ -26,7 +28,7 @@ namespace TFSDataService
 
         public static List<TeamMember> DefaultMembers(string collection, string projectName)
         {
-            Team defaultTeam = List(collection, projectName).FirstOrDefault(x => x.name == projectName);
+            Team defaultTeam = List(collection, projectName).FirstOrDefault(x => x.name.Contains(projectName));
 
             if (defaultTeam != null)
             {
@@ -39,6 +41,7 @@ namespace TFSDataService
             }
             else
             {
+                logger.Warn("No default team found for {0}/{1}", collection, projectName);
                 return new List<TeamMember>();
             }
         }

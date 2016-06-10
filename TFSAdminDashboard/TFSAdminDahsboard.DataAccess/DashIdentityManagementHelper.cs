@@ -1,4 +1,6 @@
 ﻿
+using MoreLinq;
+using NLog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +12,7 @@ namespace TFSAdminDashboard.DataAccess
 {
     public class DashIdentityManagementHelper
     {
+        private static Logger logger = LogManager.GetCurrentClassLogger();
 
         /// <summary>
         /// Gets all identities, parsing each project's default team.
@@ -20,8 +23,11 @@ namespace TFSAdminDashboard.DataAccess
 
             List<User> userList = new List<User>();
 
+            int i = 0;
             foreach (TeamProject proj in projects)
             {
+                ++i;
+                logger.Info("Process project {0} {1}/{2}", proj.name, i, projects.Count);
                 foreach (TeamMember member in DataServiceTeams.DefaultMembers(proj.collectionName, proj.name))
                 {
                     userList.Add(new User()
@@ -32,7 +38,7 @@ namespace TFSAdminDashboard.DataAccess
                 }
             }
 
-            return userList.DistinctBy(x => x.Name);
+           return userList.DistinctBy(x => x.Name).OrderBy(x => x.Name).ToList();
         }
 
         public static Tuple<List<ApplicationGroupDefinition>, List<User>> FeedIdentityData(string collectionName, string projectName)
@@ -47,7 +53,7 @@ namespace TFSAdminDashboard.DataAccess
                     Account = member.uniqueName
                 });
             }
-
+            return null;
             //return Tuple.Create(applicationGroupCollection, userCollection);
         }
     }

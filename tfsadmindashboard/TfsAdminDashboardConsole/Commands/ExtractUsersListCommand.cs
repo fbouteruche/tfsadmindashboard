@@ -1,19 +1,11 @@
 ﻿using CsvHelper;
-using MoreLinq;
 using Newtonsoft.Json;
 using NLog;
-using System;
-using System.Collections.Generic;
-using System.DirectoryServices;
 using System.IO;
-using System.Linq;
 using TFSAdminDashboard.DataAccess;
-using TFSAdminDashboard.DTO;
 using TfsAdminDashboardConsole.Commands.IO;
 using TfsAdminDashboardConsole.ExtensionsMethods;
 using TfsAdminDashboardConsole.Service;
-using TFSDataService;
-using TFSDataService.JsonBusinessObjects;
 
 namespace TfsAdminDashboardConsole.Commands
 {
@@ -24,7 +16,7 @@ namespace TfsAdminDashboardConsole.Commands
         public void Execute(CommandLineOptions args)
         {
             logger.Info("Extract Users List in progress...");
-            string fileName = FileNameTool.GetFileName("TfsExtractUserList", args.OutputFormat);
+            string fileName = FileNameTool.GetFileName("TfsExtractUsersList", args.OutputFormat);
 
             var filteredUsers = DashIdentityManagementHelper.GetAllIdentities();
 
