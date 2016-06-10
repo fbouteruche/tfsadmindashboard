@@ -29,21 +29,29 @@ namespace TFSDataService
         public static List<TeamMember> DefaultMembers(string collection, string projectName)
         {
             Team defaultTeam = List(collection, projectName).FirstOrDefault(x => x.name.Contains(projectName));
+            List<TeamMember> ans = new List<TeamMember>();
 
             if (defaultTeam != null)
             {
-                string teamMembersUrl = string.Format("{0}/{1}/_apis/projects/{2}/teams/{3}/members", tfsServer, collection, projectName, defaultTeam.id);
+                string surfaceteamMembersUrl = string.Format("{0}/{1}/_apis/projects/{2}/teams/{3}/members", tfsServer, collection, projectName, defaultTeam.id);
 
-                string json = JsonRequest.GetRestResponse(teamMembersUrl);
-                TeamMemberRootobject o = JsonConvert.DeserializeObject<TeamMemberRootobject>(json);
+                string json = JsonRequest.GetRestResponse(surfaceteamMembersUrl);
+                SurfaceTeamMemberRootobject o = JsonConvert.DeserializeObject<SurfaceTeamMemberRootobject>(json);
 
-                return o.value.ToList();
+                foreach(SurfaceTeamMember surfObject in o.value)
+                {
+                    string json2 = JsonRequest.GetRestResponse(surfObject.url);
+
+                    TeamMember member = JsonConvert.DeserializeObject<TeamMember>(json2);
+                    ans.Add(member);
+                }
             }
             else
             {
                 logger.Warn("No default team found for {0}/{1}", collection, projectName);
-                return new List<TeamMember>();
             }
+
+            return ans;
         }
     }
 }

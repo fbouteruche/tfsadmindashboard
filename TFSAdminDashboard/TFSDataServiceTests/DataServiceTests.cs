@@ -98,7 +98,7 @@ namespace TFSDataService.Tests
         {
             var teamMembers = DataServiceTeams.DefaultMembers("DT", "DemoCMMI");
 
-            Assert.IsTrue(teamMembers.Count(x => x.displayName.Contains("TOLLU")) == 1);
+            Assert.IsTrue(teamMembers.Count(x => x.DisplayName.Contains("TOLLU")) == 1);
         }
 
         [Test()]

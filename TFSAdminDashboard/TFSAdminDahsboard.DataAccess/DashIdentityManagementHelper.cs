@@ -32,8 +32,11 @@ namespace TFSAdminDashboard.DataAccess
                 {
                     userList.Add(new User()
                     {
-                        Name = member.displayName,
-                        Account = member.uniqueName
+                        Name = member.DisplayName,
+                        Account = member.Properties.Account,
+                        IsActive = member.IsActive,
+                        Mail = member.Properties.Mail,
+                        Domain = member.Properties.Domain
                     });
                 }
             }
@@ -49,8 +52,11 @@ namespace TFSAdminDashboard.DataAccess
             {
                 userList.Add(new User()
                 {
-                    Name = member.displayName,
-                    Account = member.uniqueName
+                    Name = member.DisplayName,
+                    Account = member.Properties.Account,
+                    IsActive = member.IsActive,
+                    Mail = member.Properties.Mail,
+                    Domain = member.Properties.Domain
                 });
             }
             return null;
