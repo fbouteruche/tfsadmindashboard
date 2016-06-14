@@ -13,17 +13,12 @@ namespace TFSAdminDashboard.DTO
         // Git stuff
         public string Repository { get; set; }
         public string LastCommit { get; set; }
-        public DateTime LastCommitDate { get; set; }
-
+       
         // TFSVC stuff
-        public string DisplayName { get; set; }
-  
-        public string ItemChangeSetId { get; set; }
+        public string Path { get; set; }
 
-        public DateTime ItemLastCheckIn { get; set; }
+        public int ItemChangeSetId { get; set; }
 
-        public string InnerChangeSetId { get; set; }
-
-        public DateTime InnerLastCheckIn { get; set; }    
+        public DateTime ItemDate { get; set; } 
     }
 }

@@ -28,12 +28,12 @@ namespace TFSAdminDashboard.DataAccess
                     var lastcommit = commits.OrderByDescending(x => x.author.date).First();
 
                     v.LastCommit = lastcommit.commitId;
-                    v.LastCommitDate = lastcommit.author.date;
+                    v.ItemDate = lastcommit.author.date;
                 }
                 else
                 {
                     v.LastCommit = "Void repo";
-                    v.LastCommitDate = DateTime.MinValue; 
+                    v.ItemDate = DateTime.MinValue; 
                 }
                 versionControlItemCollection.Add(v);
             }
@@ -44,6 +44,11 @@ namespace TFSAdminDashboard.DataAccess
         internal static DateTime? GetCreationDate(string collectionName, string projectName)
         {
             return DataServiceGit.FirstDate(collectionName, projectName);
+        }
+
+        internal static bool isGit(string collectionName, string projectName)
+        {
+            return DataServiceGit.isGitBased(collectionName, projectName);
         }
     }
 }

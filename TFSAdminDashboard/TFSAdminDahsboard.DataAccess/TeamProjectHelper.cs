@@ -72,13 +72,25 @@ namespace TFSAdminDashboard.DataAccess
                     }
 
                     // get VCS data
-                    projectDefinition.VersionControlData = DashGitHelper.FeedGitData(currCollection.name, project.name);
-                    projectDefinition.LastCheckinDate = projectDefinition.VersionControlData.Max(x => x.InnerLastCheckIn);
+                    projectDefinition.isGitBased = DashGitHelper.isGit(currCollection.name, project.name);
+                    projectDefinition.isTFVCBased = DashVersionControlHelper.isTFVC(currCollection.name, project.name);
+
+                    if(projectDefinition.isGitBased)
+                    {
+                        projectDefinition.VersionControlData = DashGitHelper.FeedGitData(currCollection.name, project.name);
+                    }
+
+                    if (projectDefinition.isTFVCBased)
+                    {
+                        projectDefinition.VersionControlData.AddRange(DashVersionControlHelper.FeedVersionControlData(currCollection.name, project.name));
+                    }
+
+                    projectDefinition.LastCheckinDate = projectDefinition.VersionControlData.OrderByDescending(x => x.ItemDate).First().ItemDate;
 
                     // get test plan Data
                     projectDefinition.TestPlanData = DashTestPlanHelper.FeedTestPlanData(currCollection.name, project.name);
 
-                    projectDefinition.Platform = "TFS2013";
+                    projectDefinition.Platform = Environment.GetEnvironmentVariable("TfsExtractPrefix", EnvironmentVariableTarget.User);
 
                     projectDefinition.DMOrigin = currCollection.name;
                     projectDefinition.ProjectCode = project.name;

@@ -5,6 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TFSAdminDashboard.DTO;
+using TFSDataService;
+using TFSDataService.JsonBusinessObjects;
 
 namespace TFSAdminDashboard.DataAccess
 {
@@ -12,49 +14,30 @@ namespace TFSAdminDashboard.DataAccess
     {
         public static List<VersionControlItem> FeedVersionControlData(string collectionName, string projectName)
         {
-            throw new Exception("To RESTify");
-            //List<VersionControlItem> versionControlItemCollection = new List<VersionControlItem>();
+            List<VersionControlItem> ans = new List<VersionControlItem>();
 
-            //VersionControlServer vcs = tpc.GetService<VersionControlServer>();
-            //ItemSet items = vcs.GetItems("$/" + projectName + "/*", RecursionType.None);
+            var changesets = DataServiceVersionControl.Changesets(collectionName, projectName);
 
-            //foreach (Item item in items.Items)
-            //{
-            //    int itemChangeSetId = item.ChangesetId;
-            //    DateTime lastInnerCheckInDate = DateTime.MinValue;
-            //    int lastInnerChangeSetId = 0;
-            //    IEnumerable history = vcs.QueryHistory(item.ServerItem, VersionSpec.Latest,
-            //        item.DeletionId,
-            //        RecursionType.Full,
-            //        null,
-            //        new ChangesetVersionSpec(itemChangeSetId),
-            //        VersionSpec.Latest,
-            //        Int32.MaxValue,
-            //        false,
-            //        false);
-            //    IEnumerator enumerator = history.GetEnumerator();
-            //    if (enumerator.MoveNext())
-            //    {
-            //        Changeset lastChangeSet = enumerator.Current as Changeset;
-            //        if (lastChangeSet != null)
-            //        {
-            //            lastInnerCheckInDate = lastChangeSet.CreationDate;
-            //            lastInnerChangeSetId = lastChangeSet.ChangesetId;
-            //        }
-            //    }
+            foreach (string branchName in changesets.Keys)
+            {
+                var lastChangeset = changesets[branchName].OrderByDescending(x => x.createdDate).First();
 
-            //    VersionControlItem vci = new VersionControlItem()
-            //    {
-            //        DisplayName = item.ServerItem,
-            //        ItemChangeSetId = itemChangeSetId.ToString(),
-            //        ItemLastCheckIn = item.CheckinDate,
-            //        InnerChangeSetId = lastInnerChangeSetId.ToString(),
-            //        InnerLastCheckIn = lastInnerCheckInDate
-            //    };
-            //    versionControlItemCollection.Add(vci);
-            //}
+                VersionControlItem vci = new VersionControlItem()
+                {
+                    Path = branchName,
+                    ItemChangeSetId = lastChangeset.changesetId,
+                    ItemDate = lastChangeset.createdDate
+                };
 
-            //return versionControlItemCollection;
+                ans.Add(vci);
+            }
+
+            return ans;
+        }
+
+        internal static bool isTFVC(string collectionName, string projectName)
+        {
+            return DataServiceVersionControl.isTFVCBased(collectionName, projectName);
         }
     }
 }

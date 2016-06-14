@@ -9,46 +9,13 @@ namespace TFSAdminDashboard.DTO
 {
     public class ProjectDefinition
     {
-        public ProjectDefinition()
-        {
-        }
-
-        public string CollectionName
-        {
-            get;
-            set;
-
-        }
-        public string Name
-        {
-            get;
-            set;
-        }
-
-        public string Id
-        {
-            get;
-            set;
-        }
-
-        public string State
-        {
-            get;
-            set;
-        }
-
-        public string Uri
-        {
-            get;
-            set;
-        }
-
-        public DateTime? UtcCreationDate
-        {
-            get;
-            set;
-        }
-
+   
+        public string CollectionName { get; set; }
+        public string Name { get; set; }
+        public string Id { get; set; }
+        public string State { get; set; }
+        public string Uri { get; set; }
+        public DateTime? UtcCreationDate { get; set; }
         public List<WorkItemDefinition> WorkItemDefinitionCollection { get; set; }
         public List<BuildDefinition> BuildsDefinitionCollection { get; set; }
         public List<VersionControlItem> VersionControlData { get; set; }
@@ -62,6 +29,9 @@ namespace TFSAdminDashboard.DTO
         public List<User> IdentityData { get; set; }
         public string DMOrigin { get; set; }
         public string ProjectCode { get; set; }
+        public bool isTFVCBased { get; set; }
+        public bool isGitBased { get; set; }
+
         public double BuildHealth
         {
             get
