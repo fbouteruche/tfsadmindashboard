@@ -71,7 +71,8 @@
     <Compile Include="JsonBusinessObjects\Teams.cs" />
     <Compile Include="JsonBusinessObjects\TestPlan.cs" />
     <Compile Include="JsonBusinessObjects\TestSuite.cs" />
-    <Compile Include="JsonBusinessObjects\TFVCBranches.cs" />
+    <Compile Include="JsonBusinessObjects\TFVCBranch.cs" />
+    <Compile Include="JsonBusinessObjects\TFVCChangeSet.cs" />
     <Compile Include="JsonBusinessObjects\wiQuery.cs" />
     <Compile Include="JsonBusinessObjects\WorkItem.cs" />
     <Compile Include="JsonBusinessObjects\WorkItemCategory.cs" />

@@ -28,5 +28,22 @@ namespace TFSDataService
         {
             return Branches(collectionName).Any(x => x.path.Contains(projectName));
         }
+
+        public static Dictionary<string, List<TFVCChangeSet>> Changesets(string collectionName, string projectName)
+        {
+            Dictionary<string, List<TFVCChangeSet>> ans = new Dictionary<string, List<TFVCChangeSet>>();
+            foreach (TFVCBranch branch in Branches(collectionName).Where(x => x.path.Contains(projectName)))
+            {
+                string tfvcChangeSetsURL = string.Format("{0}/{1}/_apis/tfvc/changesets?searchCriteria.itemPath={2}", tfsServer, collectionName, branch.path);
+
+                string json = JsonRequest.GetRestResponse(tfvcChangeSetsURL);
+
+                TFVCChangeSetRootobject o = JsonConvert.DeserializeObject<TFVCChangeSetRootobject>(json);
+
+                ans[branch.path] = o.value.ToList();
+            }
+
+            return ans;
+        }
     }
 }

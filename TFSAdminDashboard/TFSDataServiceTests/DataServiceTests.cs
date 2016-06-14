@@ -26,6 +26,12 @@ namespace TFSDataService.Tests
         }
 
         [Test()]
+        public void RestGetChangeSetsTest()
+        {
+            Assert.IsTrue(DataServiceVersionControl.Changesets("DPO", "PI-Cougar").First().Value.Count > 0);
+        }
+
+        [Test()]
         public void RestIsGitest()
         {
             Assert.IsTrue(DataServiceGit.isGitBased("DT", "DemoCMMI"));
