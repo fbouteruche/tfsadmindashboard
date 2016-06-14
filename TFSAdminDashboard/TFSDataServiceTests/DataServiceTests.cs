@@ -12,6 +12,26 @@ namespace TFSDataService.Tests
     public class DataServicesTests
     {
         [Test()]
+        public void RestGetTFVSBranchesTest()
+        {
+            Assert.IsTrue(DataServiceVersionControl.Branches("DT").Count == 0);
+            Assert.IsTrue(DataServiceVersionControl.Branches("DPO").Count > 0);
+        }
+
+        [Test()]
+        public void RestIsTFVCTest()
+        {
+            Assert.IsFalse(DataServiceVersionControl.isTFVCBased("DT", "DemoCMMI"));
+            Assert.IsTrue(DataServiceVersionControl.isTFVCBased("DPO", "PI-Cougar"));
+        }
+
+        [Test()]
+        public void RestIsGitest()
+        {
+            Assert.IsTrue(DataServiceGit.isGitBased("DT", "DemoCMMI"));
+        }
+
+        [Test()]
         public void RestGetGitRepositoriesTest()
         {
             Assert.IsTrue(DataServiceGit.Repositories("DT", "TFSAdminTool").Count > 8);

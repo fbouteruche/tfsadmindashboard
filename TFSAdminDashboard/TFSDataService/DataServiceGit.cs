@@ -95,5 +95,10 @@ namespace TFSDataService
 
             return o.value.ToList();
         }
+
+        public static bool isGitBased(string collectionName, string projectName)
+        {
+            return Repositories(collectionName, projectName).Count > 0;
+        }
     }
 }

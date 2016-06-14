@@ -55,6 +55,7 @@
     <Compile Include="DataServiceTeamProjects.cs" />
     <Compile Include="DataServiceTeams.cs" />
     <Compile Include="DataServiceTests.cs" />
+    <Compile Include="DataServiceVersionControl.cs" />
     <Compile Include="DataServiceWorkItems.cs" />
     <Compile Include="JsonBusinessObjects\BuildDefinitions.cs" />
     <Compile Include="JsonBusinessObjects\Builds.cs" />
@@ -70,6 +71,7 @@
     <Compile Include="JsonBusinessObjects\Teams.cs" />
     <Compile Include="JsonBusinessObjects\TestPlan.cs" />
     <Compile Include="JsonBusinessObjects\TestSuite.cs" />
+    <Compile Include="JsonBusinessObjects\TFVCBranches.cs" />
     <Compile Include="JsonBusinessObjects\wiQuery.cs" />
     <Compile Include="JsonBusinessObjects\WorkItem.cs" />
     <Compile Include="JsonBusinessObjects\WorkItemCategory.cs" />
