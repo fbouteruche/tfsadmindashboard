@@ -301,7 +301,6 @@
     <Compile Include="Controllers\DashboardViewController.cs" />
     <Compile Include="Controllers\ProjectOverviewController.cs" />
     <Compile Include="Controllers\ServerOverviewController.cs" />
-    <Compile Include="Controllers\TFAdminControllerBase.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -420,6 +419,10 @@
     <ProjectReference Include="..\TFSAdminDashboard.Model\TFSAdminDashboard.DTO.csproj">
       <Project>{8b7da413-1ac0-4295-b059-db0ebb89dd7c}</Project>
       <Name>TFSAdminDashboard.DTO</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TFSDataService\TFSDataService.csproj">
+      <Project>{330a12df-ec38-4357-8f83-0d912f71fc1f}</Project>
+      <Name>TFSDataService</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

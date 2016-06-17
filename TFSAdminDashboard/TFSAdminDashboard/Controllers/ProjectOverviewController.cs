@@ -1,17 +1,10 @@
-﻿using Microsoft.TeamFoundation.Build.Client;
-using Microsoft.TeamFoundation.Client;
+﻿using Microsoft.TeamFoundation.Client;
 using Microsoft.TeamFoundation.Framework.Client;
 using Microsoft.TeamFoundation.Framework.Common;
-using Microsoft.TeamFoundation.Server;
-using Microsoft.TeamFoundation.TestManagement.Client;
-using Microsoft.TeamFoundation.VersionControl.Client;
-using Microsoft.TeamFoundation.WorkItemTracking.Client;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Net;
 using System.Web.Mvc;
 using TFSAdminDashboard.DataAccess;
 using TFSAdminDashboard.DTO;
@@ -19,67 +12,42 @@ using TFSAdminDashboard.Models;
 
 namespace TFSAdminDashboard.Controllers
 {
-    public class ProjectOverviewController : TFAdminControllerBase
+    public class ProjectOverviewController : Controller
     {
         // GET: ProjectOverview
-        public ActionResult Index(string id)
+        public ActionResult Index(string collectionName)
         {
             List<SelectListItem> tpcList = new List<SelectListItem>();
             List<SelectListItem> tpList = new List<SelectListItem>();
-            string collectionId  = string.Empty;
 
             // Get the catalog of team project collections
-            ReadOnlyCollection<CatalogNode> collectionNodes = configurationServer.CatalogNode.QueryChildren(
-                new[] { CatalogResourceTypes.ProjectCollection },
-                false, CatalogQueryOptions.None);
+            ICollection<ProjectCollectionDefinition> collectionNodes = DashTeamProjectHelper.GetCollections();
 
-
-            // a project Id is supplied
-            if(!string.IsNullOrWhiteSpace(id))
-            {
-                // Get the catalog node of the project
-                ReadOnlyCollection<CatalogNode> projectNode = configurationServer.CatalogNode.QueryChildren(
-                    new[] { CatalogResourceTypes.TeamProject }, new[]{ new KeyValuePair<string, string>("ProjectId", id) },
-                    true, CatalogQueryOptions.None);
-                if (projectNode.Count == 1)
-                {
-                    CatalogNode project = projectNode[0];
-                    ReadOnlyCollection<CatalogNode> collectionNode = project.QueryParents(new[] { CatalogResourceTypes.ProjectCollection }, false, CatalogQueryOptions.None);
-
-                    if(collectionNode.Count == 1)
-                    {
-                        CatalogNode collection = collectionNode[0];
-                        collectionId = collection.Resource.Properties["InstanceId"];
-
-                        if (!string.IsNullOrWhiteSpace(collectionId))
-                        {
-                            TfsTeamProjectCollection tpc = configurationServer.GetTeamProjectCollection(new Guid(collectionId));
-
-                            ReadOnlyCollection<CatalogNode> teamProjectNodes = tpc.CatalogNode.QueryChildren(
-                                new[] { CatalogResourceTypes.TeamProject },
-                                false, CatalogQueryOptions.None);
-
-                            foreach (CatalogNode teamProjectNode in teamProjectNodes)
-                            {
-                                tpList.Add(new SelectListItem { Text = teamProjectNode.Resource.DisplayName, Value = teamProjectNode.Resource.Properties["ProjectId"], Selected = teamProjectNode.Resource.Properties["ProjectId"] == id });
-                            }
-                        }
-                    }
-                    else
-                    {
-                        throw new Exception("One and only one collection is expected for being the parent of the project id " + id);
-                    }
-                }
-                else
-                {
-                    throw new Exception("One and only one project is expected for the project id " + id);
-                }
-            }
-
-            foreach (CatalogNode collectionNode in collectionNodes)
+            foreach (ProjectCollectionDefinition collectionNode in collectionNodes)
             {
                 // Use the InstanceId property to get the team project collection
-                tpcList.Add(new SelectListItem { Text = collectionNode.Resource.DisplayName, Value = collectionNode.Resource.Properties["InstanceId"], Selected = collectionNode.Resource.Properties["InstanceId"] == collectionId });
+                tpcList.Add(
+                    new SelectListItem
+                    {
+                        Text = collectionNode.Name,
+                        Value = collectionNode.Name,
+                        Selected = collectionNode.Name == collectionName
+                    });
+            }
+
+            // a collection Id is supplied
+            if (!string.IsNullOrWhiteSpace(collectionName))
+            {
+                foreach (ProjectDefinition proj in DashTeamProjectHelper.GetProjects(collectionName))
+                {
+                    tpList.Add(
+                   new SelectListItem
+                   {
+                       Text = proj.Name,
+                       Value = proj.Name,
+                   });
+                }
+
             }
 
             ViewBag.TpcList = tpcList.OrderBy(x => x.Text).ToList();
@@ -157,10 +125,10 @@ namespace TFSAdminDashboard.Controllers
             IIdentityManagementService ims = tpc.GetService<IIdentityManagementService>();
             string projectUri;
             IdentityOverviewModel iom = new IdentityOverviewModel();
-            if(teamProjectNodes.Count() == 1)
+            if (teamProjectNodes.Count() == 1)
             {
                 projectUri = teamProjectNodes[0].Resource.Properties["ProjectUri"];
-                iom.SetApplicationAndUserGroupCollection(IdentityServiceManagementHelper.FeedIdentityData(tpc, projectUri));
+                iom.SetApplicationAndUserGroupCollection(DashIdentityManagementHelper.FeedIdentityData(tpc, projectUri));
             }
             return PartialView(iom);
         }
@@ -185,7 +153,7 @@ namespace TFSAdminDashboard.Controllers
 
         public ActionResult BuildOverview(string id, string projectid)
         {
-            if(string.IsNullOrEmpty(id) || string.IsNullOrEmpty(projectid))
+            if (string.IsNullOrEmpty(id) || string.IsNullOrEmpty(projectid))
             {
                 return RedirectToAction("Index");
             }

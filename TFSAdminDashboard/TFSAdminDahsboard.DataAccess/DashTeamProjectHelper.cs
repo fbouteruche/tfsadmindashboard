@@ -9,9 +9,46 @@ using TFSDataService.JsonBusinessObjects;
 
 namespace TFSAdminDashboard.DataAccess
 {
-    public class TeamProjectHelper
+    public class DashTeamProjectHelper
     {
         static Logger logger = LogManager.GetCurrentClassLogger();
+
+        public static ICollection<ProjectCollectionDefinition> GetCollections()
+        {
+            List<ProjectCollectionDefinition> collectionList = new List<ProjectCollectionDefinition>();
+
+            var collections = DataServiceTeamProjects.Collections().Where(x => x.state == "Started");
+
+            foreach (TeamProjectCollection currCollection in collections)
+            {
+                ProjectCollectionDefinition collection = new ProjectCollectionDefinition()
+                {
+                    InstanceId = currCollection.id,
+                    Name = currCollection.name,
+                    ProjectCount = DataServiceTeamProjects.Projects(currCollection.name).Count
+                };
+
+                collectionList.Add(collection);
+            }
+
+            return collectionList;
+        }
+
+        public static ICollection<ProjectDefinition> GetProjects(string collectionName)
+        {
+            List<ProjectDefinition> projectList = new List<ProjectDefinition>();
+
+            foreach (TeamProject currProject in DataServiceTeamProjects.Projects(collectionName))
+            {
+                projectList.Add(new ProjectDefinition()
+                {
+                    Name = currProject.name,
+                    CollectionName = currProject.collectionName
+                });
+            }
+
+            return projectList;
+        }
 
         /// <summary>
         /// Gets all projects using the REST API

@@ -45,49 +45,7 @@
         <File Id="TFSDataService.pdb"  Source="..\TfsAdminDashboardConsole\bin\$(var.Configuration)\TFSDataService.pdb"/>
         <File Id="CommandLine.dll"  Source="..\TfsAdminDashboardConsole\bin\$(var.Configuration)\CommandLine.dll"/>
         <File Id="CsvHelper.dll"  Source="..\TfsAdminDashboardConsole\bin\$(var.Configuration)\CsvHelper.dll"/>
-        <File Id="Microsoft.IdentityModel.Clients.ActiveDirectory.dll"  Source="..\TfsAdminDashboardConsole\bin\$(var.Configuration)\Microsoft.IdentityModel.Clients.ActiveDirectory.dll"/>
-        <File Id="Microsoft.IdentityModel.Clients.ActiveDirectory.WindowsForms.dll"  Source="..\TfsAdminDashboardConsole\bin\$(var.Configuration)\Microsoft.IdentityModel.Clients.ActiveDirectory.WindowsForms.dll"/>
-        <File Id="Microsoft.ServiceBus.dll"  Source="..\TfsAdminDashboardConsole\bin\$(var.Configuration)\Microsoft.ServiceBus.dll"/>
-        <File Id="Microsoft.TeamFoundation.Build.Client.dll"  Source="..\TfsAdminDashboardConsole\bin\$(var.Configuration)\Microsoft.TeamFoundation.Build.Client.dll"/>
-        <File Id="Microsoft.TeamFoundation.Build.Common.dll"  Source="..\TfsAdminDashboardConsole\bin\$(var.Configuration)\Microsoft.TeamFoundation.Build.Common.dll"/>
-        <File Id="Microsoft.TeamFoundation.Build2.WebApi.dll"  Source="..\TfsAdminDashboardConsole\bin\$(var.Configuration)\Microsoft.TeamFoundation.Build2.WebApi.dll"/>
-        <File Id="Microsoft.TeamFoundation.Chat.WebApi.dll"  Source="..\TfsAdminDashboardConsole\bin\$(var.Configuration)\Microsoft.TeamFoundation.Chat.WebApi.dll"/>
-        <File Id="Microsoft.TeamFoundation.Client.dll"  Source="..\TfsAdminDashboardConsole\bin\$(var.Configuration)\Microsoft.TeamFoundation.Client.dll"/>
-        <File Id="Microsoft.TeamFoundation.Common.dll"  Source="..\TfsAdminDashboardConsole\bin\$(var.Configuration)\Microsoft.TeamFoundation.Common.dll"/>
-        <File Id="Microsoft.TeamFoundation.Core.WebApi.dll"  Source="..\TfsAdminDashboardConsole\bin\$(var.Configuration)\Microsoft.TeamFoundation.Core.WebApi.dll"/>
-        <File Id="Microsoft.TeamFoundation.DeleteTeamProject.dll"  Source="..\TfsAdminDashboardConsole\bin\$(var.Configuration)\Microsoft.TeamFoundation.DeleteTeamProject.dll"/>
-        <File Id="Microsoft.TeamFoundation.Diff.dll"  Source="..\TfsAdminDashboardConsole\bin\$(var.Configuration)\Microsoft.TeamFoundation.Diff.dll"/>
-        <File Id="Microsoft.TeamFoundation.Discussion.Client.dll"  Source="..\TfsAdminDashboardConsole\bin\$(var.Configuration)\Microsoft.TeamFoundation.Discussion.Client.dll"/>
-        <File Id="Microsoft.TeamFoundation.Git.Client.dll"  Source="..\TfsAdminDashboardConsole\bin\$(var.Configuration)\Microsoft.TeamFoundation.Git.Client.dll"/>
-        <File Id="Microsoft.TeamFoundation.Lab.Client.dll"  Source="..\TfsAdminDashboardConsole\bin\$(var.Configuration)\Microsoft.TeamFoundation.Lab.Client.dll"/>
-        <File Id="Microsoft.TeamFoundation.Lab.Common.dll"  Source="..\TfsAdminDashboardConsole\bin\$(var.Configuration)\Microsoft.TeamFoundation.Lab.Common.dll"/>
-        <File Id="Microsoft.TeamFoundation.Lab.TestIntegration.Client.dll"  Source="..\TfsAdminDashboardConsole\bin\$(var.Configuration)\Microsoft.TeamFoundation.Lab.TestIntegration.Client.dll"/>
-        <File Id="Microsoft.TeamFoundation.Lab.WorkflowIntegration.Client.dll"  Source="..\TfsAdminDashboardConsole\bin\$(var.Configuration)\Microsoft.TeamFoundation.Lab.WorkflowIntegration.Client.dll"/>
-        <File Id="Microsoft.TeamFoundation.Policy.WebApi.dll"  Source="..\TfsAdminDashboardConsole\bin\$(var.Configuration)\Microsoft.TeamFoundation.Policy.WebApi.dll"/>
-        <File Id="Microsoft.TeamFoundation.ProjectManagement.dll"  Source="..\TfsAdminDashboardConsole\bin\$(var.Configuration)\Microsoft.TeamFoundation.ProjectManagement.dll"/>
-        <File Id="Microsoft.TeamFoundation.SharePointReporting.Integration.dll"  Source="..\TfsAdminDashboardConsole\bin\$(var.Configuration)\Microsoft.TeamFoundation.SharePointReporting.Integration.dll"/>
-        <File Id="Microsoft.TeamFoundation.SourceControl.WebApi.dll"  Source="..\TfsAdminDashboardConsole\bin\$(var.Configuration)\Microsoft.TeamFoundation.SourceControl.WebApi.dll"/>
-        <File Id="Microsoft.TeamFoundation.Test.WebApi.dll"  Source="..\TfsAdminDashboardConsole\bin\$(var.Configuration)\Microsoft.TeamFoundation.Test.WebApi.dll"/>
-        <File Id="Microsoft.TeamFoundation.TestImpact.Client.dll"  Source="..\TfsAdminDashboardConsole\bin\$(var.Configuration)\Microsoft.TeamFoundation.TestImpact.Client.dll"/>
-        <File Id="Microsoft.TeamFoundation.TestManagement.Client.dll"  Source="..\TfsAdminDashboardConsole\bin\$(var.Configuration)\Microsoft.TeamFoundation.TestManagement.Client.dll"/>
-        <File Id="Microsoft.TeamFoundation.TestManagement.Common.dll"  Source="..\TfsAdminDashboardConsole\bin\$(var.Configuration)\Microsoft.TeamFoundation.TestManagement.Common.dll"/>
-        <File Id="Microsoft.TeamFoundation.TestManagement.WebApi.dll"  Source="..\TfsAdminDashboardConsole\bin\$(var.Configuration)\Microsoft.TeamFoundation.TestManagement.WebApi.dll"/>
-        <File Id="Microsoft.TeamFoundation.VersionControl.Client.dll"  Source="..\TfsAdminDashboardConsole\bin\$(var.Configuration)\Microsoft.TeamFoundation.VersionControl.Client.dll"/>
-        <File Id="Microsoft.TeamFoundation.VersionControl.Common.dll"  Source="..\TfsAdminDashboardConsole\bin\$(var.Configuration)\Microsoft.TeamFoundation.VersionControl.Common.dll"/>
-        <File Id="Microsoft.TeamFoundation.VersionControl.Common.Integration.dll"  Source="..\TfsAdminDashboardConsole\bin\$(var.Configuration)\Microsoft.TeamFoundation.VersionControl.Common.Integration.dll"/>
-        <File Id="Microsoft.TeamFoundation.Work.WebApi.dll"  Source="..\TfsAdminDashboardConsole\bin\$(var.Configuration)\Microsoft.TeamFoundation.Work.WebApi.dll"/>
-        <File Id="Microsoft.TeamFoundation.WorkItemTracking.Client.DataStoreLoader.dll"  Source="..\TfsAdminDashboardConsole\bin\$(var.Configuration)\Microsoft.TeamFoundation.WorkItemTracking.Client.DataStoreLoader.dll"/>
-        <File Id="Microsoft.TeamFoundation.WorkItemTracking.Client.dll"  Source="..\TfsAdminDashboardConsole\bin\$(var.Configuration)\Microsoft.TeamFoundation.WorkItemTracking.Client.dll"/>
-        <File Id="Microsoft.TeamFoundation.WorkItemTracking.Client.QueryLanguage.dll"  Source="..\TfsAdminDashboardConsole\bin\$(var.Configuration)\Microsoft.TeamFoundation.WorkItemTracking.Client.QueryLanguage.dll"/>
-        <File Id="Microsoft.TeamFoundation.WorkItemTracking.Common.dll"  Source="..\TfsAdminDashboardConsole\bin\$(var.Configuration)\Microsoft.TeamFoundation.WorkItemTracking.Common.dll"/>
-        <File Id="Microsoft.TeamFoundation.WorkItemTracking.Proxy.dll"  Source="..\TfsAdminDashboardConsole\bin\$(var.Configuration)\Microsoft.TeamFoundation.WorkItemTracking.Proxy.dll"/>
-        <File Id="Microsoft.TeamFoundation.WorkItemTracking.WebApi.dll"  Source="..\TfsAdminDashboardConsole\bin\$(var.Configuration)\Microsoft.TeamFoundation.WorkItemTracking.WebApi.dll"/>
-        <File Id="Microsoft.VisualStudio.Services.Client.dll"  Source="..\TfsAdminDashboardConsole\bin\$(var.Configuration)\Microsoft.VisualStudio.Services.Client.dll"/>
-        <File Id="Microsoft.VisualStudio.Services.Common.dll"  Source="..\TfsAdminDashboardConsole\bin\$(var.Configuration)\Microsoft.VisualStudio.Services.Common.dll"/>
-        <File Id="Microsoft.VisualStudio.Services.WebApi.dll"  Source="..\TfsAdminDashboardConsole\bin\$(var.Configuration)\Microsoft.VisualStudio.Services.WebApi.dll"/>
-        <File Id="Microsoft.WindowsAzure.Configuration.dll"  Source="..\TfsAdminDashboardConsole\bin\$(var.Configuration)\Microsoft.WindowsAzure.Configuration.dll"/>
-        <File Id="Microsoft.WITDataStore32.dll"  Source="..\TfsAdminDashboardConsole\bin\$(var.Configuration)\Microsoft.WITDataStore32.dll"/>
-        <File Id="Microsoft.WITDataStore64.dll"  Source="..\TfsAdminDashboardConsole\bin\$(var.Configuration)\Microsoft.WITDataStore64.dll"/>
+       
         <File Id="MoreLinq.dll"  Source="..\TfsAdminDashboardConsole\bin\$(var.Configuration)\MoreLinq.dll"/>
         <File Id="Newtonsoft.Json.dll"  Source="..\TfsAdminDashboardConsole\bin\$(var.Configuration)\Newtonsoft.Json.dll"/>
         <File Id="NLog.dll"  Source="..\TfsAdminDashboardConsole\bin\$(var.Configuration)\NLog.dll"/>

@@ -13,7 +13,7 @@ namespace TFSAdminDashboard.DTO
         {
         }
 
-        public Guid InstanceId
+        public string InstanceId
         {
             get;
             set;

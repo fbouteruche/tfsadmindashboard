@@ -7,14 +7,7 @@ namespace TFSAdminDashboard.Models
 {
     public class ServerOverviewModel
     {
-
-        public string Name
-        {
-            get;
-            set;
-        }
-
-        public TimeZone TimeZone
+        public string Url
         {
             get;
             set;

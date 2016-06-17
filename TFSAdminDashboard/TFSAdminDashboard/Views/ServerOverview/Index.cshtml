@@ -4,15 +4,12 @@
 <div class="row">
     <div class="panel panel-primary">
         <div class="panel-heading">
-            Server Overview - @Model.Name - Time Zone : @Model.TimeZone.StandardName
+            Server Overview - @model.Url
         </div>
         <div class="panel-body">
             <ul class="nav nav-tabs" role="tablist">
                 <li class="active"><a href="#identityservice" role="tab" data-toggle="tab">Identity Service <img class="throb" id="identityThrobber" src="~/Img/ajax-loader.gif" /></a></li>
                 <li><a href="#projectcollections" role="tab" data-toggle="tab">Project Collections <img class="throb" id="collectionThrobber" src="~/Img/ajax-loader.gif" /></a></li>
-                <li><a href="#organizationcatalogservice" role="tab" data-toggle="tab">Organizational Catalog Service <img class="throb" id="organizationalThrobber" src="~/Img/ajax-loader.gif" /></a></li>
-                <li><a href="#infrastructurecatalogservice" role="tab" data-toggle="tab">Infrastructure Catalog Service <img class="throb" id="infraThrobber" src="~/Img/ajax-loader.gif" /></a></li>
-                <li><a href="#machineservice" role="tab" data-toggle="tab">Build Machines <img class="throb" id="machinesThrobber" src="~/Img/ajax-loader.gif" /></a></li>
             </ul>
             <ul class="nav nav-tabs" role="tablist">
                 
@@ -20,9 +17,6 @@
             <div class="tab-content">
                 <div class="tab-pane active" id="identityservice" data-action="@Url.Action("IdentityOverview")"></div>
                 <div class="tab-pane" id="projectcollections" data-action="@Url.Action("CollectionOverview")"></div>
-                <div class="tab-pane" id="organizationcatalogservice" data-action="@Url.Action("OrganizationalOverview")"></div>
-                <div class="tab-pane" id="infrastructurecatalogservice" data-action="@Url.Action("InfrastructureOverview")"></div>
-                <div class="tab-pane" id="machineservice" data-action="@Url.Action("MachineOverview")"></div>
             </div>
         </div>
     </div>

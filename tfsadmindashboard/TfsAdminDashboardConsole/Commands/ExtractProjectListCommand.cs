@@ -20,7 +20,7 @@ namespace TfsAdminDashboardConsole.Commands
         public void Execute(CommandLineOptions args)
         {
             logger.Info("Extract Project List in progress...");
-            ICollection<ProjectDefinition> projectList = TeamProjectHelper.GetAllProjects();
+            ICollection<ProjectDefinition> projectList = DashTeamProjectHelper.GetAllProjects();
 
             string fileName = FileNameTool.GetFileName("TfsExtractProjectList", args.OutputFormat);
 
