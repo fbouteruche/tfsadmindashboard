@@ -42,7 +42,7 @@ namespace TFSDataService.Tool
                 }
                 catch (WebException e)
                 {
-                    logger.Warn("Error encountered {0}, let's retry in a few seconds", e.Message);
+                    logger.Warn("GET Error encountered {0}, let's retry in a few seconds", e.Message);
                     request = null;
                     Thread.Sleep(2000);
                     request = CreateRequest(requestUrl);
@@ -61,27 +61,49 @@ namespace TFSDataService.Tool
 
         internal static string PostData(string postURL, string payload)
         {
-            var request = WebRequest.Create(postURL);
-            request.Credentials = new NetworkCredential(Environment.GetEnvironmentVariable("TfsLoginName", EnvironmentVariableTarget.User), Environment.GetEnvironmentVariable("TfsPassword", EnvironmentVariableTarget.User));
+            WebRequest request = CreateRequest(postURL);
 
             request.Method = "POST";
             request.ContentType = "application/json";
             request.ContentLength = payload.Length;
-            using (Stream webStream = request.GetRequestStream())
-            using (StreamWriter requestWriter = new StreamWriter(webStream, System.Text.Encoding.ASCII))
+
+            int tries = 0;
+
+            while (tries < 5)
             {
-                requestWriter.Write(payload);
+                ++tries;
+                try
+                {
+                    using (Stream webStream = request.GetRequestStream())
+                    using (StreamWriter requestWriter = new StreamWriter(webStream, System.Text.Encoding.ASCII))
+                    {
+                        requestWriter.Write(payload);
+                    }
+
+                    string json;
+                    var response = (HttpWebResponse)request.GetResponse();
+
+                    using (var sr = new StreamReader(response.GetResponseStream()))
+                    {
+                        json = sr.ReadToEnd();
+                    }
+
+                    return json;
+                }
+                catch (WebException e)
+                {
+                    logger.Warn("POST Error encountered {0}, let's retry in a few seconds", e.Message);
+                    request = null;
+                    Thread.Sleep(2000);
+                    request = CreateRequest(postURL);
+
+                    request.Method = "POST";
+                    request.ContentType = "application/json";
+                    request.ContentLength = payload.Length;
+                }
             }
 
-            string json;
-            var response = (HttpWebResponse)request.GetResponse();
-
-            using (var sr = new StreamReader(response.GetResponseStream()))
-            {
-                json = sr.ReadToEnd();
-            }
-
-            return json;
+            throw new Exception("To much network error");
         }
     }
 }
