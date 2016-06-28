@@ -10,12 +10,17 @@ namespace TfsAdminDashboardConsole
         static void Main(string[] args)
         {
             Logger logger = LogManager.GetCurrentClassLogger();
+            System.Diagnostics.Stopwatch sw = new System.Diagnostics.Stopwatch();
+
             try
             {
                 var options = new CommandLineOptions();
                 bool processed = false;
 
                 var assemblyName = System.Reflection.Assembly.GetExecutingAssembly().GetName();
+
+               
+                sw.Start();
 
                 logger.Info("{0} v.{1}", assemblyName.Name, assemblyName.Version);
 
@@ -57,6 +62,11 @@ namespace TfsAdminDashboardConsole
                 SendMail.SendException(e);
                 logger.Info("Mail sent");
                 throw;
+            }
+            finally
+            {
+                sw.Stop();
+                logger.Info("Extract processed in {0:hh\\:mm\\:ss}", sw.Elapsed);
             }
         }
     }
