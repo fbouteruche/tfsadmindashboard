@@ -57,8 +57,6 @@ namespace TfsAdminDashboardConsole
             }
             catch (Exception e)
             {
-                logger.Error<Exception>(e);
-
                 SendMail.SendException(e);
                 logger.Info("Mail sent");
                 throw;

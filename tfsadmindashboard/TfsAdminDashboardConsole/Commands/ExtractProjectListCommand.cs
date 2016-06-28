@@ -1,6 +1,7 @@
 ﻿using CsvHelper;
 using Newtonsoft.Json;
 using NLog;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using TFSAdminDashboard.DataAccess;
@@ -19,34 +20,42 @@ namespace TfsAdminDashboardConsole.Commands
 
         public void Execute(CommandLineOptions args)
         {
-            logger.Info("Extract Project List in progress...");
-            ICollection<ProjectDefinition> projectList = DashTeamProjectHelper.GetAllProjects();
-
-            string fileName = FileNameTool.GetFileName("TfsExtractProjectList", args.OutputFormat);
-
-            if (args.OutputFormat == "CSV")
+            try
             {
-                using (CsvWriter csv = new CsvWriter(new StreamWriter(fileName)))
+                logger.Info("Extract Project List in progress...");
+                ICollection<ProjectDefinition> projectList = DashTeamProjectHelper.GetAllProjects();
+
+                string fileName = FileNameTool.GetFileName("TfsExtractProjectList", args.OutputFormat);
+
+                if (args.OutputFormat == "CSV")
                 {
-                    csv.Configuration.RegisterClassMap<ProjectDefinitionCsvMap>();
-                    csv.WriteExcelSeparator();
-                    csv.WriteRecords(projectList);
+                    using (CsvWriter csv = new CsvWriter(new StreamWriter(fileName)))
+                    {
+                        csv.Configuration.RegisterClassMap<ProjectDefinitionCsvMap>();
+                        csv.WriteExcelSeparator();
+                        csv.WriteRecords(projectList);
+                    }
                 }
-            }
-            else
-            {
-                string json = JsonConvert.SerializeObject(projectList);
-                File.WriteAllText(fileName, json);
-            }
+                else
+                {
+                    string json = JsonConvert.SerializeObject(projectList);
+                    File.WriteAllText(fileName, json);
+                }
 
-            if(args.UploadSFTP)
-            {
-                logger.Info("STFP Upload for file {1}", fileName);
-                ISFTPService sftp = new SFTPService();
-                sftp.UploadFile(fileName, args.SFTPAuthentMode.ToEnum<AuthentMethod>());
-            }
+                if (args.UploadSFTP)
+                {
+                    logger.Info("STFP Upload for file {1}", fileName);
+                    ISFTPService sftp = new SFTPService();
+                    sftp.UploadFile(fileName, args.SFTPAuthentMode.ToEnum<AuthentMethod>());
+                }
 
-            logger.Info("Extract Project done");
+                logger.Info("Extract Project done");
+            }
+            catch (Exception e)
+            {
+                logger.Error<Exception>(e);
+                throw;
+            }
         }
     }
 }
