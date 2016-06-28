@@ -1,4 +1,5 @@
 ﻿using NLog;
+using PostMan;
 using System;
 using TfsAdminDashboardConsole.Commands;
 
@@ -52,6 +53,9 @@ namespace TfsAdminDashboardConsole
             catch (Exception e)
             {
                 logger.Error<Exception>(e);
+
+                SendMail.SendException(e);
+                logger.Info("Mail sent");
                 throw;
             }
         }

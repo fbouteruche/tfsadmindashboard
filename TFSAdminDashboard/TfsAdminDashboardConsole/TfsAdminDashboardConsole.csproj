@@ -271,6 +271,10 @@
     <None Include="variable.ps1" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\PostMan\PostMan.csproj">
+      <Project>{debb7f6b-d121-44d1-87a0-fe03ec98c06f}</Project>
+      <Name>PostMan</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TFSAdminDahsboard.DataAccess\TFSAdminDashboard.DataAccess.csproj">
       <Project>{ee7ff479-448b-422e-a858-5dddbaf09766}</Project>
       <Name>TFSAdminDashboard.DataAccess</Name>

@@ -61,6 +61,10 @@
         <File Id="TFSAdminDashboard.DataAccess.pdb"  Source="..\TfsAdminDashboardConsole\bin\$(var.Configuration)\TFSAdminDashboard.DataAccess.pdb"/>
         <File Id="TFSAdminDashboard.DTO.pdb"  Source="..\TfsAdminDashboardConsole\bin\$(var.Configuration)\TFSAdminDashboard.DTO.pdb"/>
         <File Id="TfsAdminDashboardConsole.pdb"  Source="..\TfsAdminDashboardConsole\bin\$(var.Configuration)\TfsAdminDashboardConsole.pdb"/>
+
+        <File Id="PostMan.pdb"  Source="..\TfsAdminDashboardConsole\bin\$(var.Configuration)\PostMan.pdb"/>
+        <File Id="PostMan.dll"  Source="..\TfsAdminDashboardConsole\bin\$(var.Configuration)\PostMan.dll"/>
+        
       </Component>
       <Component Id="NlogConfig" Guid="*" Permanent="yes">
         <File Id="NLog.config"  Source="..\TfsAdminDashboardConsole\bin\$(var.Configuration)\NLog.config"/>
