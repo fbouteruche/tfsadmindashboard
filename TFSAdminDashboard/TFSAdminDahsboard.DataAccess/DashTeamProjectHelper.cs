@@ -108,6 +108,10 @@ namespace TFSAdminDashboard.DataAccess
                         }
                     }
 
+
+                    // get Wit Data
+                    projectDefinition.WorkItemDefinitionCollection = DashWorkItemHelper.FeedWorkItemData(currCollection.name, project.name);
+
                     // get VCS data
                     projectDefinition.isGitBased = DashGitHelper.isGit(currCollection.name, project.name);
                     projectDefinition.isTFVCBased = DashVersionControlHelper.isTFVC(currCollection.name, project.name);
