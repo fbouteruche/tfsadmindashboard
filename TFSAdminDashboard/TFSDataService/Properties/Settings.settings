@@ -1,0 +1,12 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="TFSDataService.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="BuildUrl" Type="System.String" Scope="User">
+      <Value Profile="(Default)">{0}/{1}/{2}/_apis/build/builds?api-version=2.0</Value>
+    </Setting>
+    <Setting Name="BuildDefinitionUrl" Type="System.String" Scope="User">
+      <Value Profile="(Default)">{0}/{1}/{2}/_apis/build/definitions?api-version=2.0</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

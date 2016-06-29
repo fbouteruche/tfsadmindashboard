@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using TFSDataService.JsonBusinessObjects;
+using TFSDataService.Properties;
 using TFSDataService.Tool;
 
 namespace TFSDataService
@@ -16,7 +17,7 @@ namespace TFSDataService
 
         public static List<Build> Builds(string collectionName, string projectName)
         {
-            string buildsUrl = string.Format("{0}/{1}/{2}/_apis/build/builds?api-version=2.0", tfsServer, collectionName, projectName);
+            string buildsUrl = string.Format(Settings.Default.BuildUrl, tfsServer, collectionName, projectName);
 
             string json = JsonRequest.GetRestResponse(buildsUrl);
 
@@ -27,7 +28,7 @@ namespace TFSDataService
 
         public static List<BuildDefinition> BuildDefinitions(string collectionName, string projectName)
         {
-            string buildsDefUrl = string.Format("{0}/{1}/{2}/_apis/build/definitions?api-version=2.0", tfsServer, collectionName, projectName);
+            string buildsDefUrl = string.Format(Settings.Default.BuildDefinitionUrl, tfsServer, collectionName, projectName);
 
             string json = JsonRequest.GetRestResponse(buildsDefUrl);
 
