@@ -16,7 +16,7 @@ namespace TFSDataService
 
         public static DateTime FirstDate(string collectionName, string projectName)
         {
-            List<GitCommit> commits = Commits(collectionName, projectName);
+            List<GitCommit> commits = AllCommits(collectionName, projectName);
 
             if (commits.Count > 0)
             {
@@ -27,6 +27,25 @@ namespace TFSDataService
             {
                 return DateTime.MinValue;
             }
+        }
+
+        private static List<GitCommit> AllCommits(string collectionName, string projectName)
+        {
+            List<GitCommit> ans = new List<GitCommit>();
+            var gitRepos = Repositories(collectionName, projectName);
+
+            foreach (GitRepository gitR in gitRepos)
+            {
+                string gitCommitsUrl = string.Format(Settings.Default.GitCommitUrl, tfsServer, collectionName, gitR.id);
+
+                string json = JsonRequest.GetRestResponse(gitCommitsUrl);
+
+                GitCommitRootobject o = JsonConvert.DeserializeObject<GitCommitRootobject>(json);
+
+                ans.AddRange(o.value.ToList());
+            }
+
+            return ans;
         }
 
         public static List<GitCommit> Commits(string collectionName, string projectName, string repoName = null)

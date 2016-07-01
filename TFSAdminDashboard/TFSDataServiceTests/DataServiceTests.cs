@@ -70,6 +70,12 @@ namespace TFSDataService.Tests
         }
 
         [Test()]
+        public void RestGitFirstDateTest2()
+        {
+            Assert.IsTrue(DataServiceGit.FirstDate("DT", "almnetDocs") != DateTime.MinValue);
+        }
+
+        [Test()]
         public void RestGetCollectionsTest()
         {
             var spy = DataServiceTeamProjects.Collections();
