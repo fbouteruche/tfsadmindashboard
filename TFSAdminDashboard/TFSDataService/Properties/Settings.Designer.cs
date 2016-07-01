@@ -94,5 +94,41 @@ namespace TFSDataService.Properties {
                 this["GitRepoUrl"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("{0}/_apis/projectcollections?api-version=1.0")]
+        public string ProjectCollectionUrl {
+            get {
+                return ((string)(this["ProjectCollectionUrl"]));
+            }
+            set {
+                this["ProjectCollectionUrl"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("{0}/_apis/projectcollections/{1}?api-version=1.0")]
+        public string TeamProjectCollectionUrl {
+            get {
+                return ((string)(this["TeamProjectCollectionUrl"]));
+            }
+            set {
+                this["TeamProjectCollectionUrl"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("{0}/{1}/_apis/projects?api-version=1.0")]
+        public string TeamProjectUrl {
+            get {
+                return ((string)(this["TeamProjectUrl"]));
+            }
+            set {
+                this["TeamProjectUrl"] = value;
+            }
+        }
     }
 }

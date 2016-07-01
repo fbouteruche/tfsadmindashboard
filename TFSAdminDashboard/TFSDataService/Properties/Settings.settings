@@ -20,5 +20,14 @@
     <Setting Name="GitRepoUrl" Type="System.String" Scope="User">
       <Value Profile="(Default)">{0}/{1}/{2}/_apis/git/repositories?api-version=1.0</Value>
     </Setting>
+    <Setting Name="ProjectCollectionUrl" Type="System.String" Scope="User">
+      <Value Profile="(Default)">{0}/_apis/projectcollections?api-version=1.0</Value>
+    </Setting>
+    <Setting Name="TeamProjectCollectionUrl" Type="System.String" Scope="User">
+      <Value Profile="(Default)">{0}/_apis/projectcollections/{1}?api-version=1.0</Value>
+    </Setting>
+    <Setting Name="TeamProjectUrl" Type="System.String" Scope="User">
+      <Value Profile="(Default)">{0}/{1}/_apis/projects?api-version=1.0</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

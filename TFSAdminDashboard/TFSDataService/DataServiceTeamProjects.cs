@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using TFSDataService.JsonBusinessObjects;
+using TFSDataService.Properties;
 using TFSDataService.Tool;
 
 namespace TFSDataService
@@ -15,7 +16,7 @@ namespace TFSDataService
         {
             List<TeamProjectCollection> ans = new List<TeamProjectCollection>();
 
-            string surfacetpcUrl = string.Format("{0}/_apis/projectcollections", tfsServer);
+            string surfacetpcUrl = string.Format(Settings.Default.ProjectCollectionUrl, tfsServer);
 
             string json = JsonRequest.GetRestResponse(surfacetpcUrl);
 
@@ -24,7 +25,7 @@ namespace TFSDataService
             foreach (SurfaceTeamProjectCollection stpc in o.value.ToList())
             {
 
-                string tpcUrl = string.Format("{0}/_apis/projectcollections/{1}", tfsServer, stpc.id);
+                string tpcUrl = string.Format(Settings.Default.TeamProjectCollectionUrl, tfsServer, stpc.id);
                 string json2 = JsonRequest.GetRestResponse(tpcUrl);
 
                 ans.Add(JsonConvert.DeserializeObject<TeamProjectCollection>(json2));
@@ -35,7 +36,7 @@ namespace TFSDataService
 
         public static List<TeamProject> Projects(string collection)
         {
-            string tpcUrl = string.Format("{0}/{1}/_apis/projects?api-version=1.0", tfsServer, collection);
+            string tpcUrl = string.Format(Settings.Default.TeamProjectUrl, tfsServer, collection);
 
             string json = JsonRequest.GetRestResponse(tpcUrl);
 
