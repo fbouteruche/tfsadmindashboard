@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TFSDataService.JsonBusinessObjects;
+using TFSDataService.Properties;
 using TFSDataService.Tool;
 
 namespace TFSDataService
@@ -17,7 +18,7 @@ namespace TFSDataService
 
         public static List<Team> List(string collection, string projectName)
         {
-            string teamscUrl = string.Format("{0}/{1}/_apis/projects/{2}/teams?api-version=1.0", tfsServer, collection, projectName);
+            string teamscUrl = string.Format(Settings.Default.TeamUrl, tfsServer, collection, projectName);
 
             string json = JsonRequest.GetRestResponse(teamscUrl);
 
@@ -33,7 +34,7 @@ namespace TFSDataService
 
             if (defaultTeam != null)
             {
-                string surfaceteamMembersUrl = string.Format("{0}/{1}/_apis/projects/{2}/teams/{3}/members", tfsServer, collection, projectName, defaultTeam.id);
+                string surfaceteamMembersUrl = string.Format(Settings.Default.TeamMemberUrl, tfsServer, collection, projectName, defaultTeam.id);
 
                 string json = JsonRequest.GetRestResponse(surfaceteamMembersUrl);
                 SurfaceTeamMemberRootobject o = JsonConvert.DeserializeObject<SurfaceTeamMemberRootobject>(json);

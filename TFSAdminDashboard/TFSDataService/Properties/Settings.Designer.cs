@@ -130,5 +130,29 @@ namespace TFSDataService.Properties {
                 this["TeamProjectUrl"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("{0}/{1}/_apis/projects/{2}/teams?api-version=1.0")]
+        public string TeamUrl {
+            get {
+                return ((string)(this["TeamUrl"]));
+            }
+            set {
+                this["TeamUrl"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("{0}/{1}/_apis/projects/{2}/teams/{3}/members?api-version=1.0")]
+        public string TeamMemberUrl {
+            get {
+                return ((string)(this["TeamMemberUrl"]));
+            }
+            set {
+                this["TeamMemberUrl"] = value;
+            }
+        }
     }
 }
