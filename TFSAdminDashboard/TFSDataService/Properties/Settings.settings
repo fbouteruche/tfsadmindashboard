@@ -8,5 +8,17 @@
     <Setting Name="BuildDefinitionUrl" Type="System.String" Scope="User">
       <Value Profile="(Default)">{0}/{1}/{2}/_apis/build/definitions?api-version=2.0</Value>
     </Setting>
+    <Setting Name="GitBranchUrl" Type="System.String" Scope="User">
+      <Value Profile="(Default)">{0}/{1}/_apis/git/repositories/{2}/refs/heads?api-version=1.0</Value>
+    </Setting>
+    <Setting Name="GitCommitUrl" Type="System.String" Scope="User">
+      <Value Profile="(Default)">{0}/{1}/_apis/git/repositories/{2}/commits?api-version=1.0</Value>
+    </Setting>
+    <Setting Name="GitTagUrl" Type="System.String" Scope="User">
+      <Value Profile="(Default)">{0}/{1}/_apis/git/repositories/{2}/refs/tags?api-version=1.0</Value>
+    </Setting>
+    <Setting Name="GitRepoUrl" Type="System.String" Scope="User">
+      <Value Profile="(Default)">{0}/{1}/{2}/_apis/git/repositories?api-version=1.0</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

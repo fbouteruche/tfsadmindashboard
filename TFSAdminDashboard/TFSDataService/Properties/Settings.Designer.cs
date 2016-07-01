@@ -46,5 +46,53 @@ namespace TFSDataService.Properties {
                 this["BuildDefinitionUrl"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("{0}/{1}/_apis/git/repositories/{2}/refs/heads?api-version=1.0")]
+        public string GitBranchUrl {
+            get {
+                return ((string)(this["GitBranchUrl"]));
+            }
+            set {
+                this["GitBranchUrl"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("{0}/{1}/_apis/git/repositories/{2}/commits?api-version=1.0")]
+        public string GitCommitUrl {
+            get {
+                return ((string)(this["GitCommitUrl"]));
+            }
+            set {
+                this["GitCommitUrl"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("{0}/{1}/_apis/git/repositories/{2}/refs/tags?api-version=1.0")]
+        public string GitTagUrl {
+            get {
+                return ((string)(this["GitTagUrl"]));
+            }
+            set {
+                this["GitTagUrl"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("{0}/{1}/{2}/_apis/git/repositories?api-version=1.0")]
+        public string GitRepoUrl {
+            get {
+                return ((string)(this["GitRepoUrl"]));
+            }
+            set {
+                this["GitRepoUrl"] = value;
+            }
+        }
     }
 }

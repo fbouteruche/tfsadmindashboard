@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TFSDataService.JsonBusinessObjects;
+using TFSDataService.Properties;
 using TFSDataService.Tool;
 
 namespace TFSDataService
@@ -45,7 +46,7 @@ namespace TFSDataService
 
             if (gitR != null)
             {
-                string gitCommitsUrl = string.Format("{0}/{1}/_apis/git/repositories/{2}/commits?api-version=1.0", tfsServer, collectionName, gitR.id);
+                string gitCommitsUrl = string.Format(Settings.Default.GitCommitUrl, tfsServer, collectionName, gitR.id);
 
                 string json = JsonRequest.GetRestResponse(gitCommitsUrl);
 
@@ -62,7 +63,7 @@ namespace TFSDataService
             var gitRepos = Repositories(collectionName, projectName);
             GitRepository gitR = gitRepos.First(x => x.name == repoName);
 
-            string gitBranchesURL = string.Format("{0}/{1}/_apis/git/repositories/{2}/refs/heads?api-version=1.0", tfsServer, collectionName, gitR.id);
+            string gitBranchesURL = string.Format(Settings.Default.GitBranchUrl, tfsServer, collectionName, gitR.id);
 
             string json = JsonRequest.GetRestResponse(gitBranchesURL);
 
@@ -76,9 +77,9 @@ namespace TFSDataService
             var gitRepos = Repositories(collectionName, projectName);
             GitRepository gitR = gitRepos.First(x => x.name == repoName);
 
-            string gitBranchesURL = string.Format("{0}/{1}/_apis/git/repositories/{2}/refs/tags?api-version=1.0", tfsServer, collectionName, gitR.id);
+            string gitTagsURL = string.Format(Settings.Default.GitTagUrl, tfsServer, collectionName, gitR.id);
 
-            string json = JsonRequest.GetRestResponse(gitBranchesURL);
+            string json = JsonRequest.GetRestResponse(gitTagsURL);
 
             GitTagRootobject o = JsonConvert.DeserializeObject<GitTagRootobject>(json);
 
@@ -87,7 +88,7 @@ namespace TFSDataService
 
         public static List<GitRepository> Repositories(string collectionName, string projectName)
         {
-            string gitReposURL = string.Format("{0}/{1}/{2}/_apis/git/repositories", tfsServer, collectionName, projectName);
+            string gitReposURL = string.Format(Settings.Default.GitRepoUrl, tfsServer, collectionName, projectName);
 
             string json = JsonRequest.GetRestResponse(gitReposURL);
 
