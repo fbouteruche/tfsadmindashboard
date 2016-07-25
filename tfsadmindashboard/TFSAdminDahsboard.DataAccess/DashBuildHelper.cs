@@ -35,7 +35,12 @@ namespace TFSAdminDashboard.DataAccess
                 else
                     buildDef.LastFail = DateTime.MinValue;
 
-                buildDef.Health = builds.Take(5).Count(x => x.result == "succeeded") * 20;
+                double succeeded = builds.Take(5).Count(x => x.result == "succeeded");
+                int buildCount = builds.Count() >= 5 ? 5 : builds.Count();
+                if (builds.Any())
+                    buildDef.Health = (int) (succeeded / buildCount * 100);
+                else
+                    buildDef.Health = 0;
 
                 buildDefinitionCollection.Add(buildDef);
             }
