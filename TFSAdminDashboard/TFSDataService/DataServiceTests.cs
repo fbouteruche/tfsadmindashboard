@@ -10,6 +10,11 @@ namespace TFSDataService
     {
         private static string tfsServer = Environment.GetEnvironmentVariable("TfsUrl", EnvironmentVariableTarget.User);
 
+        static DataServiceTests()
+        {
+            DataServiceBase.CheckVariables();
+        }
+
         // TODO: Expose also test results
 
         public static List<TestPlan> Plans(string collectionName, string projectName)

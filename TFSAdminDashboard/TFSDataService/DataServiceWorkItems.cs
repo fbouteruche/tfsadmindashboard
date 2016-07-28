@@ -11,6 +11,11 @@ namespace TFSDataService
     {
         private static string tfsServer = Environment.GetEnvironmentVariable("TfsUrl", EnvironmentVariableTarget.User);
 
+        static DataServiceWorkItems()
+        {
+            DataServiceBase.CheckVariables();
+        }
+
         public static List<WorkItemType> Types(string collectionName, string projectName)
         {
             string witTypesURL = string.Format("{0}/{1}/{2}/_apis/wit/workItemTypes", tfsServer, collectionName, projectName);

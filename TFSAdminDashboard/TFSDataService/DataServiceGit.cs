@@ -14,6 +14,11 @@ namespace TFSDataService
     {
         private static string tfsServer = Environment.GetEnvironmentVariable("TfsUrl", EnvironmentVariableTarget.User);
 
+        static DataServiceGit()
+        {
+            DataServiceBase.CheckVariables();
+        }
+
         public static DateTime FirstDate(string collectionName, string projectName)
         {
             List<GitCommit> commits = AllCommits(collectionName, projectName);

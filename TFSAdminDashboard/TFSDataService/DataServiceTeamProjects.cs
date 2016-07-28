@@ -12,6 +12,11 @@ namespace TFSDataService
     {
         private static string tfsServer = Environment.GetEnvironmentVariable("TfsUrl", EnvironmentVariableTarget.User);
 
+        static DataServiceTeamProjects()
+        {
+            DataServiceBase.CheckVariables();
+        }
+
         public static List<TeamProjectCollection> Collections()
         {
             List<TeamProjectCollection> ans = new List<TeamProjectCollection>();

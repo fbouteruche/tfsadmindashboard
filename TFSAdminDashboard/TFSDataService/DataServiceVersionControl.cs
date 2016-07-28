@@ -13,6 +13,11 @@ namespace TFSDataService
     {
         private static string tfsServer = Environment.GetEnvironmentVariable("TfsUrl", EnvironmentVariableTarget.User);
 
+        static DataServiceVersionControl()
+        {
+            DataServiceBase.CheckVariables();
+        }
+
         public static List<TFVCBranch> Branches(string collectionName)
         {
             string tfvcBranchesURL = string.Format("{0}/{1}/_apis/tfvc/branches", tfsServer, collectionName);

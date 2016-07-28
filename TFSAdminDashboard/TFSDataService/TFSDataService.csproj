@@ -50,6 +50,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataServiceBase.cs" />
     <Compile Include="DataServiceBuild.cs" />
     <Compile Include="DataServiceGit.cs" />
     <Compile Include="DataServiceTeamProjects.cs" />

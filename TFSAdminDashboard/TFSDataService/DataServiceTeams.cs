@@ -16,6 +16,11 @@ namespace TFSDataService
         private static string tfsServer = Environment.GetEnvironmentVariable("TfsUrl", EnvironmentVariableTarget.User);
         private static Logger logger = LogManager.GetCurrentClassLogger();
 
+        static DataServiceTeams()
+        {
+            DataServiceBase.CheckVariables();
+        }
+
         public static List<Team> List(string collection, string projectName)
         {
             string teamscUrl = string.Format(Settings.Default.TeamUrl, tfsServer, collection, projectName);

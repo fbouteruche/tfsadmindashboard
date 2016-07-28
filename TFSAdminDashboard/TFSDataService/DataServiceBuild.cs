@@ -15,6 +15,11 @@ namespace TFSDataService
     {
         private static string tfsServer = Environment.GetEnvironmentVariable("TfsUrl", EnvironmentVariableTarget.User);
 
+        static DataServiceBuild()
+        {
+            DataServiceBase.CheckVariables();
+        }
+
         public static List<Build> Builds(string collectionName, string projectName)
         {
             string buildsUrl = string.Format(Settings.Default.BuildUrl, tfsServer, collectionName, projectName);
