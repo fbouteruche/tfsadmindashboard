@@ -23,135 +23,102 @@ namespace TFSDataService.Properties {
             }
         }
         
-        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("{0}/{1}/{2}/_apis/build/builds?api-version=2.0")]
         public string BuildUrl {
             get {
                 return ((string)(this["BuildUrl"]));
             }
-            set {
-                this["BuildUrl"] = value;
-            }
         }
         
-        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("{0}/{1}/{2}/_apis/build/definitions?api-version=2.0")]
         public string BuildDefinitionUrl {
             get {
                 return ((string)(this["BuildDefinitionUrl"]));
             }
-            set {
-                this["BuildDefinitionUrl"] = value;
-            }
         }
         
-        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("{0}/{1}/_apis/git/repositories/{2}/refs/heads?api-version=1.0")]
         public string GitBranchUrl {
             get {
                 return ((string)(this["GitBranchUrl"]));
             }
-            set {
-                this["GitBranchUrl"] = value;
-            }
         }
         
-        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("{0}/{1}/_apis/git/repositories/{2}/commits?api-version=1.0")]
         public string GitCommitUrl {
             get {
                 return ((string)(this["GitCommitUrl"]));
             }
-            set {
-                this["GitCommitUrl"] = value;
-            }
         }
         
-        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("{0}/{1}/_apis/git/repositories/{2}/refs/tags?api-version=1.0")]
         public string GitTagUrl {
             get {
                 return ((string)(this["GitTagUrl"]));
             }
-            set {
-                this["GitTagUrl"] = value;
-            }
         }
         
-        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("{0}/{1}/{2}/_apis/git/repositories?api-version=1.0")]
         public string GitRepoUrl {
             get {
                 return ((string)(this["GitRepoUrl"]));
             }
-            set {
-                this["GitRepoUrl"] = value;
-            }
         }
         
-        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("{0}/_apis/projectcollections?api-version=1.0")]
         public string ProjectCollectionUrl {
             get {
                 return ((string)(this["ProjectCollectionUrl"]));
             }
-            set {
-                this["ProjectCollectionUrl"] = value;
-            }
         }
         
-        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("{0}/_apis/projectcollections/{1}?api-version=1.0")]
         public string TeamProjectCollectionUrl {
             get {
                 return ((string)(this["TeamProjectCollectionUrl"]));
             }
-            set {
-                this["TeamProjectCollectionUrl"] = value;
-            }
         }
         
-        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("{0}/{1}/_apis/projects?api-version=1.0")]
         public string TeamProjectUrl {
             get {
                 return ((string)(this["TeamProjectUrl"]));
             }
-            set {
-                this["TeamProjectUrl"] = value;
-            }
         }
         
-        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("{0}/{1}/_apis/projects/{2}/teams?api-version=1.0")]
         public string TeamUrl {
             get {
                 return ((string)(this["TeamUrl"]));
             }
-            set {
-                this["TeamUrl"] = value;
-            }
         }
         
-        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("{0}/{1}/_apis/projects/{2}/teams/{3}/members?api-version=1.0")]
         public string TeamMemberUrl {
             get {
                 return ((string)(this["TeamMemberUrl"]));
-            }
-            set {
-                this["TeamMemberUrl"] = value;
             }
         }
         
