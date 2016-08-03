@@ -90,6 +90,25 @@ namespace TFSDataService.Tests
         }
 
         [Test()]
+        public void RestGetBuildDefinitionTemplatesTest()
+        {
+            Assert.IsTrue(DataServiceBuild.BuildDefinitionTemplates("DT", "DemoCMMI").Count(x => x.name.Contains("OAB")) > 0);
+        }
+
+        [Test()]
+        public void RestCreateBuildDefinitionTemplatesTest()
+        {
+            var build  = DataServiceBuild.BuildDefinitionTemplates("DT", "DemoCMMI").Where(x => x.name.Contains("OAB")).FirstOrDefault();
+
+            build.id = "myCustomTemplate";
+            build.name = "Visual Studio OAB modif";
+
+            DataServiceBuild.SetBuildDefinitionTemplate("DT", "DemoCMMI", build);
+        }
+
+
+
+        [Test()]
         public void RestGetBuildDefinitionTest()
         {
             Assert.IsTrue(DataServiceBuild.BuildDefinitions("DT", "DemoCMMI").Count(x => x.name == "VNext_CI" || x.name == "CI-DemoASP") == 2);

@@ -154,5 +154,29 @@ namespace TFSDataService.Properties {
                 this["TeamMemberUrl"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("{0}/{1}/{2}/_apis/build/definitions/templates?api-version=2.0")]
+        public string BuildDefinitionTemplateUrl {
+            get {
+                return ((string)(this["BuildDefinitionTemplateUrl"]));
+            }
+            set {
+                this["BuildDefinitionTemplateUrl"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("{0}/{1}/{2}/_apis/build/definitions/templates/{3}?api-version=2.0")]
+        public string BuildDefinitionTemplatePostUrl {
+            get {
+                return ((string)(this["BuildDefinitionTemplatePostUrl"]));
+            }
+            set {
+                this["BuildDefinitionTemplatePostUrl"] = value;
+            }
+        }
     }
 }

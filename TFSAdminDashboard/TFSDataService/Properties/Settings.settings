@@ -35,5 +35,11 @@
     <Setting Name="TeamMemberUrl" Type="System.String" Scope="User">
       <Value Profile="(Default)">{0}/{1}/_apis/projects/{2}/teams/{3}/members?api-version=1.0</Value>
     </Setting>
+    <Setting Name="BuildDefinitionTemplateUrl" Type="System.String" Scope="User">
+      <Value Profile="(Default)">{0}/{1}/{2}/_apis/build/definitions/templates?api-version=2.0</Value>
+    </Setting>
+    <Setting Name="BuildDefinitionTemplatePostUrl" Type="System.String" Scope="User">
+      <Value Profile="(Default)">{0}/{1}/{2}/_apis/build/definitions/templates/{3}?api-version=2.0</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
