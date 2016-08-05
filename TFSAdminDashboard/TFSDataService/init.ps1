@@ -1,3 +1,5 @@
+Write-Host "Check for environment variables"
+
 $ko = $false;
 
 if(![environment]::GetEnvironmentVariable("TfsUrl")) {
@@ -30,3 +32,5 @@ if($ko -eq $true) {
         [Environment]::SetEnvironmentVariable("TfsPassword", (Read-Host -Prompt TfsPassword), "Machine")
     }
 }
+
+Write-Host "Environment variables set"
