@@ -1,4 +1,4 @@
-"This packages assumes that the following environment variables are declared:
+Write-Host "This packages assumes that the following environment variables are declared:
 * TfsUrl (like 'http://tfsurl:8080/tfs')
 * TfsLoginName (With AD prefix if necessary)
 * TfsPassword (unencrypted, will have to fix that)
