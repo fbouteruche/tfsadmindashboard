@@ -163,3 +163,4 @@ tfsadmindashboard/.vs/config/applicationhost.config
 /TFSAdminDashboard/TFSAdminDashboard.Model/Properties/VersionAssemblyInfo.cs
 /TFSAdminDashboard/TFSDataService/Properties/VersionAssemblyInfo.cs
 /TFSAdminDashboard/TfsAdminDashboardCommands/Properties/VersionAssemblyInfo.cs
+*.nupkg
