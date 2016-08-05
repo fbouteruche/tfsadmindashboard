@@ -10,10 +10,6 @@
     <description>$description$</description>
     <copyright>Copyright 2016</copyright>
      <tags>TFS REST</tags>
-    <dependencies>
-        <dependency  id="Newtonsoft.Json" version="8.0.3"/>
-		<dependency id="NLog" version="4.3.4" />
-    </dependencies>
   </metadata>
   <files>
 	<file src="init.ps1" target="tools\init.ps1" />
