@@ -27,35 +27,22 @@ namespace TFSDataService
 
             ProcessRootobject o = JsonConvert.DeserializeObject<ProcessRootobject>(json);
 
-            return o?.value.ToList();
+            return o.value.ToList();
 
         }
 
-        //public static List<TeamProject> Projects(string collection)
-        //{
-        //    string tpcUrl = string.Format(Settings.Default.TeamProjectUrl, tfsServer, collection);
+        public static Process Process(string collection, string processId)
+        {
 
-        //    string json = JsonRequest.GetRestResponse(tpcUrl);
+            string processUrl = string.Format(Settings.Default.SingleProcessUrl, tfsServer, collection, processId);
 
-        //    TeampProjectRootobject o = JsonConvert.DeserializeObject<TeampProjectRootobject>(json);
+            string json = JsonRequest.GetRestResponse(processUrl);
 
-        //    return o.value.ToList();
-        //}
+            Process o = JsonConvert.DeserializeObject<Process>(json);
 
-        //public static List<TeamProject> AllProjects()
-        //{
-        //    List<TeamProject> ans = new List<TeamProject>();
+            return o;
 
-        //    foreach (var collection in Collections())
-        //    {
-        //        foreach(TeamProject p in Projects(collection.name))
-        //        {
-        //            p.collectionName = collection.name;
-        //            ans.Add(p);
-        //        }
-        //    }
+        }
 
-        //    return ans;
-        //}
     }
 }

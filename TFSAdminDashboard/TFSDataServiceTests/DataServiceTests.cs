@@ -89,6 +89,13 @@ namespace TFSDataService.Tests
             Assert.IsTrue(DataServiceProcesses.Processes("Default").Count(x => x.name == "CMMI OAB 1.11") == 1);
         }
 
+        [Test()]
+        public void RestGetProjectTemplateTest()
+        {
+            var spy = DataServiceProcesses.Process("Default", "5277c09f-f6d4-4774-ae28-0f04df432d3e");
+            Assert.IsTrue(DataServiceProcesses.Process("Default", "5277c09f-f6d4-4774-ae28-0f04df432d3e").name == "CMMI OAB 1.11");
+        }
+
 
         [Test()]
         public void RestGetProjectsTest()

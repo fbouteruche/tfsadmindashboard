@@ -44,5 +44,8 @@
     <Setting Name="ProcessesUrl" Type="System.String" Scope="Application">
       <Value Profile="(Default)">{0}/{1}/_apis/process/processes?api-version=1.0</Value>
     </Setting>
+    <Setting Name="SingleProcessUrl" Type="System.String" Scope="User">
+      <Value Profile="(Default)">{0}/{1}/_apis/process/processes/{2}?api-version=1.0</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

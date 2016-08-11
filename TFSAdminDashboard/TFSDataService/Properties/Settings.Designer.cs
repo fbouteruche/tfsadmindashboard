@@ -148,5 +148,17 @@ namespace TFSDataService.Properties {
                 return ((string)(this["ProcessesUrl"]));
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("{0}/{1}/_apis/process/processes/{2}?api-version=1.0")]
+        public string SingleProcessUrl {
+            get {
+                return ((string)(this["SingleProcessUrl"]));
+            }
+            set {
+                this["SingleProcessUrl"] = value;
+            }
+        }
     }
 }
