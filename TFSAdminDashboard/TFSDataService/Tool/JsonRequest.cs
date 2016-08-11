@@ -49,7 +49,7 @@ namespace TFSDataService.Tool
                 }
             }
 
-            throw new Exception("To much network error");
+            throw new Exception("Too much network error");
         }
 
         private static WebRequest CreateRequest(string requestUrl)
@@ -103,7 +103,7 @@ namespace TFSDataService.Tool
                 }
             }
 
-            throw new Exception("To much network error");
+            throw new Exception("Too much network error");
         }
     }
 }

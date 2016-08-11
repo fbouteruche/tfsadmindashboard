@@ -53,6 +53,7 @@
     <Compile Include="DataServiceBase.cs" />
     <Compile Include="DataServiceBuild.cs" />
     <Compile Include="DataServiceGit.cs" />
+    <Compile Include="DataServiceProcesses.cs" />
     <Compile Include="DataServiceTeamProjects.cs" />
     <Compile Include="DataServiceTeams.cs" />
     <Compile Include="DataServiceTests.cs" />
@@ -65,6 +66,7 @@
     <Compile Include="JsonBusinessObjects\GitCommit.cs" />
     <Compile Include="JsonBusinessObjects\GitRepository.cs" />
     <Compile Include="JsonBusinessObjects\GitTags.cs" />
+    <Compile Include="JsonBusinessObjects\Process.cs" />
     <Compile Include="JsonBusinessObjects\SurfaceTeamProjectCollections.cs" />
     <Compile Include="JsonBusinessObjects\SurfaceTeamMember.cs" />
     <Compile Include="JsonBusinessObjects\TeamMember.cs" />

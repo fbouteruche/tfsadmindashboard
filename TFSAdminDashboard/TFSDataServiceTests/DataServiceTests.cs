@@ -82,6 +82,13 @@ namespace TFSDataService.Tests
             Assert.IsTrue(DataServiceTeamProjects.Collections().Count(x => x.name == "DT") == 1);
         }
 
+        [Test()]
+        public void RestGetProjectTemplatesTest()
+        {
+            var spy = DataServiceProcesses.Processes("Default");
+            Assert.IsTrue(DataServiceProcesses.Processes("Default").Count(x => x.name == "CMMI OAB 1.11") == 1);
+        }
+
 
         [Test()]
         public void RestGetProjectsTest()

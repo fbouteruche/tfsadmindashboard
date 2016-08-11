@@ -139,5 +139,14 @@ namespace TFSDataService.Properties {
                 return ((string)(this["BuildDefinitionTemplatePostUrl"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("{0}/{1}/_apis/process/processes?api-version=1.0")]
+        public string ProcessesUrl {
+            get {
+                return ((string)(this["ProcessesUrl"]));
+            }
+        }
     }
 }
