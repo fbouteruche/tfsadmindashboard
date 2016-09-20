@@ -86,6 +86,11 @@ namespace TFSAdminDashboard.DataAccess
                     projectDefinition.CollectionName = currCollection.name;
                     projectDefinition.UtcCreationDate = DataServiceGit.FirstDate(currCollection.name, project.name);
 
+                    if(projectDefinition.UtcCreationDate == DateTime.MinValue)
+                    {
+                        projectDefinition.UtcCreationDate = new DateTime(2015, 06, 01); //Hack hardcode to the min date for the TFS platform
+                    }
+
                     // get Workitems data
                     projectDefinition.WorkItemDefinitionCollection = DashWorkItemHelper.FeedWorkItemData(currCollection.name, project.name);
 
