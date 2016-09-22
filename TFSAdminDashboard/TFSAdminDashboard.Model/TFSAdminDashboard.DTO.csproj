@@ -51,6 +51,7 @@
     <Compile Include="ProcessGuidanceSiteDefinition.cs" />
     <Compile Include="ProjectCollectionDefinition.cs" />
     <Compile Include="ProjectPortalDefinition.cs" />
+    <Compile Include="ProjectSimpleDefinition.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReportingConfigurationDefinition.cs" />
     <Compile Include="ReportingFolderDefinition.cs" />
