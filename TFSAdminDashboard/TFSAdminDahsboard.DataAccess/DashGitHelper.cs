@@ -16,7 +16,7 @@ namespace TFSAdminDashboard.DataAccess
 
             foreach(GitRepository repo in DataServiceGit.Repositories(collectionName, projectName))
             {
-                VersionControlItem v = new VersionControlItem()
+                VersionControlItem v = new VersionControlItem()vcbvcxnbvcxnbvcxnbvx
                 {
                     Repository = repo.name,
                     isGit = true
