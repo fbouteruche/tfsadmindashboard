@@ -22,6 +22,10 @@ namespace TFSAdminDashboard.DataAccess
                 foreach (KeyValuePair<string, int> kvp in DataServiceWorkItems.States(collectionName, projectName, wit.name))
                 { 
                     witDefinition.StateCollection.Add(kvp.Key, kvp.Value);
+                    witDefinition.TotalNumber += kvp.Value;
+
+                    if (kvp.Key.ToUpper() == "CLOSED")
+                        witDefinition.ClosedNumber += kvp.Value;
                 }
 
                 // only mention wit types which are indeed used in the project

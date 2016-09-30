@@ -38,5 +38,8 @@ namespace TFSAdminDashboard.DTO
                 return stateCollection;
             }
         }
+
+        public int TotalNumber { get; set; }
+        public int ClosedNumber { get; set; }
     }
 }

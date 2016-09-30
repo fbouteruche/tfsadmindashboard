@@ -85,7 +85,7 @@ namespace TFSAdminDashboard.DataAccess
 
                     foreach (WorkItemType wit in DataServiceWorkItems.Types(currCollection.name, project.name))
                     {
-                        if(wit.name == "User Story")
+                        if (wit.name == "User Story")
                         {
                             projectDefinition.ReportsUrl = projectDefinition.ReportsUrl.Replace("Requirements", "Stories");
                         }
@@ -113,9 +113,13 @@ namespace TFSAdminDashboard.DataAccess
                     projectDefinition.IsActive = projectDefinition.LastCommit > DateTime.Now.AddDays(-10);
 
                     // get Workitems data
-                    // var workitemsdata =  DashWorkItemHelper.FeedWorkItemData(currCollection.name, project.name);
+                    var workitemsdata = DashWorkItemHelper.FeedWorkItemData(currCollection.name, project.name);
 
+                    projectDefinition.WorkItemNumber = workitemsdata.Sum(x => x.TotalNumber);
 
+                    double closednumber = workitemsdata.Sum(x => x.ClosedNumber);
+                    projectDefinition.WorkItemHealth = closednumber / projectDefinition.WorkItemNumber;
+                  
                     //// get build data
                     //projectDefinition.BuildsDefinitionCollection = DashBuildHelper.FeedBuildData(currCollection.name, project.name);
 
@@ -139,7 +143,7 @@ namespace TFSAdminDashboard.DataAccess
                     //// get Wit Data
                     //projectDefinition.WorkItemDefinitionCollection = DashWorkItemHelper.FeedWorkItemData(currCollection.name, project.name);
 
-                    
+
 
                     //projectDefinition.LastCheckinDate = projectDefinition.VersionControlData.OrderByDescending(x => x.ItemDate).First().ItemDate;
 
@@ -209,7 +213,7 @@ namespace TFSAdminDashboard.DataAccess
                     projectDefinition.CollectionName = currCollection.name;
                     projectDefinition.UtcCreationDate = DataServiceGit.FirstDate(currCollection.name, project.name);
 
-                    if(projectDefinition.UtcCreationDate == DateTime.MinValue)
+                    if (projectDefinition.UtcCreationDate == DateTime.MinValue)
                     {
                         projectDefinition.UtcCreationDate = new DateTime(2015, 06, 01); //Hack hardcode to the min date for the TFS platform
                     }
@@ -244,7 +248,7 @@ namespace TFSAdminDashboard.DataAccess
                     projectDefinition.isGitBased = DashGitHelper.isGit(currCollection.name, project.name);
                     projectDefinition.isTFVCBased = DashVersionControlHelper.isTFVC(currCollection.name, project.name);
 
-                    if(projectDefinition.isGitBased)
+                    if (projectDefinition.isGitBased)
                     {
                         projectDefinition.VersionControlData = DashGitHelper.FeedGitData(currCollection.name, project.name);
                     }
@@ -277,7 +281,7 @@ namespace TFSAdminDashboard.DataAccess
 #if TEST
                 //Stop after the first collection in TEST mode.
                 logger.Info("TEST mode, stop after the first collection");
-break;
+                break;
 #endif
             }
             return projectList.OrderBy(x => x.Name).ToList();
