@@ -53,8 +53,13 @@ namespace TFSAdminDashboard.DTO
         /// <summary>
         /// Commit number, grand total
         /// </summary>
-        public int CommitsNumber { get; set; }
+        public int GitCommits { get; set; }
 
+        /// <summary>
+        /// Branches list
+        /// </summary>
+        public string GitBranches { get; set; }
+       
         /// <summary>
         /// Number of build definitions
         /// </summary>
@@ -85,5 +90,7 @@ namespace TFSAdminDashboard.DTO
         /// % of passed tests
         /// </summary>
         public double TestHealth { get; set; }
+        public bool TFVCFlag { get; set; }
+
     }
 }

@@ -10,11 +10,23 @@ namespace TFSAdminDashboard.DataAccess
 
     public class DashGitHelper
     {
+        internal static List<GitBranch> FeedGitBranchData(string collectionName, string projectName)
+        {
+            List<GitBranch> ans = new List<GitBranch>();
+
+            foreach (GitRepository repo in DataServiceGit.Repositories(collectionName, projectName))
+            {
+                ans.AddRange(DataServiceGit.Branches(collectionName, projectName, repo.name));
+            }
+
+            return ans;
+        }
+
         public static List<VersionControlItem> FeedGitData(string collectionName, string projectName)
         {
             List<VersionControlItem> versionControlItemCollection = new List<VersionControlItem>();
 
-            foreach(GitRepository repo in DataServiceGit.Repositories(collectionName, projectName))
+            foreach (GitRepository repo in DataServiceGit.Repositories(collectionName, projectName))
             {
                 VersionControlItem v = new VersionControlItem()
                 {
@@ -23,8 +35,8 @@ namespace TFSAdminDashboard.DataAccess
                 };
 
                 var commits = DataServiceGit.Commits(collectionName, projectName, repo.name);
-                if(commits.Count > 0)
-                { 
+                if (commits.Count > 0)
+                {
                     var lastcommit = commits.OrderByDescending(x => x.author.date).First();
 
                     v.LastCommit = lastcommit.commitId;
@@ -33,11 +45,12 @@ namespace TFSAdminDashboard.DataAccess
                 else
                 {
                     v.LastCommit = "Void repo";
-                    v.ItemDate = DateTime.MinValue; 
+                    v.ItemDate = DateTime.MinValue;
                 }
+                v.TotalCommit = commits.Count;
                 versionControlItemCollection.Add(v);
             }
-           
+
             return versionControlItemCollection;
         }
 
@@ -50,5 +63,7 @@ namespace TFSAdminDashboard.DataAccess
         {
             return DataServiceGit.isGitBased(collectionName, projectName);
         }
+
+
     }
 }

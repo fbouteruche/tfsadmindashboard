@@ -1,4 +1,5 @@
-﻿using NLog;
+﻿using MoreLinq;
+using NLog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -90,20 +91,30 @@ namespace TFSAdminDashboard.DataAccess
                         }
                     }
 
-
-                        //projectDefinition.CollectionDescription = currCollection.description;
-                        //projectDefinition.Uri = project.url;
-                        projectDefinition.State = project.state;
-                    //projectDefinition.CollectionName = currCollection.name;
+                    projectDefinition.State = project.state;
                     projectDefinition.UtcCreationDate = DataServiceGit.FirstDate(currCollection.name, project.name);
-
                     if (projectDefinition.UtcCreationDate == DateTime.MinValue)
                     {
                         projectDefinition.UtcCreationDate = new DateTime(2015, 06, 01); //Hack hardcode to the min date for the TFS platform
                     }
 
+                    projectDefinition.TFVCFlag = DashVersionControlHelper.isTFVC(currCollection.name, project.name);
+
+                    var commitsData = DashGitHelper.FeedGitData(currCollection.name, project.name);
+
+                    var branches = DashGitHelper.FeedGitBranchData(currCollection.name, project.name);
+
+                    projectDefinition.GitBranches = branches.Select(x => x.branchname).ToDelimitedString();
+
+                    projectDefinition.GitCommits = commitsData.Sum(x => x.TotalCommit);
+
+                    projectDefinition.LastCommit = commitsData.OrderBy(x => x.ItemDate).First().ItemDate;
+
+                    projectDefinition.IsActive = projectDefinition.LastCommit > DateTime.Now.AddDays(-10);
+
                     // get Workitems data
-                    //projectDefinition.WorkItemDefinitionCollection = DashWorkItemHelper.FeedWorkItemData(currCollection.name, project.name);
+                    // var workitemsdata =  DashWorkItemHelper.FeedWorkItemData(currCollection.name, project.name);
+
 
                     //// get build data
                     //projectDefinition.BuildsDefinitionCollection = DashBuildHelper.FeedBuildData(currCollection.name, project.name);
@@ -128,19 +139,7 @@ namespace TFSAdminDashboard.DataAccess
                     //// get Wit Data
                     //projectDefinition.WorkItemDefinitionCollection = DashWorkItemHelper.FeedWorkItemData(currCollection.name, project.name);
 
-                    //// get VCS data
-                    //projectDefinition.isGitBased = DashGitHelper.isGit(currCollection.name, project.name);
-                    //projectDefinition.isTFVCBased = DashVersionControlHelper.isTFVC(currCollection.name, project.name);
-
-                    //if (projectDefinition.isGitBased)
-                    //{
-                    //    projectDefinition.VersionControlData = DashGitHelper.FeedGitData(currCollection.name, project.name);
-                    //}
-
-                    //if (projectDefinition.isTFVCBased)
-                    //{
-                    //    projectDefinition.VersionControlData.AddRange(DashVersionControlHelper.FeedVersionControlData(currCollection.name, project.name));
-                    //}
+                    
 
                     //projectDefinition.LastCheckinDate = projectDefinition.VersionControlData.OrderByDescending(x => x.ItemDate).First().ItemDate;
 

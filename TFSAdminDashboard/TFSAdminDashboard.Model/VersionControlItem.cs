@@ -19,6 +19,7 @@ namespace TFSAdminDashboard.DTO
 
         public int ItemChangeSetId { get; set; }
 
-        public DateTime ItemDate { get; set; } 
+        public DateTime ItemDate { get; set; }
+        public int TotalCommit { get; set; }
     }
 }
