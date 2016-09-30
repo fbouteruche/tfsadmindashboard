@@ -55,7 +55,7 @@ namespace TFSDataService
                 }
             }
 
-            return ans.DistinctBy(x => x.DisplayName);
+            return ans.DistinctBy(x => x.DisplayName).ToList();
         }
     }
 }

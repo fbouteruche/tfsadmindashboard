@@ -161,7 +161,7 @@ namespace TFSDataService.Tests
         [Test()]
         public void RestGetDefaultTeamMembersTest()
         {
-            var teamMembers = DataServiceTeams.DefaultMembers("DT", "DemoCMMI");
+            var teamMembers = DataServiceTeams.Members("DT", "DemoCMMI");
 
             Assert.IsTrue(teamMembers.Count(x => x.DisplayName.Contains("TOLLU")) == 1);
         }
