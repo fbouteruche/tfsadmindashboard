@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using MoreLinq;
+using Newtonsoft.Json;
 using NLog;
 using System;
 using System.Collections.Generic;
@@ -32,14 +33,15 @@ namespace TFSDataService
             return o.value.ToList();
         }
 
-        public static List<TeamMember> DefaultMembers(string collection, string projectName)
+        public static List<TeamMember> Members(string collection, string projectName)
         {
-            Team defaultTeam = List(collection, projectName).FirstOrDefault(x => x.name.Contains(projectName));
+            List < Team >  teams = List(collection, projectName);
+
             List<TeamMember> ans = new List<TeamMember>();
 
-            if (defaultTeam != null)
+            foreach(Team t in teams)
             {
-                string surfaceteamMembersUrl = string.Format(Settings.Default.TeamMemberUrl, tfsServer, collection, projectName, defaultTeam.id);
+                string surfaceteamMembersUrl = string.Format(Settings.Default.TeamMemberUrl, tfsServer, collection, projectName, t.id);
 
                 string json = JsonRequest.GetRestResponse(surfaceteamMembersUrl);
                 SurfaceTeamMemberRootobject o = JsonConvert.DeserializeObject<SurfaceTeamMemberRootobject>(json);
@@ -52,12 +54,8 @@ namespace TFSDataService
                     ans.Add(member);
                 }
             }
-            else
-            {
-                logger.Warn("No default team found for {0}/{1}", collection, projectName);
-            }
 
-            return ans;
+            return ans.DistinctBy(x => x.DisplayName);
         }
     }
 }
