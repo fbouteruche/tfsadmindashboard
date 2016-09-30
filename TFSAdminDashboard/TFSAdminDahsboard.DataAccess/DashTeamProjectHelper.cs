@@ -120,42 +120,18 @@ namespace TFSAdminDashboard.DataAccess
                     double closednumber = workitemsdata.Sum(x => x.ClosedNumber);
                     projectDefinition.WorkItemHealth = closednumber / projectDefinition.WorkItemNumber;
                   
-                    //// get build data
-                    //projectDefinition.BuildsDefinitionCollection = DashBuildHelper.FeedBuildData(currCollection.name, project.name);
+                    // get build data
+                    var buildData = DashBuildHelper.FeedBuildData(currCollection.name, project.name);
 
-                    //if (projectDefinition.BuildsDefinitionCollection.Count > 0)
-                    //{
-                    //    var lastSuccess = projectDefinition.BuildsDefinitionCollection.Max(x => x.LastSuccess);
-                    //    var lastfail = projectDefinition.BuildsDefinitionCollection.Max(x => x.LastFail);
+                    projectDefinition.BuildNumber = buildData.Count;
 
-                    //    if (lastSuccess != DateTime.MinValue)
-                    //    {
-                    //        projectDefinition.LastSuccessBuild = lastSuccess;
-                    //    }
-
-                    //    if (lastfail != DateTime.MinValue)
-                    //    {
-                    //        projectDefinition.LastFailedBuild = lastfail;
-                    //    }
-                    //}
-
-
-                    //// get Wit Data
-                    //projectDefinition.WorkItemDefinitionCollection = DashWorkItemHelper.FeedWorkItemData(currCollection.name, project.name);
-
-
-
-                    //projectDefinition.LastCheckinDate = projectDefinition.VersionControlData.OrderByDescending(x => x.ItemDate).First().ItemDate;
+                    if(buildData.Count > 0)
+                        projectDefinition.BuildHealth = buildData.Average(x => x.Health);
 
                     //// get test plan Data
                     //projectDefinition.TestPlanData = DashTestPlanHelper.FeedTestPlanData(currCollection.name, project.name);
 
                     //projectDefinition.Platform = Environment.GetEnvironmentVariable("TfsExtractPrefix", EnvironmentVariableTarget.User);
-
-                    //projectDefinition.DMOrigin = currCollection.name;
-                    //projectDefinition.ProjectCode = project.name;
-
-                    //projectDefinition.ExtractDate = DateTime.Now;
 
                     projectList.Add(projectDefinition);
 #if QUICKTEST
