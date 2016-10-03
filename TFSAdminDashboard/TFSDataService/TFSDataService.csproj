@@ -76,6 +76,7 @@
     <Compile Include="JsonBusinessObjects\TeamProjects.cs" />
     <Compile Include="JsonBusinessObjects\Teams.cs" />
     <Compile Include="JsonBusinessObjects\TestPlan.cs" />
+    <Compile Include="JsonBusinessObjects\TestResult.cs" />
     <Compile Include="JsonBusinessObjects\TestSuite.cs" />
     <Compile Include="JsonBusinessObjects\TFVCBranch.cs" />
     <Compile Include="JsonBusinessObjects\TFVCChangeSet.cs" />
@@ -88,6 +89,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="JsonBusinessObjects\TestRun.cs" />
     <Compile Include="Tool\JsonRequest.cs" />
     <Compile Include="JsonBusinessObjects\wiResults.cs" />
   </ItemGroup>

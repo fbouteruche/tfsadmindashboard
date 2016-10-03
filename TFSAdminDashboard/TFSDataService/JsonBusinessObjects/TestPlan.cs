@@ -30,12 +30,6 @@ namespace TFSDataService.JsonBusinessObjects
         public TestSuite rootSuiteObject { get; set; }
     }
 
-    public class Area
-    {
-        public string id { get; set; }
-        public string name { get; set; }
-    }
-
     public class Rootsuite
     {
         public string id { get; set; }
