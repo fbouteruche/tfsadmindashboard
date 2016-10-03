@@ -42,5 +42,34 @@ namespace TFSAdminDashboard.DataAccess
 
             return ans;
         }
+
+        internal static double GetTestResultsRatio(string collectionName, string projectName, List<WorkItemDefinition> workitemsdata)
+        {
+            var testResults = DataServiceTests.RunResults(collectionName, projectName);
+
+            var testCases = workitemsdata.FirstOrDefault(x => x.Name == "Test Case");
+
+            if (testCases != null)
+            {
+                int openTestCases = 0;
+                foreach (KeyValuePair<string, int> kvp in testCases.StateCollection)
+                {
+                    if (kvp.Key != "Closed")
+                    {
+                        openTestCases += kvp.Value;
+                    }
+                }
+
+                var tests = testResults.Select(x => new { id = x.testCase.id, outcome = x.outcome, date = x.completedDate });
+
+                var latestOutcomes = tests.GroupBy(x => x.id).Select(y => y.OrderByDescending(z => z.date).FirstOrDefault());
+
+                double numberpassed = latestOutcomes.Count(x => x.outcome == "Passed");
+
+                return numberpassed / openTestCases;
+            }
+            else
+                return 0;
+        }
     }
 }

@@ -68,7 +68,8 @@ namespace TFSDataService
 
                 TestResultRootobject o = JsonConvert.DeserializeObject<TestResultRootobject>(json);
 
-                ans.AddRange(o.value.ToList());
+                // Only return results linked to a testcase
+                ans.AddRange(o.value.Where(x => x.testCase.id != null).ToList());
             }
 
             return ans;

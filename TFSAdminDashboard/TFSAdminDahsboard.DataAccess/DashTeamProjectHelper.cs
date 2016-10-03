@@ -104,7 +104,7 @@ namespace TFSAdminDashboard.DataAccess
 
                     var branches = DashGitHelper.FeedGitBranchData(currCollection.name, project.name);
 
-                    projectDefinition.GitBranches = branches.Select(x => x.branchname).ToDelimitedString();
+                    projectDefinition.GitBranches = branches.Select(x => x.branchname).Distinct().ToDelimitedString();
 
                     projectDefinition.GitCommits = commitsData.Sum(x => x.TotalCommit);
 
@@ -128,10 +128,8 @@ namespace TFSAdminDashboard.DataAccess
                     if(buildData.Count > 0)
                         projectDefinition.BuildHealth = buildData.Average(x => x.Health);
 
-                    //// get test plan Data
-                    //projectDefinition.TestPlanData = DashTestPlanHelper.FeedTestPlanData(currCollection.name, project.name);
-
-                    //projectDefinition.Platform = Environment.GetEnvironmentVariable("TfsExtractPrefix", EnvironmentVariableTarget.User);
+                    // get test plan Data
+                    var testResults = DashTestPlanHelper.GetTestResultsRatio(currCollection.name, project.name, workitemsdata);
 
                     projectList.Add(projectDefinition);
 #if QUICKTEST

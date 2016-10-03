@@ -159,6 +159,21 @@ namespace TFSDataService.Tests
 
             Assert.IsTrue(teams.Count(x => x.name.Contains("DemoCMMI")) == 1);
         }
-        
+
+        [Test()]
+        public void RestGetTestRuns()
+        {
+            var testRuns = DataServiceTests.Runs("DT", "DemoCMMI");
+
+            Assert.IsTrue(testRuns.Any(x => x.isAutomated == false && x.passedTests > 0));
+        }
+
+        [Test()]
+        public void RestGetTestResults()
+        {
+            var testResults = DataServiceTests.RunResults("DT", "DemoCMMI");
+
+           Assert.IsTrue(testResults.Count > 1);
+        }
     }
 }
