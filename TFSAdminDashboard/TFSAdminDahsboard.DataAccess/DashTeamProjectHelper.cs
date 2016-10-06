@@ -65,9 +65,11 @@ namespace TFSAdminDashboard.DataAccess
 
             foreach (TeamProjectCollection currCollection in collections)
             {
-#if DT
+#if QUICKTEST
                 if (currCollection.name != Environment.GetEnvironmentVariable("QuickTestCollection", EnvironmentVariableTarget.User))
                     continue;
+
+                logger.Info("QUICKTEST mode, consider only the {0} collection", Environment.GetEnvironmentVariable("QuickTestCollection", EnvironmentVariableTarget.User));
 #endif
                 ++processedColl;
                 processed = 0;
@@ -89,14 +91,17 @@ namespace TFSAdminDashboard.DataAccess
 #endif
             }
 
+            logger.Info("Extract done");
             return projectList.OrderBy(x => x.Name).ToList();
         }
 
         private static void ExtractInfos(List<ProjectSimpleDefinition> projectList, string tfsUrl, string reportUrl, TeamProjectCollection currCollection, List<TeamProject> collProjects, TeamProject project)
         {
-#if DT
+#if QUICKTEST
             if (project.name != Environment.GetEnvironmentVariable("QuickTestProject", EnvironmentVariableTarget.User))
                 return;
+
+            logger.Info("QUICKTEST mode, consider only the {0} project", Environment.GetEnvironmentVariable("QuickTestProject", EnvironmentVariableTarget.User));
 #endif
             ++processed;
             logger.Info("       Process {2} - {0}/{1}", processed, collProjects.Count, project.name);
@@ -270,6 +275,8 @@ namespace TFSAdminDashboard.DataAccess
                 break;
 #endif
             }
+
+            logger.Info("Extract done");
             return projectList.OrderBy(x => x.Name).ToList();
         }
     }
