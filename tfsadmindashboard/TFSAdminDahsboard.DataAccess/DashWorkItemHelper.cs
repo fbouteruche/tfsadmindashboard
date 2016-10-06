@@ -29,7 +29,7 @@ namespace TFSAdminDashboard.DataAccess
                 }
 
                 // only mention wit types which are indeed used in the project
-                if(witDefinition.StateCollection.Count > 1)
+                if(witDefinition.StateCollection.Count >= 1)
                     workItemDefinitionCollection.Add(witDefinition);
             }
 
