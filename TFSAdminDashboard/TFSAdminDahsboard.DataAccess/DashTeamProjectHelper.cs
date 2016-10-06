@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using TFSAdminDashboard.DTO;
 using TFSDataService;
 using TFSDataService.JsonBusinessObjects;
@@ -65,17 +66,23 @@ namespace TFSAdminDashboard.DataAccess
             foreach (TeamProjectCollection currCollection in collections)
             {
                 ++processedColl;
+                processed = 0;
                 logger.Info("OoO Collection {0} - {1}/{2}", currCollection.name, processedColl, collections.Count());
 
                 var collProjects = DataServiceTeamProjects.Projects(currCollection.name);
 
                 logger.Info("   {0} project to extract in collection {1}", collProjects.Count, currCollection.name);
 
-                foreach (TeamProject project in collProjects)
+                Parallel.ForEach(collProjects, project =>
                 {
-                    ++processed;
                     ExtractInfos(projectList, tfsUrl, reportUrl, currCollection, collProjects, project);
-                }
+                });
+
+#if TEST
+                //Stop after the first collection in TEST mode.
+                logger.Info("TEST mode, stop after the first collection");
+                break;
+#endif
             }
 
             return projectList.OrderBy(x => x.Name).ToList();
@@ -83,6 +90,7 @@ namespace TFSAdminDashboard.DataAccess
 
         private static void ExtractInfos(List<ProjectSimpleDefinition> projectList, string tfsUrl, string reportUrl, TeamProjectCollection currCollection, List<TeamProject> collProjects, TeamProject project)
         {
+            ++processed;
             logger.Info("       Process {2} - {0}/{1}", processed, collProjects.Count, project.name);
             ProjectSimpleDefinition projectDefinition = new ProjectSimpleDefinition();
 
