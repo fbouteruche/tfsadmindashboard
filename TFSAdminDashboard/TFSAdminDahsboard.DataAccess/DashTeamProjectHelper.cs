@@ -65,6 +65,10 @@ namespace TFSAdminDashboard.DataAccess
 
             foreach (TeamProjectCollection currCollection in collections)
             {
+#if DT
+                if (currCollection.name != Environment.GetEnvironmentVariable("QuickTestCollection", EnvironmentVariableTarget.User))
+                    continue;
+#endif
                 ++processedColl;
                 processed = 0;
                 logger.Info("OoO Collection {0} - {1}/{2}", currCollection.name, processedColl, collections.Count());
@@ -90,6 +94,10 @@ namespace TFSAdminDashboard.DataAccess
 
         private static void ExtractInfos(List<ProjectSimpleDefinition> projectList, string tfsUrl, string reportUrl, TeamProjectCollection currCollection, List<TeamProject> collProjects, TeamProject project)
         {
+#if DT
+            if (project.name != Environment.GetEnvironmentVariable("QuickTestProject", EnvironmentVariableTarget.User))
+                return;
+#endif
             ++processed;
             logger.Info("       Process {2} - {0}/{1}", processed, collProjects.Count, project.name);
             ProjectSimpleDefinition projectDefinition = new ProjectSimpleDefinition();
@@ -147,7 +155,10 @@ namespace TFSAdminDashboard.DataAccess
                 projectDefinition.BuildHealth = buildData.Average(x => x.Health);
 
             // get test plan Data
-            var testResults = DashTestPlanHelper.GetTestResultsRatio(currCollection.name, project.name, workitemsdata);
+            int test_number = 0;
+            projectDefinition.TestHealth = DashTestPlanHelper.GetTestResultsRatio(currCollection.name, project.name, workitemsdata, ref test_number);
+
+            projectDefinition.TestNumber = test_number;
 
             projectList.Add(projectDefinition);
         }

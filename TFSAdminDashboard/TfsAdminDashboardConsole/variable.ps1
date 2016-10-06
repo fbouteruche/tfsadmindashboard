@@ -29,6 +29,10 @@
 #  Case of a User / pwd SSH authentication
 [Environment]::SetEnvironmentVariable("TfsExtractSSH_Password", (Read-Host -Prompt TfsExtractSSH_Password), "User")
 
+# Collection and project Name for QUICKTEST mode
+[Environment]::SetEnvironmentVariable("QuickTestCollection", (Read-Host -Prompt QuickTestCollection), "User")
+[Environment]::SetEnvironmentVariable("QuickTestProject", (Read-Host -Prompt QuickTestProject), "User")
+
 
 
 

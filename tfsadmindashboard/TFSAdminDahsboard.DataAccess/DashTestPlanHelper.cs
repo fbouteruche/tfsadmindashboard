@@ -43,7 +43,7 @@ namespace TFSAdminDashboard.DataAccess
             return ans;
         }
 
-        internal static double GetTestResultsRatio(string collectionName, string projectName, List<WorkItemDefinition> workitemsdata)
+        internal static double GetTestResultsRatio(string collectionName, string projectName, List<WorkItemDefinition> workitemsdata, ref int totalTestCases)
         {
             var testResults = DataServiceTests.RunResults(collectionName, projectName);
 
@@ -51,6 +51,7 @@ namespace TFSAdminDashboard.DataAccess
 
             if (testCases != null)
             {
+                totalTestCases = testCases.TotalNumber;
                 int openTestCases = 0;
                 foreach (KeyValuePair<string, int> kvp in testCases.StateCollection)
                 {
