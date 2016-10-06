@@ -108,11 +108,13 @@ namespace TFSAdminDashboard.DataAccess
             ProjectSimpleDefinition projectDefinition = new ProjectSimpleDefinition();
 
             // General data
+            logger.Trace("General Data");
             projectDefinition.Name = project.name;
             projectDefinition.Collection = currCollection.name;
             projectDefinition.Id = project.id;
             projectDefinition.Url = string.Format("{0}/{1}/{2}", tfsUrl, currCollection.name, project.name);
             projectDefinition.ReportsUrl = string.Format(reportUrl, currCollection.name, project.name);
+
 
             foreach (WorkItemType wit in DataServiceWorkItems.Types(currCollection.name, project.name))
             {
@@ -131,6 +133,7 @@ namespace TFSAdminDashboard.DataAccess
 
             projectDefinition.TFVCFlag = DashVersionControlHelper.isTFVC(currCollection.name, project.name);
 
+            logger.Trace("Git Data");
             var commitsData = DashGitHelper.FeedGitData(currCollection.name, project.name);
 
             var branches = DashGitHelper.FeedGitBranchData(currCollection.name, project.name);
@@ -144,6 +147,7 @@ namespace TFSAdminDashboard.DataAccess
             projectDefinition.IsActive = projectDefinition.LastCommit > DateTime.Now.AddDays(-10);
 
             // get Workitems data
+            logger.Trace("WorkItems Data");
             var workitemsdata = DashWorkItemHelper.FeedWorkItemData(currCollection.name, project.name);
 
             projectDefinition.WorkItemNumber = workitemsdata.Sum(x => x.TotalNumber);
@@ -152,6 +156,7 @@ namespace TFSAdminDashboard.DataAccess
             projectDefinition.WorkItemHealth = closednumber / projectDefinition.WorkItemNumber;
 
             // get build data
+            logger.Trace("Build Data");
             var buildData = DashBuildHelper.FeedBuildData(currCollection.name, project.name);
 
             projectDefinition.BuildNumber = buildData.Count;
@@ -160,6 +165,7 @@ namespace TFSAdminDashboard.DataAccess
                 projectDefinition.BuildHealth = buildData.Average(x => x.Health);
 
             // get test plan Data
+            logger.Trace("TestPlan Data");
             int test_number = 0;
             projectDefinition.TestHealth = DashTestPlanHelper.GetTestResultsRatio(currCollection.name, project.name, workitemsdata, ref test_number);
 

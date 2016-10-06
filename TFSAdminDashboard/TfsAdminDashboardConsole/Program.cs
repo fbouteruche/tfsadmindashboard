@@ -26,7 +26,7 @@ namespace TfsAdminDashboardConsole
 
                 if (CommandLine.Parser.Default.ParseArguments(args, options))
                 {
-                    processed = (options.extractProjects || options.extractUsers) == true;
+                    processed = (options.extractProjects || options.extractUsers || options.extractSimpleProjects) == true;
 
                     if (options.extractProjects == true)
                     {
@@ -34,6 +34,14 @@ namespace TfsAdminDashboardConsole
                         iCommand command = new ExtractProjectListCommand();
                         command.Execute(options);
                     }
+
+                    if (options.extractSimpleProjects == true)
+                    {
+                        logger.Info("Extract Simple Projects");
+                        iCommand command = new ExtractSimpleProjectListCommand();
+                        command.Execute(options);
+                    }
+
 
                     if (options.extractUsers == true)
                     {

@@ -20,6 +20,17 @@ namespace TfsAdminDashboardConsole
         HelpText = "Extract the TFS Platform Team Projects list")]
         public bool extractProjects { get; set; }
 
+
+        /// <summary>
+        /// Gets or sets a value indicating whether [extract projects] is needed or not.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if [extract projects]; otherwise, <c>false</c>.
+        /// </value>
+        [Option("ExtractSimpleProjectList", Required = false,
+        HelpText = "Extract the TFS Platform Team Projects list, simple infos")]
+        public bool extractSimpleProjects { get; set; }
+
         /// <summary>
         /// Gets or sets a value indicating whether [extract users] is needed or not.
         /// </summary>
