@@ -25,7 +25,7 @@ namespace TfsAdminDashboardConsole.Commands
                 logger.Info("Extract Simple Project List in progress...");
                 ICollection<ProjectSimpleDefinition> projectList = DashTeamProjectHelper.GetAllProjectsSimple();
 
-                string fileName = FileNameTool.GetFileName("TfsExtractProjectSimpleList", args.OutputFormat);
+                string fileName = FileNameTool.GetFileName("TfsExtractProjectList", args.OutputFormat);
 
                 if (args.OutputFormat == "CSV")
                 {
