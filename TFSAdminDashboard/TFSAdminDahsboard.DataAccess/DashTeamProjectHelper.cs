@@ -51,11 +51,12 @@ namespace TFSAdminDashboard.DataAccess
             return projectList;
         }
 
+        static int processedColl = 0;
+        static int processed = 0;
+        static List<ProjectSimpleDefinition> projectList = new List<ProjectSimpleDefinition>();
+
         public static ICollection<ProjectSimpleDefinition> GetAllProjectsSimple()
         {
-            List<ProjectSimpleDefinition> projectList = new List<ProjectSimpleDefinition>();
-            int processedColl = 0;
-
             string tfsUrl = Environment.GetEnvironmentVariable("TfsUrl", EnvironmentVariableTarget.User);
             string reportUrl = "https://almnet.orangeapplicationsforbusiness.com/Reports/Pages/Report.aspx?ItemPath=%2fTfsReports%2f{0}%2f{1}%2fProject+Management%2fRequirements+Overview";
 
@@ -67,88 +68,80 @@ namespace TFSAdminDashboard.DataAccess
                 logger.Info("OoO Collection {0} - {1}/{2}", currCollection.name, processedColl, collections.Count());
 
                 var collProjects = DataServiceTeamProjects.Projects(currCollection.name);
-                int processed = 0;
 
                 logger.Info("   {0} project to extract in collection {1}", collProjects.Count, currCollection.name);
+
                 foreach (TeamProject project in collProjects)
                 {
                     ++processed;
-                    logger.Info("       Process {2} - {0}/{1}", processed, collProjects.Count, project.name);
-                    ProjectSimpleDefinition projectDefinition = new ProjectSimpleDefinition();
-
-                    // General data
-                    projectDefinition.Name = project.name;
-                    projectDefinition.Collection = currCollection.name;
-                    projectDefinition.Id = project.id;
-                    projectDefinition.Url = string.Format("{0}/{1}/{2}", tfsUrl, currCollection.name, project.name);
-                    projectDefinition.ReportsUrl = string.Format(reportUrl, currCollection.name, project.name);
-
-                    foreach (WorkItemType wit in DataServiceWorkItems.Types(currCollection.name, project.name))
-                    {
-                        if (wit.name == "User Story")
-                        {
-                            projectDefinition.ReportsUrl = projectDefinition.ReportsUrl.Replace("Requirements", "Stories");
-                        }
-                    }
-
-                    projectDefinition.State = project.state;
-                    projectDefinition.UtcCreationDate = DataServiceGit.FirstDate(currCollection.name, project.name);
-                    if (projectDefinition.UtcCreationDate == DateTime.MinValue)
-                    {
-                        projectDefinition.UtcCreationDate = new DateTime(2015, 06, 01); //Hack hardcode to the min date for the TFS platform
-                    }
-
-                    projectDefinition.TFVCFlag = DashVersionControlHelper.isTFVC(currCollection.name, project.name);
-
-                    var commitsData = DashGitHelper.FeedGitData(currCollection.name, project.name);
-
-                    var branches = DashGitHelper.FeedGitBranchData(currCollection.name, project.name);
-
-                    projectDefinition.GitBranches = branches.Select(x => x.branchname).Distinct().ToDelimitedString();
-
-                    projectDefinition.GitCommits = commitsData.Sum(x => x.TotalCommit);
-
-                    projectDefinition.LastCommit = commitsData.OrderBy(x => x.ItemDate).First().ItemDate;
-
-                    projectDefinition.IsActive = projectDefinition.LastCommit > DateTime.Now.AddDays(-10);
-
-                    // get Workitems data
-                    var workitemsdata = DashWorkItemHelper.FeedWorkItemData(currCollection.name, project.name);
-
-                    projectDefinition.WorkItemNumber = workitemsdata.Sum(x => x.TotalNumber);
-
-                    double closednumber = workitemsdata.Sum(x => x.ClosedNumber);
-                    projectDefinition.WorkItemHealth = closednumber / projectDefinition.WorkItemNumber;
-                  
-                    // get build data
-                    var buildData = DashBuildHelper.FeedBuildData(currCollection.name, project.name);
-
-                    projectDefinition.BuildNumber = buildData.Count;
-
-                    if(buildData.Count > 0)
-                        projectDefinition.BuildHealth = buildData.Average(x => x.Health);
-
-                    // get test plan Data
-                    var testResults = DashTestPlanHelper.GetTestResultsRatio(currCollection.name, project.name, workitemsdata);
-
-                    projectList.Add(projectDefinition);
-#if QUICKTEST
-                    //Stop after the first project in QUICKTEST mode.
-                    logger.Info("QUICKTEST mode, stop after the first project");
-                    break;
-#endif
+                    ExtractInfos(projectList, tfsUrl, reportUrl, currCollection, collProjects, project);
                 }
-
-#if TEST
-                //Stop after the first collection in TEST mode.
-                logger.Info("TEST mode, stop after the first collection");
-                break;
-#endif
             }
 
             return projectList.OrderBy(x => x.Name).ToList();
+        }
 
-            return projectList;
+        private static void ExtractInfos(List<ProjectSimpleDefinition> projectList, string tfsUrl, string reportUrl, TeamProjectCollection currCollection, List<TeamProject> collProjects, TeamProject project)
+        {
+            logger.Info("       Process {2} - {0}/{1}", processed, collProjects.Count, project.name);
+            ProjectSimpleDefinition projectDefinition = new ProjectSimpleDefinition();
+
+            // General data
+            projectDefinition.Name = project.name;
+            projectDefinition.Collection = currCollection.name;
+            projectDefinition.Id = project.id;
+            projectDefinition.Url = string.Format("{0}/{1}/{2}", tfsUrl, currCollection.name, project.name);
+            projectDefinition.ReportsUrl = string.Format(reportUrl, currCollection.name, project.name);
+
+            foreach (WorkItemType wit in DataServiceWorkItems.Types(currCollection.name, project.name))
+            {
+                if (wit.name == "User Story")
+                {
+                    projectDefinition.ReportsUrl = projectDefinition.ReportsUrl.Replace("Requirements", "Stories");
+                }
+            }
+
+            projectDefinition.State = project.state;
+            projectDefinition.UtcCreationDate = DataServiceGit.FirstDate(currCollection.name, project.name);
+            if (projectDefinition.UtcCreationDate == DateTime.MinValue)
+            {
+                projectDefinition.UtcCreationDate = new DateTime(2015, 06, 01); //Hack hardcode to the min date for the TFS platform
+            }
+
+            projectDefinition.TFVCFlag = DashVersionControlHelper.isTFVC(currCollection.name, project.name);
+
+            var commitsData = DashGitHelper.FeedGitData(currCollection.name, project.name);
+
+            var branches = DashGitHelper.FeedGitBranchData(currCollection.name, project.name);
+
+            projectDefinition.GitBranches = branches.Select(x => x.branchname).Distinct().ToDelimitedString();
+
+            projectDefinition.GitCommits = commitsData.Sum(x => x.TotalCommit);
+
+            projectDefinition.LastCommit = commitsData.OrderBy(x => x.ItemDate).First().ItemDate;
+
+            projectDefinition.IsActive = projectDefinition.LastCommit > DateTime.Now.AddDays(-10);
+
+            // get Workitems data
+            var workitemsdata = DashWorkItemHelper.FeedWorkItemData(currCollection.name, project.name);
+
+            projectDefinition.WorkItemNumber = workitemsdata.Sum(x => x.TotalNumber);
+
+            double closednumber = workitemsdata.Sum(x => x.ClosedNumber);
+            projectDefinition.WorkItemHealth = closednumber / projectDefinition.WorkItemNumber;
+
+            // get build data
+            var buildData = DashBuildHelper.FeedBuildData(currCollection.name, project.name);
+
+            projectDefinition.BuildNumber = buildData.Count;
+
+            if (buildData.Count > 0)
+                projectDefinition.BuildHealth = buildData.Average(x => x.Health);
+
+            // get test plan Data
+            var testResults = DashTestPlanHelper.GetTestResultsRatio(currCollection.name, project.name, workitemsdata);
+
+            projectList.Add(projectDefinition);
         }
 
         /// <summary>
