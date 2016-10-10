@@ -35,6 +35,15 @@ namespace TfsAdminDashboardConsole.tests
 
         [TestCase]
         [Category("DevFacadeNoIC")]
+        public void LaunchExportProjectSimpleCSVCommand()
+        {
+            iCommand command = new ExtractSimpleProjectListCommand();
+            options.OutputFormat = "CSV";
+            command.Execute(options);
+        }
+
+        [TestCase]
+        [Category("DevFacadeNoIC")]
         public void LaunchExportProjectCommandJson()
         {
             iCommand command = new ExtractProjectListCommand();

@@ -110,10 +110,28 @@ namespace TFSAdminDashboard.DataAccess
             // General data
             logger.Trace("General Data");
             projectDefinition.Name = project.name;
+            projectDefinition.PlatForm = "TFSOAB";
+
             projectDefinition.Collection = currCollection.name;
             projectDefinition.Id = project.id;
             projectDefinition.Url = string.Format("{0}/{1}/{2}", tfsUrl, currCollection.name, project.name);
             projectDefinition.ReportsUrl = string.Format(reportUrl, currCollection.name, project.name);
+
+            switch(currCollection.name)
+            {
+                case "AlsyMig":
+                    projectDefinition.DM = "AD";
+                    break;
+                case "DT":
+                case "Formations":
+                case "TestMigration":
+                case "TF15":
+                    projectDefinition.DM = "DPO";
+                    break;
+                default:
+                    projectDefinition.DM = currCollection.name;
+                    break;
+            }
 
 
             foreach (WorkItemType wit in DataServiceWorkItems.Types(currCollection.name, project.name))
@@ -162,7 +180,11 @@ namespace TFSAdminDashboard.DataAccess
             projectDefinition.BuildNumber = buildData.Count;
 
             if (buildData.Count > 0)
+            { 
                 projectDefinition.BuildHealth = buildData.Average(x => x.Health);
+
+                projectDefinition.XamlRatio = (double) buildData.Count(x => x.type == "xaml") / buildData.Count;
+            }
 
             // get test plan Data
             logger.Trace("TestPlan Data");
