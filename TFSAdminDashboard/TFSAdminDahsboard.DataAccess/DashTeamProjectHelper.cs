@@ -79,10 +79,10 @@ namespace TFSAdminDashboard.DataAccess
 
                 logger.Info("   {0} project to extract in collection {1}", collProjects.Count, currCollection.name);
 
-                Parallel.ForEach(collProjects, project =>
+                foreach(TeamProject project in collProjects)
                 {
                     ExtractInfos(projectList, tfsUrl, reportUrl, currCollection, collProjects, project);
-                });
+                };
 
 #if TEST
                 //Stop after the first collection in TEST mode.
