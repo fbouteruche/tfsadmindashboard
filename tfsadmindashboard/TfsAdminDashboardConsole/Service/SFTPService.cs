@@ -41,7 +41,7 @@ namespace TfsAdminDashboardConsole.Service
                 fileStream.Close();
             }
 
-            logger.Info("File {0} uploaded", Path.GetFileName(filePath));
+            logger.Info("File {0} uploaded", uploadPath);
         }
 
         /// <summary>
