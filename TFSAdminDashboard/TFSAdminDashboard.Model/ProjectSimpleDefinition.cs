@@ -91,7 +91,7 @@ namespace TFSAdminDashboard.DTO
         /// </summary>
         public double TestHealth { get; set; }
         public bool TFVCFlag { get; set; }
-        public string PlatForm { get; set; }
+        public string Platform { get; set; }
         public string DM { get; set; }
         public double XamlRatio { get; set; }
     }

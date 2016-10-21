@@ -110,7 +110,7 @@ namespace TFSAdminDashboard.DataAccess
             // General data
             logger.Trace("General Data");
             projectDefinition.Name = string.Format("{0}/{1}", currCollection.name, project.name);
-            projectDefinition.PlatForm = "TFSOAB";
+            projectDefinition.Platform = "TFSOAB";
 
             projectDefinition.Collection = currCollection.name;
             projectDefinition.Id = project.id;
