@@ -28,11 +28,13 @@ namespace TfsAdminDashboardConsole.Service
         /// <param name="authent">The chosen SSH authent method</param>
         public void UploadFile(string filePath, AuthentMethod authent)
         {
+            string uploadPath = string.Empty;
+
             using (var sftp = new SftpClient(CreateConnectionInfo(authent)))
             {
                 var fileStream = File.OpenRead(filePath);
                 sftp.Connect();
-                string uploadPath = string.Format("{0}/{1}", Environment.GetEnvironmentVariable("TfsExtractSSH_Path", EnvironmentVariableTarget.User), Path.GetFileName(filePath));
+                uploadPath = string.Format("{0}/{1}", Environment.GetEnvironmentVariable("TfsExtractSSH_Path", EnvironmentVariableTarget.User), Path.GetFileName(filePath));
 
                 sftp.UploadFile(fileStream, uploadPath);
 
