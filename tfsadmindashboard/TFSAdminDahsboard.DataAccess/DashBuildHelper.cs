@@ -74,6 +74,9 @@ namespace TFSAdminDashboard.DataAccess
 
                 foreach (TeamProject project in collProjects)
                 {
+                    ++processed;
+
+                    logger.Info("  project  {0} / {1}", processed, collProjects.Count);
 
                     var JSonbuilds = DataServiceBuild.Builds(currCollection.name, project.name);
 
