@@ -68,7 +68,7 @@ namespace TFSDataService
             {
                 if (buildRun._links.timeline == null)
                 {
-                    throw new Exception("no timeLine");
+                    return "no record";
                 }
 
                 string json = JsonRequest.GetRestResponse(buildRun._links.timeline.href);
@@ -79,7 +79,7 @@ namespace TFSDataService
 
                 if (o == null)
                 {
-                    throw new Exception("no timeLine");
+                    return "no record";
                 }
 
                 if (o.records.Any())
