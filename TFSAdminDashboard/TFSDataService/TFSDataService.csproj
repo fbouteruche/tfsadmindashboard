@@ -65,6 +65,7 @@
     <Compile Include="JsonBusinessObjects\BuildDefinitions.cs" />
     <Compile Include="JsonBusinessObjects\BuildDefinitionTemplates.cs" />
     <Compile Include="JsonBusinessObjects\Builds.cs" />
+    <Compile Include="JsonBusinessObjects\BuildTimeLine.cs" />
     <Compile Include="JsonBusinessObjects\GitBranches.cs" />
     <Compile Include="JsonBusinessObjects\GitCommit.cs" />
     <Compile Include="JsonBusinessObjects\GitRepository.cs" />

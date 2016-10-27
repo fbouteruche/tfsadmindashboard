@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TFSAdminDashboard.DTO
 {
-    public class BuildDefinition
+    public class Build_Definition
     {
         public string Name
         {

@@ -46,6 +46,7 @@
     <Compile Include="BuildAgentDefinition.cs" />
     <Compile Include="BuildControllerDefinition.cs" />
     <Compile Include="BuildDefinition.cs" />
+    <Compile Include="BuildRun.cs" />
     <Compile Include="BuildServiceHostDefinition.cs" />
     <Compile Include="DataCollectorDefinition.cs" />
     <Compile Include="ProcessGuidanceSiteDefinition.cs" />

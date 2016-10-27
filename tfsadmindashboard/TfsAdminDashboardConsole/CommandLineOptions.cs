@@ -3,13 +3,16 @@ namespace TfsAdminDashboardConsole
 {
     using CommandLine;
     using CommandLine.Text;
-    using Service;
 
     /// <summary>
     /// The command line options class
     /// </summary>
     public class CommandLineOptions
     {
+        [Option("ExtractBuilds", Required = false,
+        HelpText = "Extract the TFS Platform Builds infos")]
+        public bool extractBuildInfo { get; set; }
+
         /// <summary>
         /// Gets or sets a value indicating whether [extract projects] is needed or not.
         /// </summary>
@@ -67,7 +70,7 @@ namespace TfsAdminDashboardConsole
             string st = HelpText.AutoBuild(
                this,
               (HelpText current) => HelpText.DefaultParsingErrorsHandler(this, current));
-            
+
             return st;
         }
     }

@@ -1,21 +1,25 @@
 ﻿
+using NLog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using TFSAdminDashboard.DTO;
 using TFSDataService;
+using TFSDataService.JsonBusinessObjects;
 
 namespace TFSAdminDashboard.DataAccess
 {
     public class DashBuildHelper
     {
-        public static List<BuildDefinition> FeedBuildData(string collectionName, string projectName)
-        {
-            List<BuildDefinition> buildDefinitionCollection = new List<BuildDefinition>();
+        static Logger logger = LogManager.GetCurrentClassLogger();
 
-            foreach (TFSDataService.JsonBusinessObjects.BuildDefinition def in DataServiceBuild.BuildDefinitions(collectionName, projectName))
+        public static List<Build_Definition> FeedBuildData(string collectionName, string projectName)
+        {
+            List<Build_Definition> buildDefinitionCollection = new List<Build_Definition>();
+
+            foreach (BuildDefinition def in DataServiceBuild.BuildDefinitions(collectionName, projectName))
             {
-                BuildDefinition buildDef = new BuildDefinition()
+                Build_Definition buildDef = new Build_Definition()
                 {
                     Name = def.name,
                     type = def.type
@@ -38,7 +42,7 @@ namespace TFSAdminDashboard.DataAccess
                 double succeeded = builds.Take(5).Count(x => x.result == "succeeded");
                 int buildCount = builds.Count() >= 5 ? 5 : builds.Count();
                 if (builds.Any())
-                    buildDef.Health = (int) (succeeded / buildCount * 100);
+                    buildDef.Health = (int)(succeeded / buildCount * 100);
                 else
                     buildDef.Health = 0;
 
@@ -47,5 +51,54 @@ namespace TFSAdminDashboard.DataAccess
 
             return buildDefinitionCollection;
         }
+
+        public static ICollection<BuildRun> GetAllBuilds()
+        {
+
+            int processedColl = 0;
+            int processed = 0;
+
+            List<BuildRun> builds = new List<BuildRun>();
+
+            var collections = DataServiceTeamProjects.Collections().Where(x => x.state == "Started");
+
+            foreach (TeamProjectCollection currCollection in collections)
+            {
+                ++processedColl;
+                processed = 0;
+                logger.Info("OoO Collection {0} - {1}/{2}", currCollection.name, processedColl, collections.Count());
+
+                var collProjects = DataServiceTeamProjects.Projects(currCollection.name);
+
+                logger.Info("   {0} project to process in collection {1}", collProjects.Count, currCollection.name);
+
+                foreach (TeamProject project in collProjects)
+                {
+
+                    var JSonbuilds = DataServiceBuild.Builds(currCollection.name, project.name);
+
+                    foreach (Build buildRun in JSonbuilds)
+                    {
+                        BuildRun b = new BuildRun();
+
+                        builds.Add(new BuildRun()
+                        {
+                            startTime = buildRun.startTime,
+                            queueTime = buildRun.queueTime,
+                            finishTime = buildRun.finishTime,
+                            duration = buildRun.finishTime - buildRun.startTime,
+                            projectName = currCollection.name + @"\" + project.name,
+                            buildName = buildRun.definition.name,
+                            buildNumber = buildRun.buildNumber,
+                            workerName = DataServiceBuild.getWorkerName(buildRun)
+                        });
+                    }
+                }
+            }
+
+            return builds;
+
+        }
+
     }
 }

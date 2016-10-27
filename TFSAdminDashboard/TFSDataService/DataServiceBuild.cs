@@ -57,9 +57,41 @@ namespace TFSDataService
         {
 
             string content = @"{  ""name"": ""My Custom Template"",  ""description"": ""A custom template for a custom process"",  ""template"": {    ""build"": [      {        ""enabled"": true,        ""continueOnError"": false,        ""alwaysRun"": false,        ""displayName"": ""Build solution **\\*.sln"",        ""task"": {          ""id"": ""71a9a2d3-a98a-4caa-96ab-affca411ecda"",          ""versionSpec"": ""*""        },        ""inputs"": {          ""solution"": ""**\\*.sln"",          ""msbuildArgs"": """",          ""platform"": ""$(platform)"",          ""configuration"": ""$(config)"",          ""clean"": ""false"",          ""restoreNugetPackages"": ""true"",          ""vsLocationMethod"": ""version"",          ""vsVersion"": ""latest"",          ""vsLocation"": """",          ""msbuildLocationMethod"": ""version"",          ""msbuildVersion"": ""latest"",          ""msbuildArchitecture"": ""x86"",          ""msbuildLocation"": """",          ""logProjectEvents"": ""true""        }      },      {        ""enabled"": true,        ""continueOnError"": false,        ""alwaysRun"": false,        ""displayName"": ""Test Assemblies **\\*test*.dll;-:**\\obj\\**"",        ""task"": {          ""id"": ""ef087383-ee5e-42c7-9a53-ab56c98420f9"",          ""versionSpec"": ""*""        },        ""inputs"": {          ""testAssembly"": ""**\\*test*.dll;-:**\\obj\\**"",          ""testFiltercriteria"": """",          ""runSettingsFile"": """",          ""codeCoverageEnabled"": ""true"",          ""otherConsoleOptions"": """",          ""vsTestVersion"": ""14.0"",          ""pathtoCustomTestAdapters"": """"        }      }    ],    ""buildNumberFormat"": ""$(date:yyyyMMdd)$(rev:.r)"",    ""jobAuthorizationScope"": ""projectCollection"",    ""triggers"": [      {        ""batchChanges"": false,        ""branchFilters"": """",        ""triggerType"": ""continuousIntegration""      }    ],    ""variables"": {      ""forceClean"": {        ""value"": ""false"",        ""allowOverride"": true      },      ""config"": {        ""value"": ""debug, release"",        ""allowOverride"": true      },      ""platform"": {        ""value"": ""any cpu"",        ""allowOverride"": true      }    }  }}";
-            string buildsUrl = string.Format(Settings.Default.BuildDefinitionTemplatePostUrl, tfsServer, collectionName, projectName,build.id.Replace(" ", "%20"));
+            string buildsUrl = string.Format(Settings.Default.BuildDefinitionTemplatePostUrl, tfsServer, collectionName, projectName, build.id.Replace(" ", "%20"));
 
             string json = JsonRequest.PostData(buildsUrl, content /*JsonConvert.SerializeObject(build)*/);
+        }
+
+        public static string getWorkerName(Build buildRun)
+        {
+            try
+            {
+                if (buildRun._links.timeline == null)
+                {
+                    throw new Exception("no timeLine");
+                }
+
+                string json = JsonRequest.GetRestResponse(buildRun._links.timeline.href);
+
+                BuildTimeLine o = null;
+
+                o = JsonConvert.DeserializeObject<BuildTimeLine>(json);
+
+                if (o == null)
+                {
+                    throw new Exception("no timeLine");
+                }
+
+                if (o.records.Any())
+                    return o.records.First().workerName;
+                else
+                    return "no agent";
+
+            }
+            catch (Exception)
+            {
+                return "no record";
+            }
         }
     }
 }

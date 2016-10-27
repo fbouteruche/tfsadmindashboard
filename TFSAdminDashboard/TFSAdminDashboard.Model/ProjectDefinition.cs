@@ -17,7 +17,7 @@ namespace TFSAdminDashboard.DTO
         public string Uri { get; set; }
         public DateTime? UtcCreationDate { get; set; }
         public List<WorkItemDefinition> WorkItemDefinitionCollection { get; set; }
-        public List<BuildDefinition> BuildsDefinitionCollection { get; set; }
+        public List<Build_Definition> BuildsDefinitionCollection { get; set; }
         public List<VersionControlItem> VersionControlData { get; set; }
         public List<TestPlanDefinition> TestPlanData { get; set; }
         public string CollectionDescription { get; set; }

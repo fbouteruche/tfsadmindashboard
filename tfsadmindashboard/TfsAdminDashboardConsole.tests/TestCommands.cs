@@ -26,6 +26,24 @@ namespace TfsAdminDashboardConsole.tests
 
         [TestCase]
         [Category("DevFacadeNoIC")]
+        public void LaunchExportBuildsCommand()
+        {
+            iCommand command = new ExtractBuildsCommand();
+            options.OutputFormat = "JSON";
+            command.Execute(options);
+        }
+
+        [TestCase]
+        [Category("DevFacadeNoIC")]
+        public void LaunchExportBuildsCommandCSV()
+        {
+            iCommand command = new ExtractBuildsCommand();
+            options.OutputFormat = "CSV";
+            command.Execute(options);
+        }
+
+        [TestCase]
+        [Category("DevFacadeNoIC")]
         public void LaunchExportProjectSimpleCommand()
         {
             iCommand command = new ExtractSimpleProjectListCommand();
