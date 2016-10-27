@@ -9,7 +9,7 @@
 [Environment]::SetEnvironmentVariable("TfsExtractProjectList", (Read-Host -Prompt TfsExtractProjectList), "User")
 [Environment]::SetEnvironmentVariable("TfsExtractMachineList", (Read-Host -Prompt TfsExtractMachineList), "User")
 [Environment]::SetEnvironmentVariable("TfsExtractUsersList", (Read-Host -Prompt TfsExtractUsersList), "User")
-
+[Environment]::SetEnvironmentVariable("TfsExtractBuilds", (Read-Host -Prompt TfsExtractBuilds), "User")
 # In case of OU extract from Active Directory
 [Environment]::SetEnvironmentVariable("LDAPAddress", (Read-Host -Prompt LDAPAddress), "User")
 [Environment]::SetEnvironmentVariable("LDAPLogin", (Read-Host -Prompt LDAPLogin), "User")
