@@ -91,6 +91,7 @@ namespace TFSAdminDashboard.DataAccess
                             queueTime = buildRun.queueTime,
                             finishTime = buildRun.finishTime,
                             duration = buildRun.finishTime - buildRun.startTime,
+                            latency = buildRun.startTime - buildRun.queueTime,
                             projectName = currCollection.name + "/" + project.name,
                             buildName = buildRun.definition.name,
                             buildNumber = buildRun.buildNumber,
