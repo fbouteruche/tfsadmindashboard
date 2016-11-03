@@ -91,7 +91,7 @@ namespace TFSAdminDashboard.DataAccess
                             queueTime = buildRun.queueTime,
                             finishTime = buildRun.finishTime,
                             duration = buildRun.finishTime - buildRun.startTime,
-                            projectName = currCollection.name + @"\" + project.name,
+                            projectName = currCollection.name + "/" + project.name,
                             buildName = buildRun.definition.name,
                             buildNumber = buildRun.buildNumber,
                             workerName = DataServiceBuild.getWorkerName(buildRun)
