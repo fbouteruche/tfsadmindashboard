@@ -6,9 +6,9 @@ namespace TFSAdminDashboard.DTO
     {
         public string buildName;
         public string buildNumber;
-        public TimeSpan duration;
+        public int duration;
         public DateTime finishTime;
-        public TimeSpan latency;
+        public int latency;
         public string projectName;
         public DateTime queueTime;
         public DateTime startTime;
