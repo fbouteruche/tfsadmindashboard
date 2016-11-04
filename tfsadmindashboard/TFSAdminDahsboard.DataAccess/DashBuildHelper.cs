@@ -79,7 +79,8 @@ namespace TFSAdminDashboard.DataAccess
                     if(processed % 10 == 0)
                         logger.Info("  project  {0} / {1}", processed, collProjects.Count);
 
-                    var JSonbuilds = DataServiceBuild.Builds(currCollection.name, project.name);
+                    // Consider only yesterday's build
+                    var JSonbuilds = DataServiceBuild.Builds(currCollection.name, project.name).Where(x => x.queueTime.Date == DateTime.Now.AddDays(-1).Date);
 
                     foreach (Build buildRun in JSonbuilds)
                     {
