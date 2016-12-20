@@ -61,6 +61,7 @@
     <Compile Include="ReportingServerDefinition.cs" />
     <Compile Include="SharePointSiteCreationLocationDefinition.cs" />
     <Compile Include="SharePointWebApplicationDefinition.cs" />
+    <Compile Include="TagData.cs" />
     <Compile Include="TeamFoundationServerInstanceDefinition.cs" />
     <Compile Include="ProjectDefinition.cs" />
     <Compile Include="TeamSystemWebAccessDefinition.cs" />

@@ -170,7 +170,11 @@ namespace TFSAdminDashboard.DataAccess
                 {
                     Name = z.name
                 }).ToList(),
-                MasterCommitsYesterday = commitsData.Where(w => w.Repository == x.Repository).Sum(v => v.TotalMasterCommit)
+                MasterCommitsYesterday = commitsData.Where(w => w.Repository == x.Repository).Sum(v => v.TotalMasterCommit),
+                Tags = DashGitHelper.FeedGitTagData(currCollection.name, project.name, x.Repository).Select(b => new TagData()
+                {
+                    Name = b.tagname,
+                }).ToList()
 
             });
 
@@ -178,7 +182,6 @@ namespace TFSAdminDashboard.DataAccess
             projectDefinition.GitCommits = commitsData.Sum(x => x.TotalMasterCommit);
 
             projectDefinition.LastCommit = commitsData.OrderByDescending(x => x.ItemDate).First().ItemDate;
-
 
             projectDefinition.Repositories = repositories.ToList();
 

@@ -10,6 +10,11 @@ namespace TFSAdminDashboard.DataAccess
 
     public class DashGitHelper
     {
+        internal static List<GitTag> FeedGitTagData(string collectionName, string projectName, string repoName)
+        {
+            return DataServiceGit.Tags(collectionName, projectName, repoName);
+        }
+
         internal static List<GitBranch> FeedGitBranchData(string collectionName, string projectName)
         {
             List<GitBranch> ans = new List<GitBranch>();
