@@ -53,12 +53,7 @@ namespace TFSAdminDashboard.DTO
         /// <summary>
         /// Commit number, grand total
         /// </summary>
-        public int GitCommits { get; set; }
-
-        /// <summary>
-        /// Branches list
-        /// </summary>
-        public string GitBranches { get; set; }
+        public int GitCommitsYesterday { get; set; }
        
         /// <summary>
         /// Number of build definitions

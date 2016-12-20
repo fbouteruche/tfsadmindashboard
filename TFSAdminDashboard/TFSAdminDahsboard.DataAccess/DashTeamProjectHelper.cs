@@ -186,7 +186,7 @@ namespace TFSAdminDashboard.DataAccess
             });
 
 
-            projectDefinition.GitCommits = commitsData.Sum(x => x.TotalMasterCommit);
+            projectDefinition.GitCommitsYesterday = commitsData.Sum(x => x.TotalMasterCommit);
 
             projectDefinition.LastCommit = commitsData.OrderByDescending(x => x.ItemDate).First().ItemDate;
 
