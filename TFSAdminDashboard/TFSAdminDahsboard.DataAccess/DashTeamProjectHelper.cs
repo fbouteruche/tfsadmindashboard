@@ -196,6 +196,30 @@ namespace TFSAdminDashboard.DataAccess
 
             projectDefinition.IsActive = projectDefinition.LastCommit > DateTime.Now.AddDays(-10);
 
+            // get build data
+            logger.Trace("Build Data");
+            var buildData = DashBuildHelper.FeedBuildData(currCollection.name, project.name);
+
+            projectDefinition.BuildDefinitionNumber = buildData.Count;
+
+            if (buildData.Count > 0)
+            {
+                projectDefinition.BuildHealth = buildData.Average(x => x.Health);
+
+                projectDefinition.XamlRatio = (double)buildData.Count(x => x.type == "xaml") / buildData.Count;
+
+                var owaspBuilds = buildData.Where(x => x.UsesDependencyCheck);
+
+                if (owaspBuilds.Any())
+                {
+                    projectDefinition.OwaspDependencyCheckBuildDefinitions = owaspBuilds.Count();
+                    projectDefinition.OwaspDependencyCheckLastSuccess = owaspBuilds.OrderByDescending(x => x.LastSuccess).First().LastSuccess;
+                }
+
+                projectDefinition.LastBuildOK = buildData.OrderByDescending(x => x.LastSuccess).First().LastSuccess;
+                projectDefinition.LastBuildKO = buildData.OrderByDescending(x => x.LastFail).First().LastFail;
+            }
+
             // get Workitems data
             logger.Trace("WorkItems Data");
             var workitemsdata = DashWorkItemHelper.FeedWorkItemData(currCollection.name, project.name);
@@ -205,18 +229,7 @@ namespace TFSAdminDashboard.DataAccess
             double closednumber = workitemsdata.Sum(x => x.ClosedNumber);
             projectDefinition.WorkItemHealth = closednumber / projectDefinition.WorkItemNumber;
 
-            // get build data
-            logger.Trace("Build Data");
-            var buildData = DashBuildHelper.FeedBuildData(currCollection.name, project.name);
 
-            projectDefinition.BuildNumber = buildData.Count;
-
-            if (buildData.Count > 0)
-            {
-                projectDefinition.BuildHealth = buildData.Average(x => x.Health);
-
-                projectDefinition.XamlRatio = (double)buildData.Count(x => x.type == "xaml") / buildData.Count;
-            }
 
             // get test plan Data
             logger.Trace("TestPlan Data");

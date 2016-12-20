@@ -58,7 +58,7 @@ namespace TFSAdminDashboard.DTO
         /// <summary>
         /// Number of build definitions
         /// </summary>
-        public int BuildNumber { get; set; }
+        public int BuildDefinitionNumber { get; set; }
 
         /// <summary>
         /// Percentage of succeed build over the last five ones
@@ -91,5 +91,10 @@ namespace TFSAdminDashboard.DTO
         public double XamlRatio { get; set; }
 
         public List<GitData> Repositories { get;  set; }
+
+        public int OwaspDependencyCheckBuildDefinitions { get; set; }
+        public DateTime? OwaspDependencyCheckLastSuccess { get; set; }
+        public DateTime? LastBuildOK { get; set; }
+        public DateTime? LastBuildKO { get; set; }
     }
 }

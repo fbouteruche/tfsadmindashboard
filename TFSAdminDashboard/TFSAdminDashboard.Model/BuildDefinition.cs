@@ -39,5 +39,6 @@ namespace TFSAdminDashboard.DTO
         public DateTime? LastSuccess { get; set; }
 
         public DateTime? LastFail { get; set; }
+        public bool UsesDependencyCheck { get; set; }
     }
 }

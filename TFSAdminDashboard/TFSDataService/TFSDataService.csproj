@@ -54,6 +54,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="JsonBusinessObjects\BuildDefinitionDetails.cs" />
     <Compile Include="DataServiceBase.cs" />
     <Compile Include="DataServiceBuild.cs" />
     <Compile Include="DataServiceGit.cs" />

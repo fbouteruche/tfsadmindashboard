@@ -27,6 +27,12 @@ namespace TFSAdminDashboard.DataAccess
 
                 var builds = DataServiceBuild.Builds(collectionName, projectName).Where(x => x.definition.name == def.name).OrderByDescending(x => x.finishTime);
 
+                if(def.type != "xaml")
+                { 
+                    var buildDetails = DataServiceBuild.BuildDefinitionsDetails(def.url);
+                    buildDef.UsesDependencyCheck = buildDetails.HasOwaspDependencyCheckEnabled;
+                }
+
                 var success = builds.FirstOrDefault(x => x.result == "succeeded");
                 if (success != null)
                     buildDef.LastSuccess = success.finishTime;

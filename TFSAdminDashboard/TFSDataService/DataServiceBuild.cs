@@ -42,6 +42,17 @@ namespace TFSDataService
             return o.value.ToList();
         }
 
+        public static BuildDefinitionDetails BuildDefinitionsDetails(string definitionUrl)
+        {
+            string json = JsonRequest.GetRestResponse(definitionUrl);
+
+            BuildDefinitionDetails o = JsonConvert.DeserializeObject<BuildDefinitionDetails>(json);
+
+            o.HasOwaspDependencyCheckEnabled = o.build.FirstOrDefault(x => x.task.id == "7363e406-cf6e-4f10-8200-281bce562769") != null;
+
+            return o;
+        }
+
         public static List<BuildDefinitionTemplate> BuildDefinitionTemplates(string collectionName, string projectName)
         {
             string buildsUrl = string.Format(Settings.Default.BuildDefinitionTemplateUrl, tfsServer, collectionName, projectName);

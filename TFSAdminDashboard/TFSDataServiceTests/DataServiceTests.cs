@@ -119,6 +119,14 @@ namespace TFSDataService.Tests
         }
 
         [Test()]
+        public void RestGetBuildDefinitionDetailsTest()
+        {
+            var nightlydefinition = DataServiceBuild.BuildDefinitions("DT", "DemoCMMI").First(x => x.name == "VNext_CI");
+
+            var nightlyDetails = DataServiceBuild.BuildDefinitionsDetails(nightlydefinition.url);
+        }
+
+        [Test()]
         public void RestGetBuildsTest()
         {
             Assert.IsTrue(DataServiceBuild.Builds("DT", "DemoCMMI").Count(x => x.result == "succeeded") > 60);
