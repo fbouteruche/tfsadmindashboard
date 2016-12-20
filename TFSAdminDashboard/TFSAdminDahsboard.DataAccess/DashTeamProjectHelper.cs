@@ -56,8 +56,9 @@ namespace TFSAdminDashboard.DataAccess
         static int processed = 0;
         static List<ProjectSimpleDefinition> projectList = new List<ProjectSimpleDefinition>();
 
+#if QUICKTEST
         static bool quicktested = false;
-
+#endif
         public static ICollection<ProjectSimpleDefinition> GetAllProjectsSimple()
         {
             string tfsUrl = Environment.GetEnvironmentVariable("TfsUrl");
