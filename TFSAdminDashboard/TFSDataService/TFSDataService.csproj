@@ -70,6 +70,7 @@
     <Compile Include="JsonBusinessObjects\GitCommit.cs" />
     <Compile Include="JsonBusinessObjects\GitRepository.cs" />
     <Compile Include="JsonBusinessObjects\GitTags.cs" />
+    <Compile Include="JsonBusinessObjects\PullRequests.cs" />
     <Compile Include="JsonBusinessObjects\SurfaceTeamProjectCollections.cs" />
     <Compile Include="JsonBusinessObjects\SurfaceTeamMember.cs" />
     <Compile Include="JsonBusinessObjects\TeamMember.cs" />

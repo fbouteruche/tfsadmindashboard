@@ -50,6 +50,12 @@ namespace TFSDataService.Tests
         }
 
         [Test()]
+        public void RestGetGitPullRequestsTest()
+        {
+            Assert.IsTrue(DataServiceGit.PullRequests("DT", "DemoCMMI", "DemoCMMI").Count(x => x.title.Contains("Merge")) > 0);
+        }
+
+        [Test()]
         public void RestGetGitTagsTest()
         {
             Assert.IsTrue(DataServiceGit.Tags("DT", "TFSAdminTool", "TFSMigrationTool").Count(x => x.tagname == "v1.0") == 1);
@@ -105,8 +111,6 @@ namespace TFSDataService.Tests
 
             DataServiceBuild.SetBuildDefinitionTemplate("DT", "DemoCMMI", build);
         }
-
-
 
         [Test()]
         public void RestGetBuildDefinitionTest()

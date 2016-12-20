@@ -41,5 +41,8 @@
     <Setting Name="BuildDefinitionTemplatePostUrl" Type="System.String" Scope="Application">
       <Value Profile="(Default)">{0}/{1}/{2}/_apis/build/definitions/templates/{3}?api-version=2.0</Value>
     </Setting>
+    <Setting Name="GitPullRequestUrl" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">{0}/{1}/_apis/git/repositories/{2}/pullRequests?api-version=2.0</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

@@ -110,6 +110,20 @@ namespace TFSDataService
             return o.value.ToList();
         }
 
+        public static List<PullRequest> PullRequests(string collectionName, string projectName, string repoName)
+        {
+            var gitRepos = Repositories(collectionName, projectName);
+            GitRepository gitR = gitRepos.First(x => x.name == repoName);
+
+            string gitPullRequestURL = string.Format(Settings.Default.GitPullRequestUrl, tfsServer, collectionName, gitR.id);
+
+            string json = JsonRequest.GetRestResponse(gitPullRequestURL);
+
+            PullRequestRootobject o = JsonConvert.DeserializeObject<PullRequestRootobject>(json);
+
+            return o.value.ToList();
+        }
+
         public static List<GitRepository> Repositories(string collectionName, string projectName)
         {
             string gitReposURL = string.Format(Settings.Default.GitRepoUrl, tfsServer, collectionName, projectName);
