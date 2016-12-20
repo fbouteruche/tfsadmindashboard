@@ -34,7 +34,7 @@ namespace TfsAdminDashboardConsole.Service
             {
                 var fileStream = File.OpenRead(filePath);
                 sftp.Connect();
-                uploadPath = string.Format("{0}/{1}", Environment.GetEnvironmentVariable("TfsExtractSSH_Path", EnvironmentVariableTarget.User), Path.GetFileName(filePath));
+                uploadPath = string.Format("{0}/{1}", Environment.GetEnvironmentVariable("TfsExtractSSH_Path"), Path.GetFileName(filePath));
 
                 sftp.UploadFile(fileStream, uploadPath);
 
@@ -60,26 +60,26 @@ namespace TfsAdminDashboardConsole.Service
             { 
                 authenticationMethod =
                    new PasswordAuthenticationMethod(
-                       Environment.GetEnvironmentVariable("TfsExtractSSH_User", EnvironmentVariableTarget.User),
-                       Environment.GetEnvironmentVariable("TfsExtractSSH_Password", EnvironmentVariableTarget.User));
+                       Environment.GetEnvironmentVariable("TfsExtractSSH_User"),
+                       Environment.GetEnvironmentVariable("TfsExtractSSH_Password"));
             }
             else
             {
                
-                using (var stream = new FileStream(Environment.GetEnvironmentVariable("TfsExtractSSH_KeyPath", EnvironmentVariableTarget.User), FileMode.Open, FileAccess.Read))
+                using (var stream = new FileStream(Environment.GetEnvironmentVariable("TfsExtractSSH_KeyPath"), FileMode.Open, FileAccess.Read))
                 {
                     var privateKeyFile = new PrivateKeyFile(stream);
                     authenticationMethod =
-                        new PrivateKeyAuthenticationMethod(Environment.GetEnvironmentVariable("TfsExtractSSH_User", EnvironmentVariableTarget.User), privateKeyFile); 
+                        new PrivateKeyAuthenticationMethod(Environment.GetEnvironmentVariable("TfsExtractSSH_User"), privateKeyFile); 
                 }
             }
 
             connectionInfo = new ConnectionInfo(
-            Environment.GetEnvironmentVariable("TfsExtractSSH_Host", EnvironmentVariableTarget.User),
-            Environment.GetEnvironmentVariable("TfsExtractSSH_User", EnvironmentVariableTarget.User),
+            Environment.GetEnvironmentVariable("TfsExtractSSH_Host"),
+            Environment.GetEnvironmentVariable("TfsExtractSSH_User"),
             authenticationMethod);
 
-            logger.Info("Created connection to {0}@{1}", Environment.GetEnvironmentVariable("TfsExtractSSH_User", EnvironmentVariableTarget.User), Environment.GetEnvironmentVariable("TfsExtractSSH_Host", EnvironmentVariableTarget.User));
+            logger.Info("Created connection to {0}@{1}", Environment.GetEnvironmentVariable("TfsExtractSSH_User"), Environment.GetEnvironmentVariable("TfsExtractSSH_Host"));
             return connectionInfo;
         }
     }

@@ -58,7 +58,7 @@ namespace TFSAdminDashboard.DataAccess
 
         public static ICollection<ProjectSimpleDefinition> GetAllProjectsSimple()
         {
-            string tfsUrl = Environment.GetEnvironmentVariable("TfsUrl", EnvironmentVariableTarget.User);
+            string tfsUrl = Environment.GetEnvironmentVariable("TfsUrl");
             string reportUrl = "https://almnet.orangeapplicationsforbusiness.com/Reports/Pages/Report.aspx?ItemPath=%2fTfsReports%2f{0}%2f{1}%2fProject+Management%2fRequirements+Overview";
 
             var collections = DataServiceTeamProjects.Collections().Where(x => x.state == "Started");
@@ -66,10 +66,10 @@ namespace TFSAdminDashboard.DataAccess
             foreach (TeamProjectCollection currCollection in collections)
             {
 #if QUICKTEST
-                if (currCollection.name != Environment.GetEnvironmentVariable("QuickTestCollection", EnvironmentVariableTarget.User))
+                if (currCollection.name != Environment.GetEnvironmentVariable("QuickTestCollection"))
                     continue;
 
-                logger.Info("QUICKTEST mode, consider only the {0} collection", Environment.GetEnvironmentVariable("QuickTestCollection", EnvironmentVariableTarget.User));
+                logger.Info("QUICKTEST mode, consider only the {0} collection", Environment.GetEnvironmentVariable("QuickTestCollection"));
 #endif
                 ++processedColl;
                 processed = 0;
@@ -98,10 +98,10 @@ namespace TFSAdminDashboard.DataAccess
         private static void ExtractInfos(List<ProjectSimpleDefinition> projectList, string tfsUrl, string reportUrl, TeamProjectCollection currCollection, List<TeamProject> collProjects, TeamProject project)
         {
 #if QUICKTEST
-            if (project.name != Environment.GetEnvironmentVariable("QuickTestProject", EnvironmentVariableTarget.User))
+            if (project.name != Environment.GetEnvironmentVariable("QuickTestProject"))
                 return;
 
-            logger.Info("QUICKTEST mode, consider only the {0} project", Environment.GetEnvironmentVariable("QuickTestProject", EnvironmentVariableTarget.User));
+            logger.Info("QUICKTEST mode, consider only the {0} project", Environment.GetEnvironmentVariable("QuickTestProject"));
 #endif
             ++processed;
             logger.Info("       Process {2} - {0}/{1}", processed, collProjects.Count, project.name);
@@ -117,6 +117,7 @@ namespace TFSAdminDashboard.DataAccess
             projectDefinition.Url = string.Format("{0}/{1}/{2}", tfsUrl, currCollection.name, project.name);
             projectDefinition.ReportsUrl = string.Format(reportUrl, currCollection.name, project.name);
 
+            // DM
             switch(currCollection.name)
             {
                 case "AlsyMig":
@@ -133,7 +134,7 @@ namespace TFSAdminDashboard.DataAccess
                     break;
             }
 
-
+            //Report link
             foreach (WorkItemType wit in DataServiceWorkItems.Types(currCollection.name, project.name))
             {
                 if (wit.name == "User Story")
@@ -142,6 +143,7 @@ namespace TFSAdminDashboard.DataAccess
                 }
             }
 
+            // Creation date
             projectDefinition.State = project.state;
             projectDefinition.UtcCreationDate = DataServiceGit.FirstDate(currCollection.name, project.name);
             if (projectDefinition.UtcCreationDate == DateTime.MinValue)
@@ -282,7 +284,7 @@ namespace TFSAdminDashboard.DataAccess
                     // get test plan Data
                     projectDefinition.TestPlanData = DashTestPlanHelper.FeedTestPlanData(currCollection.name, project.name);
 
-                    projectDefinition.Platform = Environment.GetEnvironmentVariable("TfsExtractPrefix", EnvironmentVariableTarget.User);
+                    projectDefinition.Platform = Environment.GetEnvironmentVariable("TfsExtractPrefix");
 
                     projectDefinition.DMOrigin = currCollection.name;
                     projectDefinition.ProjectCode = project.name;

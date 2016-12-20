@@ -16,8 +16,8 @@ namespace TfsAdminDashboardCommands.Command
         private static Logger logger = LogManager.GetCurrentClassLogger();
 
         protected TfsConfigurationServer configurationServer = new TfsConfigurationServer(
-            new Uri(Environment.GetEnvironmentVariable("TfsUrl", EnvironmentVariableTarget.User)),
-            new NetworkCredential(Environment.GetEnvironmentVariable("TfsLoginName", EnvironmentVariableTarget.User), Environment.GetEnvironmentVariable("TfsPassword", EnvironmentVariableTarget.User)));
+            new Uri(Environment.GetEnvironmentVariable("TfsUrl")),
+            new NetworkCredential(Environment.GetEnvironmentVariable("TfsLoginName"), Environment.GetEnvironmentVariable("TfsPassword")));
 
         public AddReaderUserCommand() { }
 

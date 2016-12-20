@@ -13,7 +13,7 @@ namespace TFSDataService
     /// </summary>
     public static class DataServiceBuild
     {
-        private static string tfsServer = Environment.GetEnvironmentVariable("TfsUrl", EnvironmentVariableTarget.User);
+        private static string tfsServer = Environment.GetEnvironmentVariable("TfsUrl");
 
         static DataServiceBuild()
         {

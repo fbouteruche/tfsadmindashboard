@@ -55,7 +55,7 @@ namespace TFSDataService.Tool
         private static WebRequest CreateRequest(string requestUrl)
         {
             var request = WebRequest.Create(requestUrl);
-            request.Credentials = new NetworkCredential(Environment.GetEnvironmentVariable("TfsLoginName", EnvironmentVariableTarget.User), Environment.GetEnvironmentVariable("TfsPassword", EnvironmentVariableTarget.User));
+            request.Credentials = new NetworkCredential(Environment.GetEnvironmentVariable("TfsLoginName"), Environment.GetEnvironmentVariable("TfsPassword"));
             return request;
         }
 

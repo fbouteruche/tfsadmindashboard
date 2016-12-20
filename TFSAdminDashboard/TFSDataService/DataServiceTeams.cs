@@ -14,7 +14,7 @@ namespace TFSDataService
 {
     public static class DataServiceTeams
     {
-        private static string tfsServer = Environment.GetEnvironmentVariable("TfsUrl", EnvironmentVariableTarget.User);
+        private static string tfsServer = Environment.GetEnvironmentVariable("TfsUrl");
         private static Logger logger = LogManager.GetCurrentClassLogger();
 
         static DataServiceTeams()

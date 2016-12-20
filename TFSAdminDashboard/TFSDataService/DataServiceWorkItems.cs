@@ -9,7 +9,7 @@ namespace TFSDataService
 {
     public static class DataServiceWorkItems
     {
-        private static string tfsServer = Environment.GetEnvironmentVariable("TfsUrl", EnvironmentVariableTarget.User);
+        private static string tfsServer = Environment.GetEnvironmentVariable("TfsUrl");
 
         static DataServiceWorkItems()
         {

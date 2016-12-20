@@ -11,7 +11,7 @@ namespace TFSDataService
 {
     public static class DataServiceVersionControl
     {
-        private static string tfsServer = Environment.GetEnvironmentVariable("TfsUrl", EnvironmentVariableTarget.User);
+        private static string tfsServer = Environment.GetEnvironmentVariable("TfsUrl");
 
         static DataServiceVersionControl()
         {

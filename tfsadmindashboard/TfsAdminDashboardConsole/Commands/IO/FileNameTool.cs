@@ -17,10 +17,10 @@ namespace TfsAdminDashboardConsole.Commands.IO
         public static string GetFileName(string envVFileName, string outFormat)
         {
             string ans = Path.Combine(
-                Environment.GetEnvironmentVariable("TfsExtractPath", EnvironmentVariableTarget.User),
+                Environment.GetEnvironmentVariable("TfsExtractPath"),
                 DateTime.Now.ToString("yyyy_MM_dd") + "_" +
-                Environment.GetEnvironmentVariable("TfsExtractPrefix", EnvironmentVariableTarget.User) + "_" +
-                Environment.GetEnvironmentVariable(envVFileName, EnvironmentVariableTarget.User) );
+                Environment.GetEnvironmentVariable("TfsExtractPrefix") + "_" +
+                Environment.GetEnvironmentVariable(envVFileName) );
 
             if(outFormat == "JSON")
             {

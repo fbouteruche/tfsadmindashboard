@@ -10,7 +10,7 @@ namespace TFSDataService
 {
     public static class DataServiceGit
     {
-        private static string tfsServer = Environment.GetEnvironmentVariable("TfsUrl", EnvironmentVariableTarget.User);
+        private static string tfsServer = Environment.GetEnvironmentVariable("TfsUrl");
 
         static DataServiceGit()
         {
