@@ -174,8 +174,15 @@ namespace TFSAdminDashboard.DataAccess
                 Tags = DashGitHelper.FeedGitTagData(currCollection.name, project.name, x.Repository).Select(b => new TagData()
                 {
                     Name = b.tagname,
+                }).ToList(),
+                PullRequests = DashGitHelper.FeedPullRequestData(currCollection.name, project.name, x.Repository).Select(c => new PullRequestData()
+                {
+                    Title = c.title,
+                    Status = c.status,
+                    Sourcebranch = c.sourceRefName.Substring("refs/heads/".Length),
+                    Targetbranch = c.targetRefName.Substring("refs/heads/".Length),
+                    CreationDate = c.creationDate
                 }).ToList()
-
             });
 
 

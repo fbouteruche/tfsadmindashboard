@@ -12,6 +12,7 @@ namespace TFSAdminDashboard.DTO
         public string DefaultBranch { get; set; }
         public int MasterCommitsYesterday { get; set; }
         public string Name { get; set; }
+        public List<PullRequestData> PullRequests { get; set; }
         public List<TagData> Tags { get; set; }
     }
 }

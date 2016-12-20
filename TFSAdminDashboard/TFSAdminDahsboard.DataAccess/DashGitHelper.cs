@@ -10,6 +10,11 @@ namespace TFSAdminDashboard.DataAccess
 
     public class DashGitHelper
     {
+        internal static List<PullRequest> FeedPullRequestData(string collectionName, string projectName, string repoName)
+        {
+            return DataServiceGit.PullRequests(collectionName, projectName, repoName);
+        }
+
         internal static List<GitTag> FeedGitTagData(string collectionName, string projectName, string repoName)
         {
             return DataServiceGit.Tags(collectionName, projectName, repoName);
@@ -72,6 +77,6 @@ namespace TFSAdminDashboard.DataAccess
             return DataServiceGit.isGitBased(collectionName, projectName);
         }
 
-
+      
     }
 }
