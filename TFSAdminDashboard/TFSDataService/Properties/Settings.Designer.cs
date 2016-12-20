@@ -52,7 +52,7 @@ namespace TFSDataService.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("{0}/{1}/_apis/git/repositories/{2}/commits?api-version=1.0")]
+        [global::System.Configuration.DefaultSettingValueAttribute("{0}/{1}/_apis/git/repositories/{2}/commits?api-version=2.0&branch=master")]
         public string GitCommitUrl {
             get {
                 return ((string)(this["GitCommitUrl"]));

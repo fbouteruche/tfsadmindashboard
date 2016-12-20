@@ -94,5 +94,7 @@ namespace TFSAdminDashboard.DTO
         public string Platform { get; set; }
         public string DM { get; set; }
         public double XamlRatio { get; set; }
+
+        public List<GitData> Repositories { get;  set; }
     }
 }

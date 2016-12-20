@@ -12,7 +12,7 @@
       <Value Profile="(Default)">{0}/{1}/_apis/git/repositories/{2}/refs/heads?api-version=1.0</Value>
     </Setting>
     <Setting Name="GitCommitUrl" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">{0}/{1}/_apis/git/repositories/{2}/commits?api-version=1.0</Value>
+      <Value Profile="(Default)">{0}/{1}/_apis/git/repositories/{2}/commits?api-version=2.0&amp;branch=master</Value>
     </Setting>
     <Setting Name="GitTagUrl" Type="System.String" Scope="Application">
       <Value Profile="(Default)">{0}/{1}/_apis/git/repositories/{2}/refs/tags?api-version=1.0</Value>

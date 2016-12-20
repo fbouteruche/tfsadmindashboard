@@ -31,7 +31,8 @@ namespace TFSAdminDashboard.DataAccess
                 VersionControlItem v = new VersionControlItem()
                 {
                     Repository = repo.name,
-                    isGit = true
+                    isGit = true,
+                    DefaultBranch = repo.defaultBranch
                 };
 
                 var commits = DataServiceGit.Commits(collectionName, projectName, repo.name);
@@ -47,7 +48,9 @@ namespace TFSAdminDashboard.DataAccess
                     v.LastCommit = "Void repo";
                     v.ItemDate = DateTime.MinValue;
                 }
-                v.TotalCommit = commits.Count;
+
+                v.TotalMasterCommit = commits.Where(x => x.author.date.Date == DateTime.Now.AddDays(-1).Date).ToList().Count;
+
                 versionControlItemCollection.Add(v);
             }
 

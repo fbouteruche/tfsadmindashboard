@@ -91,6 +91,8 @@ namespace TFSDataService
 
             GitBranchRootobject o = JsonConvert.DeserializeObject<GitBranchRootobject>(json);
 
+            o.value.ToList().ForEach(x => x.repo = repoName);
+
             return o.value.ToList();
         }
 

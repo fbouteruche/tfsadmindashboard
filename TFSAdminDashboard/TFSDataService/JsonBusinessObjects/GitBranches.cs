@@ -24,6 +24,8 @@ namespace TFSDataService.JsonBusinessObjects
             }
         }
 
+        public string repo { get; set; }
+
         public string objectId { get; set; }
         public string url { get; set; }
     }

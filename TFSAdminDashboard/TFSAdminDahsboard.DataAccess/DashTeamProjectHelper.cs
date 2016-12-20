@@ -56,6 +56,8 @@ namespace TFSAdminDashboard.DataAccess
         static int processed = 0;
         static List<ProjectSimpleDefinition> projectList = new List<ProjectSimpleDefinition>();
 
+        static bool quicktested = false;
+
         public static ICollection<ProjectSimpleDefinition> GetAllProjectsSimple()
         {
             string tfsUrl = Environment.GetEnvironmentVariable("TfsUrl");
@@ -79,15 +81,17 @@ namespace TFSAdminDashboard.DataAccess
 
                 logger.Info("   {0} project to extract in collection {1}", collProjects.Count, currCollection.name);
 
-                foreach(TeamProject project in collProjects)
+                foreach (TeamProject project in collProjects)
                 {
                     ExtractInfos(projectList, tfsUrl, reportUrl, currCollection, collProjects, project);
                 };
 
-#if TEST
-                //Stop after the first collection in TEST mode.
-                logger.Info("TEST mode, stop after the first collection");
-                break;
+#if QUICKTEST
+                if (quicktested)
+                {
+                    logger.Info("TEST mode, stop after the first collection");
+                    break;
+                }
 #endif
             }
 
@@ -102,6 +106,7 @@ namespace TFSAdminDashboard.DataAccess
                 return;
 
             logger.Info("QUICKTEST mode, consider only the {0} project", Environment.GetEnvironmentVariable("QuickTestProject"));
+            quicktested = true;
 #endif
             ++processed;
             logger.Info("       Process {2} - {0}/{1}", processed, collProjects.Count, project.name);
@@ -118,7 +123,7 @@ namespace TFSAdminDashboard.DataAccess
             projectDefinition.ReportsUrl = string.Format(reportUrl, currCollection.name, project.name);
 
             // DM
-            switch(currCollection.name)
+            switch (currCollection.name)
             {
                 case "AlsyMig":
                     projectDefinition.DM = "AD";
@@ -155,14 +160,29 @@ namespace TFSAdminDashboard.DataAccess
 
             logger.Trace("Git Data");
             var commitsData = DashGitHelper.FeedGitData(currCollection.name, project.name);
-
             var branches = DashGitHelper.FeedGitBranchData(currCollection.name, project.name);
 
-            projectDefinition.GitBranches = branches.Select(x => x.branchname).Distinct().ToDelimitedString();
+            var repositories = commitsData.Select(x => new GitData()
+            {
+                Name = x.Repository,
+                DefaultBranch = x.DefaultBranch,
+                Branches = branches.Where(y => y.repo == x.Repository).Select(z => new BranchData()
+                {
+                    Name = z.name
+                }).ToList(),
+                MasterCommitsYesterday = commitsData.Where(w => w.Repository == x.Repository).Sum(v => v.TotalMasterCommit)
 
-            projectDefinition.GitCommits = commitsData.Sum(x => x.TotalCommit);
+            });
 
-            projectDefinition.LastCommit = commitsData.OrderBy(x => x.ItemDate).First().ItemDate;
+
+            projectDefinition.GitCommits = commitsData.Sum(x => x.TotalMasterCommit);
+
+            projectDefinition.LastCommit = commitsData.OrderByDescending(x => x.ItemDate).First().ItemDate;
+
+
+            projectDefinition.Repositories = repositories.ToList();
+
+            projectDefinition.LastCommit = commitsData.OrderByDescending(x => x.ItemDate).First().ItemDate;
 
             projectDefinition.IsActive = projectDefinition.LastCommit > DateTime.Now.AddDays(-10);
 
@@ -182,10 +202,10 @@ namespace TFSAdminDashboard.DataAccess
             projectDefinition.BuildNumber = buildData.Count;
 
             if (buildData.Count > 0)
-            { 
+            {
                 projectDefinition.BuildHealth = buildData.Average(x => x.Health);
 
-                projectDefinition.XamlRatio = (double) buildData.Count(x => x.type == "xaml") / buildData.Count;
+                projectDefinition.XamlRatio = (double)buildData.Count(x => x.type == "xaml") / buildData.Count;
             }
 
             // get test plan Data

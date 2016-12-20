@@ -43,12 +43,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationGroupDefinition.cs" />
+    <Compile Include="BranchData.cs" />
     <Compile Include="BuildAgentDefinition.cs" />
     <Compile Include="BuildControllerDefinition.cs" />
     <Compile Include="BuildDefinition.cs" />
     <Compile Include="BuildRun.cs" />
     <Compile Include="BuildServiceHostDefinition.cs" />
     <Compile Include="DataCollectorDefinition.cs" />
+    <Compile Include="GitData.cs" />
     <Compile Include="ProcessGuidanceSiteDefinition.cs" />
     <Compile Include="ProjectCollectionDefinition.cs" />
     <Compile Include="ProjectPortalDefinition.cs" />
