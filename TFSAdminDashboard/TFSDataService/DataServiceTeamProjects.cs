@@ -65,5 +65,33 @@ namespace TFSDataService
 
             return ans;
         }
+
+        public static bool CreateProject(string collection, string name, string description, string processTemplateName )
+        {
+            string processTemplateId = DataServiceProcesses.ProcessId(collection, processTemplateName);
+            string createProjectUrl = string.Format(Settings.Default.CreateTeamProjectUrl, tfsServer, collection);
+
+            TeamProjectRequest request = new TeamProjectRequest()
+            {
+                name = name,
+                description = description,
+                capabilities = new Capabilities()
+                {
+                    processTemplate = new Processtemplate()
+                    {
+                        templateTypeId = processTemplateId
+                    },
+                    versioncontrol = new Versioncontrol()
+                    {
+                        sourceControlType = "Git"
+                    }
+
+                }
+            };
+
+            string json = JsonRequest.PostData(createProjectUrl, JsonConvert.SerializeObject(request));
+
+            return json.Contains("queued");
+        }
     }
 }

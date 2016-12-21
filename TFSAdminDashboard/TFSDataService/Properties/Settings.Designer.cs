@@ -148,5 +148,32 @@ namespace TFSDataService.Properties {
                 return ((string)(this["GitPullRequestUrl"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("{0}/{1}/_apis/projects?api-version=2.0-preview")]
+        public string CreateTeamProjectUrl {
+            get {
+                return ((string)(this["CreateTeamProjectUrl"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("{0}/{1}/_apis/process/processes?api-version=1.0")]
+        public string ProcessesUrl {
+            get {
+                return ((string)(this["ProcessesUrl"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("{0}/{1}/_apis/process/processes/{2}?api-version=1.0")]
+        public string SingleProcessUrl {
+            get {
+                return ((string)(this["SingleProcessUrl"]));
+            }
+        }
     }
 }

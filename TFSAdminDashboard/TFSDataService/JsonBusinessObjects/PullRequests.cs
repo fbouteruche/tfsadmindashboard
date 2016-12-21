@@ -31,7 +31,7 @@ namespace TFSDataService.JsonBusinessObjects
         public Lastmergecommit lastMergeCommit { get; set; }
         public Reviewer[] reviewers { get; set; }
         public string url { get; set; }
-        public _Links _links { get; set; }
+        public _Links1 _links { get; set; }
     }
 
     public class Repository1
@@ -67,7 +67,7 @@ namespace TFSDataService.JsonBusinessObjects
         public string url { get; set; }
     }
 
-    public class _Links
+    public class _Links1
     {
         public Self self { get; set; }
         public Repository2 repository { get; set; }

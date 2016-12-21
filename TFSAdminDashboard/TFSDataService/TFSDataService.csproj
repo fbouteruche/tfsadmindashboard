@@ -54,6 +54,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataServiceProcesses.cs" />
     <Compile Include="JsonBusinessObjects\BuildDefinitionDetails.cs" />
     <Compile Include="DataServiceBase.cs" />
     <Compile Include="DataServiceBuild.cs" />
@@ -71,11 +72,13 @@
     <Compile Include="JsonBusinessObjects\GitCommit.cs" />
     <Compile Include="JsonBusinessObjects\GitRepository.cs" />
     <Compile Include="JsonBusinessObjects\GitTags.cs" />
+    <Compile Include="JsonBusinessObjects\Process.cs" />
     <Compile Include="JsonBusinessObjects\PullRequests.cs" />
     <Compile Include="JsonBusinessObjects\SurfaceTeamProjectCollections.cs" />
     <Compile Include="JsonBusinessObjects\SurfaceTeamMember.cs" />
     <Compile Include="JsonBusinessObjects\TeamMember.cs" />
     <Compile Include="JsonBusinessObjects\TeamProjectCollection.cs" />
+    <Compile Include="JsonBusinessObjects\TeamProjectRequest.cs" />
     <Compile Include="JsonBusinessObjects\TeamProjects.cs" />
     <Compile Include="JsonBusinessObjects\Teams.cs" />
     <Compile Include="JsonBusinessObjects\TestPlan.cs" />
