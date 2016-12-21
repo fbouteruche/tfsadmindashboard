@@ -28,7 +28,7 @@ namespace TFSAdminDashboard.DataAccess
             {
                 ++i;
                 logger.Info("Process project {0} {1}/{2}", proj.name, i, projects.Count);
-                foreach (TeamMember member in DataServiceTeams.Members(proj.collectionName, proj.name))
+                foreach (TeamMember member in DataServiceTeams.DefaultMembers(proj.collectionName, proj.name))
                 {
                     userList.Add(new User()
                     {
@@ -48,7 +48,7 @@ namespace TFSAdminDashboard.DataAccess
         {
             List<User> userList = new List<User>();
 
-            foreach (TeamMember member in DataServiceTeams.Members(collectionName, projectName))
+            foreach (TeamMember member in DataServiceTeams.DefaultMembers(collectionName, projectName))
             {
                 userList.Add(new User()
                 {

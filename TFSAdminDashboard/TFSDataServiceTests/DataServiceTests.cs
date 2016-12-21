@@ -97,7 +97,7 @@ namespace TFSDataService.Tests
         [Test()]
         public void RestGetProjectTemplatesIdTest()
         {
-            Assert.IsTrue(DataServiceProcesses.ProcessId("AD", "CMMI OAB 1.1") == "5277c09f-f6d4-4774-ae28-0f04df432d3e");
+            Assert.IsTrue(DataServiceProcesses.ProcessId("AD", "CMMI") == "5277c09f-f6d4-4774-ae28-0f04df432d3e");
         }
 
         [Test()]
@@ -177,7 +177,7 @@ namespace TFSDataService.Tests
         [Test()]
         public void RestGetDefaultTeamMembersTest()
         {
-            var teamMembers = DataServiceTeams.Members("DT", "DemoCMMI");
+            var teamMembers = DataServiceTeams.DefaultMembers("DT", "DemoCMMI");
 
             Assert.IsTrue(teamMembers.Count(x => x.DisplayName.Contains("TOLLU")) == 1);
         }

@@ -33,7 +33,7 @@ namespace TFSDataService
             return o.value.ToList();
         }
 
-        public static List<TeamMember> Members(string collection, string projectName)
+        public static List<TeamMember> DefaultMembers(string collection, string projectName)
         {
             List < Team >  teams = List(collection, projectName);
 
