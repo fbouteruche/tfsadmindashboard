@@ -89,13 +89,6 @@ namespace TFSDataService.Tests
         }
 
         [Test()]
-        public void RestGetProjectTemplatesTest()
-        {
-            var spy = DataServiceProcesses.Processes("AD");
-            Assert.IsTrue(DataServiceProcesses.Processes("AD").Count(x => x.name == "CMMI OAB 1.1") == 1);
-        }
-
-        [Test()]
         public void RestCreateProjectTest()
         {
             DataServiceTeamProjects.CreateProject("AD", "testREST","this is the test rest project", "CMMI");
@@ -113,7 +106,6 @@ namespace TFSDataService.Tests
             var spy = DataServiceProcesses.Process("AD", "5277c09f-f6d4-4774-ae28-0f04df432d3e");
             Assert.IsTrue(DataServiceProcesses.Process("AD", "5277c09f-f6d4-4774-ae28-0f04df432d3e").name == "CMMI OAB 1.11");
         }
-
 
         [Test()]
         public void RestGetProjectsTest()
