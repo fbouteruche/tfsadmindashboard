@@ -96,6 +96,12 @@ namespace TFSDataService.Tests
         }
 
         [Test()]
+        public void RestCreateProjectTest()
+        {
+            DataServiceTeamProjects.CreateProject("AD", "testREST","this is the test rest project", "CMMI");
+        }
+
+        [Test()]
         public void RestGetProjectTemplatesIdTest()
         {
             Assert.IsTrue(DataServiceProcesses.ProcessId("AD", "CMMI OAB 1.1") == "5277c09f-f6d4-4774-ae28-0f04df432d3e");
