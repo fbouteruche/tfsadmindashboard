@@ -52,7 +52,7 @@ namespace TFSAdminDashboard.DataAccess
                 if (builds.Any())
                     buildDef.Health = (int)(succeeded / buildCount * 100);
                 else
-                    buildDef.Health = 0;
+                    buildDef.Health = 100;
 
                 buildDefinitionCollection.Add(buildDef);
             }

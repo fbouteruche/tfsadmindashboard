@@ -147,7 +147,11 @@ namespace TFSDataService.Tests
         [Test()]
         public void RestGetBuildsTest()
         {
-            Assert.IsTrue(DataServiceBuild.Builds("DT", "DemoCMMI").Count(x => x.result == "succeeded") > 60);
+            var builds = DataServiceBuild.Builds("AD", "OAB-AD-MOB");
+
+            var succeed = builds.Count(x => x.result == "succeeded");
+
+            Assert.IsTrue(DataServiceBuild.Builds("AD", "OAB-AD-MOB").Count(x => x.result == "succeeded") > 60);
         }
 
         [Test()]
