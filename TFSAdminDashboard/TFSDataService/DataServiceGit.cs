@@ -17,6 +17,12 @@ namespace TFSDataService
             DataServiceBase.CheckVariables();
         }
 
+        /// <summary>
+        /// get the date of the first git commit
+        /// </summary>
+        /// <param name="collectionName"></param>
+        /// <param name="projectName"></param>
+        /// <returns></returns>
         public static DateTime FirstDate(string collectionName, string projectName)
         {
             List<GitCommit> commits = AllCommits(collectionName, projectName);
@@ -32,6 +38,12 @@ namespace TFSDataService
             }
         }
 
+        /// <summary>
+        /// Get all commits, through all git repo (only the first 100 seems to be returned by the API)
+        /// </summary>
+        /// <param name="collectionName"></param>
+        /// <param name="projectName"></param>
+        /// <returns></returns>
         private static List<GitCommit> AllCommits(string collectionName, string projectName)
         {
             List<GitCommit> ans = new List<GitCommit>();
@@ -51,6 +63,13 @@ namespace TFSDataService
             return ans;
         }
 
+        /// <summary>
+        /// Get all commits, for a given git repo (only the first 100 seems to be returned by the API)
+        /// </summary>
+        /// <param name="collectionName"></param>
+        /// <param name="projectName"></param>
+        /// <param name="repoName"></param>
+        /// <returns></returns>
         public static List<GitCommit> Commits(string collectionName, string projectName, string repoName = null)
         {
             var gitRepos = Repositories(collectionName, projectName);
@@ -80,6 +99,13 @@ namespace TFSDataService
                 return new List<GitCommit>();
         }
 
+        /// <summary>
+        /// List Git branches for a git repo
+        /// </summary>
+        /// <param name="collectionName"></param>
+        /// <param name="projectName"></param>
+        /// <param name="repoName"></param>
+        /// <returns></returns>
         public static List<GitBranch> Branches(string collectionName, string projectName, string repoName)
         {
             var gitRepos = Repositories(collectionName, projectName);
@@ -96,6 +122,13 @@ namespace TFSDataService
             return o.value.ToList();
         }
 
+        /// <summary>
+        /// List Git tags, for a given repo
+        /// </summary>
+        /// <param name="collectionName"></param>
+        /// <param name="projectName"></param>
+        /// <param name="repoName"></param>
+        /// <returns></returns>
         public static List<GitTag> Tags(string collectionName, string projectName, string repoName)
         {
             var gitRepos = Repositories(collectionName, projectName);
@@ -110,6 +143,13 @@ namespace TFSDataService
             return o.value.ToList();
         }
 
+        /// <summary>
+        /// List Pull requests, for a given repo
+        /// </summary>
+        /// <param name="collectionName"></param>
+        /// <param name="projectName"></param>
+        /// <param name="repoName"></param>
+        /// <returns></returns>
         public static List<PullRequest> PullRequests(string collectionName, string projectName, string repoName)
         {
             var gitRepos = Repositories(collectionName, projectName);
@@ -124,6 +164,12 @@ namespace TFSDataService
             return o.value.ToList();
         }
 
+        /// <summary>
+        /// List Git repos
+        /// </summary>
+        /// <param name="collectionName"></param>
+        /// <param name="projectName"></param>
+        /// <returns></returns>
         public static List<GitRepository> Repositories(string collectionName, string projectName)
         {
             string gitReposURL = string.Format(Settings.Default.GitRepoUrl, tfsServer, collectionName, projectName);
@@ -135,6 +181,12 @@ namespace TFSDataService
             return o.value.ToList();
         }
 
+        /// <summary>
+        /// Is a TFS Project Git based?
+        /// </summary>
+        /// <param name="collectionName"></param>
+        /// <param name="projectName"></param>
+        /// <returns></returns>
         public static bool isGitBased(string collectionName, string projectName)
         {
             return Repositories(collectionName, projectName).Count > 0;

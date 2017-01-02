@@ -18,6 +18,11 @@ namespace TFSDataService
             DataServiceBase.CheckVariables();
         }
 
+        /// <summary>
+        /// List TFVC branches
+        /// </summary>
+        /// <param name="collectionName"></param>
+        /// <returns></returns>
         public static List<TFVCBranch> Branches(string collectionName)
         {
             string tfvcBranchesURL = string.Format("{0}/{1}/_apis/tfvc/branches", tfsServer, collectionName);
@@ -29,11 +34,23 @@ namespace TFSDataService
             return o.value.ToList();
         }
 
+        /// <summary>
+        /// Is the project TFVC based?
+        /// </summary>
+        /// <param name="collectionName"></param>
+        /// <param name="projectName"></param>
+        /// <returns></returns>
         public static bool isTFVCBased(string collectionName, string projectName)
         {
             return Branches(collectionName).Any(x => x.path.Contains(projectName));
         }
 
+        /// <summary>
+        /// List changesets
+        /// </summary>
+        /// <param name="collectionName"></param>
+        /// <param name="projectName"></param>
+        /// <returns></returns>
         public static Dictionary<string, List<TFVCChangeSet>> Changesets(string collectionName, string projectName)
         {
             Dictionary<string, List<TFVCChangeSet>> ans = new Dictionary<string, List<TFVCChangeSet>>();

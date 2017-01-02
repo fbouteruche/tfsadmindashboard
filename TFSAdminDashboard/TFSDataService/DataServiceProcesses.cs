@@ -17,6 +17,11 @@ namespace TFSDataService
             DataServiceBase.CheckVariables();
         }
 
+        /// <summary>
+        /// List the process templates available in a collection
+        /// </summary>
+        /// <param name="collection"></param>
+        /// <returns></returns>
         public static List<Process> Processes(string collection)
         {
             List<Process> processes = new List<Process>();
@@ -31,6 +36,12 @@ namespace TFSDataService
 
         }
 
+        /// <summary>
+        /// Get the process ID from a process name
+        /// </summary>
+        /// <param name="collection"></param>
+        /// <param name="processName"></param>
+        /// <returns></returns>
         public static string ProcessId(string collection, string processName)
         {
             var process = Processes(collection).FirstOrDefault(x => x.name == processName);
@@ -45,6 +56,12 @@ namespace TFSDataService
             }
         }
 
+        /// <summary>
+        /// Get a process from it's ID
+        /// </summary>
+        /// <param name="collection"></param>
+        /// <param name="processId"></param>
+        /// <returns></returns>
         public static Process Process(string collection, string processId)
         {
 

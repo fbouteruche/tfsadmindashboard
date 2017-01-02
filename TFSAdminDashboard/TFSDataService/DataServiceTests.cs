@@ -16,8 +16,12 @@ namespace TFSDataService
             DataServiceBase.CheckVariables();
         }
 
-        // TODO: Expose also test results
-
+        /// <summary>
+        /// List test plans
+        /// </summary>
+        /// <param name="collectionName"></param>
+        /// <param name="projectName"></param>
+        /// <returns></returns>
         public static List<TestPlan> Plans(string collectionName, string projectName)
         {
 
@@ -45,6 +49,12 @@ namespace TFSDataService
             return ans;
         }
 
+        /// <summary>
+        /// List test runs
+        /// </summary>
+        /// <param name="collectionName"></param>
+        /// <param name="projectName"></param>
+        /// <returns></returns>
         public static List<TestRun> Runs(string collectionName, string projectName)
         {
             string testRunsURL = string.Format("{0}/{1}/{2}/_apis/test/runs?api-version=1.0", tfsServer, collectionName, projectName);
@@ -56,11 +66,18 @@ namespace TFSDataService
             return o.value.ToList();
         }
 
+
+        /// <summary>
+        /// List test runs results
+        /// </summary>
+        /// <param name="collectionName"></param>
+        /// <param name="projectName"></param>
+        /// <returns></returns>
         public static List<TestResult> RunResults(string collectionName, string projectName)
         {
             List<TestResult> ans = new List<TestResult>();
 
-            foreach(TestRun run in Runs(collectionName, projectName))
+            foreach (TestRun run in Runs(collectionName, projectName))
             {
                 string testRunResultsURL = string.Format("{0}/{1}/{2}/_apis/test/runs/{3}/results?api-version=3.0-preview", tfsServer, collectionName, projectName, run.id);
 

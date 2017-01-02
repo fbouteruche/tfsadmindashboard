@@ -17,6 +17,10 @@ namespace TFSDataService
             DataServiceBase.CheckVariables();
         }
 
+        /// <summary>
+        /// List all Team Project Collections
+        /// </summary>
+        /// <returns>a list of collections</returns>
         public static List<TeamProjectCollection> Collections()
         {
             List<TeamProjectCollection> ans = new List<TeamProjectCollection>();
@@ -39,6 +43,11 @@ namespace TFSDataService
             return ans;
         }
 
+        /// <summary>
+        /// List all project in a given collection
+        /// </summary>
+        /// <param name="collection">TeamProjectCollection</param>
+        /// <returns>a list of projects</returns>
         public static List<TeamProject> Projects(string collection)
         {
             string tpcUrl = string.Format(Settings.Default.TeamProjectUrl, tfsServer, collection);
@@ -50,6 +59,10 @@ namespace TFSDataService
             return o.value.ToList();
         }
 
+        /// <summary>
+        /// List all projects in all collections
+        /// </summary>
+        /// <returns></returns>
         public static List<TeamProject> AllProjects()
         {
             List<TeamProject> ans = new List<TeamProject>();
@@ -66,6 +79,14 @@ namespace TFSDataService
             return ans;
         }
 
+        /// <summary>
+        /// Create a team project
+        /// </summary>
+        /// <param name="collection">TeamProjectCollection</param>
+        /// <param name="name">Project name</param>
+        /// <param name="description">Description</param>
+        /// <param name="processTemplateName">Template name</param>
+        /// <returns>true if the request was queued</returns>
         public static bool CreateProject(string collection, string name, string description, string processTemplateName )
         {
             string processTemplateId = DataServiceProcesses.ProcessId(collection, processTemplateName);

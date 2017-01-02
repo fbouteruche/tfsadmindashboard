@@ -16,6 +16,12 @@ namespace TFSDataService
             DataServiceBase.CheckVariables();
         }
 
+        /// <summary>
+        /// List workitems types
+        /// </summary>
+        /// <param name="collectionName"></param>
+        /// <param name="projectName"></param>
+        /// <returns></returns>
         public static List<WorkItemType> Types(string collectionName, string projectName)
         {
             string witTypesURL = string.Format("{0}/{1}/{2}/_apis/wit/workItemTypes", tfsServer, collectionName, projectName);
@@ -27,6 +33,13 @@ namespace TFSDataService
             return o.value.ToList();
         }
 
+        /// <summary>
+        /// List available states for a given workitem
+        /// </summary>
+        /// <param name="collectionName"></param>
+        /// <param name="projectName"></param>
+        /// <param name="workitemType"></param>
+        /// <returns></returns>
         public static Dictionary<string, int> States(string collectionName, string projectName, string workitemType)
         {
             Dictionary<string, int> ans = new Dictionary<string, int>();

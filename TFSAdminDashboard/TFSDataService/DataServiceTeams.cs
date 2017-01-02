@@ -22,6 +22,12 @@ namespace TFSDataService
             DataServiceBase.CheckVariables();
         }
 
+        /// <summary>
+        /// List the teams for a project
+        /// </summary>
+        /// <param name="collection"></param>
+        /// <param name="projectName"></param>
+        /// <returns></returns>
         public static List<Team> List(string collection, string projectName)
         {
             string teamscUrl = string.Format(Settings.Default.TeamUrl, tfsServer, collection, projectName);
@@ -33,6 +39,12 @@ namespace TFSDataService
             return o.value.ToList();
         }
 
+        /// <summary>
+        /// List the members of the default team
+        /// </summary>
+        /// <param name="collection"></param>
+        /// <param name="projectName"></param>
+        /// <returns></returns>
         public static List<TeamMember> DefaultMembers(string collection, string projectName)
         {
             List < Team >  teams = List(collection, projectName);
