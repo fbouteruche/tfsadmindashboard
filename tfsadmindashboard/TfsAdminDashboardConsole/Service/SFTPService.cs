@@ -30,11 +30,16 @@ namespace TfsAdminDashboardConsole.Service
         {
             string uploadPath = string.Empty;
 
+            string destinationPath = Environment.GetEnvironmentVariable("TfsExtractSSH_Path");
+
+            if(filePath.Contains("Build"))
+                destinationPath = Environment.GetEnvironmentVariable("TfsExtractSSHActivity_Path");
+
             using (var sftp = new SftpClient(CreateConnectionInfo(authent)))
             {
                 var fileStream = File.OpenRead(filePath);
                 sftp.Connect();
-                uploadPath = string.Format("{0}/{1}", Environment.GetEnvironmentVariable("TfsExtractSSH_Path"), Path.GetFileName(filePath));
+                uploadPath = string.Format("{0}/{1}", destinationPath, Path.GetFileName(filePath));
 
                 sftp.UploadFile(fileStream, uploadPath);
 
