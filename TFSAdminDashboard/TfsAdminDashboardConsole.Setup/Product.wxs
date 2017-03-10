@@ -42,7 +42,6 @@
 		<ComponentGroup Id="ProductComponents" Directory="INSTALLFOLDER">
       <Component Id="ProductComponent" Guid="DF306401-E083-4F6F-9B59-80563ECA8282">
         <File Id="TfsAdminDashboardConsole.exe"  Source="..\TfsAdminDashboardConsole\bin\$(var.Configuration)\TfsAdminDashboardConsole.exe"/>
-        <File Id="TFSDataService.pdb"  Source="..\TfsAdminDashboardConsole\bin\$(var.Configuration)\TFSDataService.pdb"/>
         <File Id="CommandLine.dll"  Source="..\TfsAdminDashboardConsole\bin\$(var.Configuration)\CommandLine.dll"/>
         <File Id="CsvHelper.dll"  Source="..\TfsAdminDashboardConsole\bin\$(var.Configuration)\CsvHelper.dll"/>
        

@@ -67,7 +67,7 @@ namespace TFSDataService
             try
             {
                 o = JsonConvert.DeserializeObject<BuildDefinitionDetails>(json);
-                o.HasOwaspDependencyCheckEnabled = o.build.FirstOrDefault(x => x.task.id == "7363e406-cf6e-4f10-8200-281bce562769") != null;
+                o.HasOwaspDependencyCheckEnabled = o.build.FirstOrDefault(x => x.task.id == "7363e406-cf6e-4f10-8200-281bce562769" && x.enabled) != null;
             }
             catch
             {
