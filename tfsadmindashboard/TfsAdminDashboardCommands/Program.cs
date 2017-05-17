@@ -23,12 +23,18 @@ namespace TfsAdminDashboardCommands
 
             if (CommandLine.Parser.Default.ParseArguments(args, options))
             {
-                if (! string.IsNullOrEmpty(options.addTeamCollectionReader))
+                if (options.Add)
                 {
-                    logger.Info("Add user {0} as a reader in each project of collection {1}", options.addTeamCollectionReader, options.TeamProjectCollection);
-                    AddReaderUserCommand command = new AddReaderUserCommand();
-                    command.Execute(options);
+                    logger.Info("Add user {0} as a member of group {1} in each project of collection {2}", options.accountName, options.groupName, options.TeamProjectCollection);
                 }
+
+                if (options.Remove)
+                {
+                    logger.Info("Remove user {0} from group {1} in each project of collection {2}", options.accountName, options.groupName, options.TeamProjectCollection);
+                }
+
+                new ManageUserGroupMemberShipCommand().Execute(options);
+
             }
         }
     }

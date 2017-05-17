@@ -237,7 +237,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CommandLineOptions.cs" />
-    <Compile Include="Command\AddReaderUserCommand.cs" />
+    <Compile Include="Command\ManageUserGroupMemberShipCommand.cs" />
+    <Compile Include="ManageUserGroupTool.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
