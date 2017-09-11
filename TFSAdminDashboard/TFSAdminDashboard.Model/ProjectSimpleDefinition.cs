@@ -96,5 +96,7 @@ namespace TFSAdminDashboard.DTO
         public DateTime? OwaspDependencyCheckLastSuccess { get; set; }
         public DateTime? LastBuildOK { get; set; }
         public DateTime? LastBuildKO { get; set; }
+        public DateTime LastWorkItemModif { get; set; }
+        public int WorkItemModifYesterday { get; set; }
     }
 }

@@ -55,12 +55,12 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="TFSDataService, Version=1.0.6.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\TFSDataService.1.0.6.0\lib\net452\TFSDataService.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="TFSDataService, Version=1.0.7.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\TFSDataService.1.0.7.0\lib\net452\TFSDataService.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BO\WorkItemData.cs" />
     <Compile Include="DashBuildHelper.cs" />
     <Compile Include="DashGitHelper.cs" />
     <Compile Include="DashTestPlanHelper.cs" />

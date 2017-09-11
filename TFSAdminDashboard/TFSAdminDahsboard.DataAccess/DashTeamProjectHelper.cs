@@ -225,9 +225,12 @@ namespace TFSAdminDashboard.DataAccess
             logger.Trace("WorkItems Data");
             var workitemsdata = DashWorkItemHelper.FeedWorkItemData(currCollection.name, project.name);
 
-            projectDefinition.WorkItemNumber = workitemsdata.Sum(x => x.TotalNumber);
+            projectDefinition.WorkItemModifYesterday = workitemsdata.modifsYesterday;
+            projectDefinition.LastWorkItemModif = workitemsdata.lastmodif;
 
-            double closednumber = workitemsdata.Sum(x => x.ClosedNumber);
+            projectDefinition.WorkItemNumber = workitemsdata.workItemDefinitionCollection.Sum(x => x.TotalNumber);
+
+            double closednumber = workitemsdata.workItemDefinitionCollection.Sum(x => x.ClosedNumber);
             projectDefinition.WorkItemHealth = closednumber / projectDefinition.WorkItemNumber;
 
 
@@ -235,7 +238,7 @@ namespace TFSAdminDashboard.DataAccess
             // get test plan Data
             logger.Trace("TestPlan Data");
             int test_number = 0;
-            projectDefinition.TestHealth = DashTestPlanHelper.GetTestResultsRatio(currCollection.name, project.name, workitemsdata, ref test_number);
+            projectDefinition.TestHealth = DashTestPlanHelper.GetTestResultsRatio(currCollection.name, project.name, workitemsdata.workItemDefinitionCollection, ref test_number);
 
             projectDefinition.TestNumber = test_number;
 
@@ -283,9 +286,6 @@ namespace TFSAdminDashboard.DataAccess
                         projectDefinition.UtcCreationDate = new DateTime(2015, 06, 01); //Hack hardcode to the min date for the TFS platform
                     }
 
-                    // get Workitems data
-                    projectDefinition.WorkItemDefinitionCollection = DashWorkItemHelper.FeedWorkItemData(currCollection.name, project.name);
-
                     // get build data
                     projectDefinition.BuildsDefinitionCollection = DashBuildHelper.FeedBuildData(currCollection.name, project.name);
 
@@ -307,7 +307,7 @@ namespace TFSAdminDashboard.DataAccess
 
 
                     // get Wit Data
-                    projectDefinition.WorkItemDefinitionCollection = DashWorkItemHelper.FeedWorkItemData(currCollection.name, project.name);
+                    projectDefinition.WorkItemDefinitionCollection = DashWorkItemHelper.FeedWorkItemData(currCollection.name, project.name).workItemDefinitionCollection;
 
                     // get VCS data
                     projectDefinition.isGitBased = DashGitHelper.isGit(currCollection.name, project.name);
