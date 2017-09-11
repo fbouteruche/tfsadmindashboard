@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TFSAdminDashboard.DTO;
 using TFSDataService;
+using TFSDataService.JsonBusinessObjects;
 
 namespace TFSAdminDashboard.DataAccess
 {
@@ -43,10 +44,8 @@ namespace TFSAdminDashboard.DataAccess
             return ans;
         }
 
-        internal static double GetTestResultsRatio(string collectionName, string projectName, List<WorkItemDefinition> workitemsdata, ref int totalTestCases)
+        internal static double GetTestResultsRatio(string collectionName, string projectName, List<WorkItemDefinition> workitemsdata, ref int totalTestCases, List<TestResult> testResults)
         {
-            var testResults = DataServiceTests.RunResults(collectionName, projectName);
-
             var testCases = workitemsdata.FirstOrDefault(x => x.Name == "Test Case");
 
             if (testCases != null)

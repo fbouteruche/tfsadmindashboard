@@ -98,5 +98,7 @@ namespace TFSAdminDashboard.DTO
         public DateTime? LastBuildKO { get; set; }
         public DateTime LastWorkItemModif { get; set; }
         public int WorkItemModifYesterday { get; set; }
+        public int TestPassedYesterday { get; set; }
+        public DateTime LastTestResult { get; set; }
     }
 }

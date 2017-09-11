@@ -238,7 +238,25 @@ namespace TFSAdminDashboard.DataAccess
             // get test plan Data
             logger.Trace("TestPlan Data");
             int test_number = 0;
-            projectDefinition.TestHealth = DashTestPlanHelper.GetTestResultsRatio(currCollection.name, project.name, workitemsdata.workItemDefinitionCollection, ref test_number);
+            var testResults = DataServiceTests.RunResults(currCollection.name, project.name);
+
+            int testyesterday = 0;
+            DateTime lastTestResult = new DateTime(2015, 06, 01);
+
+            foreach(var result in testResults)
+            {
+                if (result.completedDate > lastTestResult)
+                    lastTestResult = result.completedDate;
+                if(DateTime.Now - result.completedDate < new TimeSpan(1,0,0))
+                {
+                    testyesterday += 1;
+                }
+            }
+
+            projectDefinition.TestHealth = DashTestPlanHelper.GetTestResultsRatio(currCollection.name, project.name, workitemsdata.workItemDefinitionCollection, ref test_number, testResults);
+
+            projectDefinition.TestPassedYesterday = testyesterday;
+            projectDefinition.LastTestResult = lastTestResult;
 
             projectDefinition.TestNumber = test_number;
 
