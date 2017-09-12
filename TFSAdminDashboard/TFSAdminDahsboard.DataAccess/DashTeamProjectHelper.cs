@@ -239,6 +239,8 @@ namespace TFSAdminDashboard.DataAccess
             var testResults = DataServiceTests.RunResults(currCollection.name, project.name);
 
             int testyesterday = 0;
+            int unittestyesterday = 0;
+
             DateTime lastTestResult = new DateTime(2015, 06, 01);
 
             foreach(var result in testResults)
@@ -247,13 +249,17 @@ namespace TFSAdminDashboard.DataAccess
                     lastTestResult = result.completedDate;
                 if(result.completedDate.Date == DateTime.Now.AddDays(-1).Date)
                 {
-                    testyesterday += 1;
+                    if (result.testCase.id != null)
+                        testyesterday += 1;
+                    else
+                        unittestyesterday += 1;
                 }
             }
 
             projectDefinition.TestHealth = DashTestPlanHelper.GetTestResultsRatio(currCollection.name, project.name, workitemsdata.workItemDefinitionCollection, ref test_number, testResults);
 
             projectDefinition.TestPassedYesterday = testyesterday;
+            projectDefinition.UnitTestPassedYesterday = unittestyesterday;
             projectDefinition.LastTestResult = lastTestResult;
 
             projectDefinition.TestNumber = test_number;

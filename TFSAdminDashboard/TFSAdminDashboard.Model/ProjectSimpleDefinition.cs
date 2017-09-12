@@ -100,5 +100,6 @@ namespace TFSAdminDashboard.DTO
         public int WorkItemModifYesterday { get; set; }
         public int TestPassedYesterday { get; set; }
         public DateTime LastTestResult { get; set; }
+        public int UnitTestPassedYesterday { get; set; }
     }
 }
