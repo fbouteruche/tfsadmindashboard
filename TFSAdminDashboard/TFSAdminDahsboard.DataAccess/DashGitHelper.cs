@@ -59,7 +59,7 @@ namespace TFSAdminDashboard.DataAccess
                     v.ItemDate = DateTime.MinValue;
                 }
 
-                v.TotalMasterCommit = commits.Where(x => x.author.date.Date == DateTime.Now.AddDays(-1).Date).ToList().Count;
+                v.TotalMasterCommitYesterday = commits.Where(x => x.author.date.Date == DateTime.Now.AddDays(-1).Date).ToList().Count;
 
                 versionControlItemCollection.Add(v);
             }

@@ -20,7 +20,7 @@ namespace TFSAdminDashboard.DTO
         public int ItemChangeSetId { get; set; }
 
         public DateTime ItemDate { get; set; }
-        public int TotalMasterCommit { get; set; }
+        public int TotalMasterCommitYesterday { get; set; }
         public string DefaultBranch { get; set; }
     }
 }

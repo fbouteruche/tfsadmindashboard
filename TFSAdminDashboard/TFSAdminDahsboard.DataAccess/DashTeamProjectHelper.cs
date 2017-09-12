@@ -171,7 +171,7 @@ namespace TFSAdminDashboard.DataAccess
                 {
                     Name = z.name
                 }).ToList(),
-                MasterCommitsYesterday = commitsData.Where(w => w.Repository == x.Repository).Sum(v => v.TotalMasterCommit),
+                MasterCommitsYesterday = commitsData.Where(w => w.Repository == x.Repository).Sum(v => v.TotalMasterCommitYesterday),
                 Tags = DashGitHelper.FeedGitTagData(currCollection.name, project.name, x.Repository).Select(b => new TagData()
                 {
                     Name = b.tagname,
@@ -187,13 +187,11 @@ namespace TFSAdminDashboard.DataAccess
             });
 
 
-            projectDefinition.GitCommitsYesterday = commitsData.Sum(x => x.TotalMasterCommit);
+            projectDefinition.GitCommitsYesterday = commitsData.Sum(x => x.TotalMasterCommitYesterday);
 
             projectDefinition.LastCommit = commitsData.OrderByDescending(x => x.ItemDate).First().ItemDate;
 
             projectDefinition.Repositories = repositories.ToList();
-
-            projectDefinition.LastCommit = commitsData.OrderByDescending(x => x.ItemDate).First().ItemDate;
 
             projectDefinition.IsActive = projectDefinition.LastCommit > DateTime.Now.AddDays(-10);
 
@@ -247,7 +245,7 @@ namespace TFSAdminDashboard.DataAccess
             {
                 if (result.completedDate > lastTestResult)
                     lastTestResult = result.completedDate;
-                if(DateTime.Now - result.completedDate < new TimeSpan(1,0,0))
+                if(result.completedDate.Date == DateTime.Now.AddDays(-1).Date)
                 {
                     testyesterday += 1;
                 }
