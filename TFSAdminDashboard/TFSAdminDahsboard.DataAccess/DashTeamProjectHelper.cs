@@ -245,7 +245,7 @@ namespace TFSAdminDashboard.DataAccess
 
             foreach(var result in testResults)
             {
-                if (result.completedDate > lastTestResult)
+                if (result.testCase.id != null && result.completedDate > lastTestResult)
                     lastTestResult = result.completedDate;
                 if(result.completedDate.Date == DateTime.Now.AddDays(-1).Date)
                 {
