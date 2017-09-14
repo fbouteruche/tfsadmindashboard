@@ -127,7 +127,12 @@ namespace TFSAdminDashboard.DataAccess
             switch (currCollection.name)
             {
                 case "AlsyMig":
+                case "DX":
                     projectDefinition.DM = "AD";
+                    break;
+                case "DPS":
+                case "DATA":
+                    projectDefinition.DM = "ISBI";
                     break;
                 case "DT":
                 case "Formations":
@@ -265,115 +270,6 @@ namespace TFSAdminDashboard.DataAccess
             projectDefinition.TestNumber = test_number;
 
             projectList.Add(projectDefinition);
-        }
-
-        /// <summary>
-        /// Gets all projects using the REST API
-        /// </summary>
-        /// <returns>the collection of projects definitions</returns>
-        public static ICollection<ProjectDefinition> GetAllProjects()
-        {
-            List<ProjectDefinition> projectList = new List<ProjectDefinition>();
-
-            int processedColl = 0;
-
-            var collections = DataServiceTeamProjects.Collections().Where(x => x.state == "Started");
-
-            foreach (TeamProjectCollection currCollection in collections)
-            {
-                ++processedColl;
-                logger.Info("OoO Collection {0} - {1}/{2}", currCollection.name, processedColl, collections.Count());
-
-                var collProjects = DataServiceTeamProjects.Projects(currCollection.name);
-                int processed = 0;
-
-                logger.Info("   {0} project to extract in collection {1}", collProjects.Count, currCollection.name);
-                foreach (TeamProject project in collProjects)
-                {
-                    ++processed;
-                    logger.Info("       Process {2} - {0}/{1}", processed, collProjects.Count, project.name);
-                    ProjectDefinition projectDefinition = new ProjectDefinition();
-
-                    // General data
-                    projectDefinition.Name = project.name;
-                    projectDefinition.Id = project.id;
-                    projectDefinition.CollectionDescription = currCollection.description;
-                    projectDefinition.Uri = project.url;
-                    projectDefinition.State = project.state;
-                    projectDefinition.CollectionName = currCollection.name;
-                    projectDefinition.UtcCreationDate = DataServiceGit.FirstDate(currCollection.name, project.name);
-
-                    if (projectDefinition.UtcCreationDate == DateTime.MinValue)
-                    {
-                        projectDefinition.UtcCreationDate = new DateTime(2015, 06, 01); //Hack hardcode to the min date for the TFS platform
-                    }
-
-                    // get build data
-                    projectDefinition.BuildsDefinitionCollection = DashBuildHelper.FeedBuildData(currCollection.name, project.name);
-
-                    if (projectDefinition.BuildsDefinitionCollection.Count > 0)
-                    {
-                        var lastSuccess = projectDefinition.BuildsDefinitionCollection.Max(x => x.LastSuccess);
-                        var lastfail = projectDefinition.BuildsDefinitionCollection.Max(x => x.LastFail);
-
-                        if (lastSuccess != DateTime.MinValue)
-                        {
-                            projectDefinition.LastSuccessBuild = lastSuccess;
-                        }
-
-                        if (lastfail != DateTime.MinValue)
-                        {
-                            projectDefinition.LastFailedBuild = lastfail;
-                        }
-                    }
-
-
-                    // get Wit Data
-                    projectDefinition.WorkItemDefinitionCollection = DashWorkItemHelper.FeedWorkItemData(currCollection.name, project.name).workItemDefinitionCollection;
-
-                    // get VCS data
-                    projectDefinition.isGitBased = DashGitHelper.isGit(currCollection.name, project.name);
-                    projectDefinition.isTFVCBased = DashVersionControlHelper.isTFVC(currCollection.name, project.name);
-
-                    if (projectDefinition.isGitBased)
-                    {
-                        projectDefinition.VersionControlData = DashGitHelper.FeedGitData(currCollection.name, project.name);
-                    }
-
-                    if (projectDefinition.isTFVCBased)
-                    {
-                        projectDefinition.VersionControlData.AddRange(DashVersionControlHelper.FeedVersionControlData(currCollection.name, project.name));
-                    }
-
-                    projectDefinition.LastCheckinDate = projectDefinition.VersionControlData.OrderByDescending(x => x.ItemDate).First().ItemDate;
-
-                    // get test plan Data
-                    projectDefinition.TestPlanData = DashTestPlanHelper.FeedTestPlanData(currCollection.name, project.name);
-
-                    projectDefinition.Platform = Environment.GetEnvironmentVariable("TfsExtractPrefix");
-
-                    projectDefinition.DMOrigin = currCollection.name;
-                    projectDefinition.ProjectCode = project.name;
-
-                    projectDefinition.ExtractDate = DateTime.Now;
-
-                    projectList.Add(projectDefinition);
-#if QUICKTEST
-                    //Stop after the first project in QUICKTEST mode.
-                    logger.Info("QUICKTEST mode, stop after the first project");
-                    break;
-#endif
-                }
-
-#if TEST
-                //Stop after the first collection in TEST mode.
-                logger.Info("TEST mode, stop after the first collection");
-                break;
-#endif
-            }
-
-            logger.Info("Extract done");
-            return projectList.OrderBy(x => x.Name).ToList();
         }
     }
 }

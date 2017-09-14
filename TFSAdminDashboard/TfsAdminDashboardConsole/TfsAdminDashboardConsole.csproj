@@ -248,7 +248,6 @@
   <ItemGroup>
     <Compile Include="CommandLineOptions.cs" />
     <Compile Include="Commands\ExtractSimpleProjectListCommand.cs" />
-    <Compile Include="Commands\ExtractProjectListCommand.cs" />
     <Compile Include="Commands\ExtractUsersListCommand.cs" />
     <Compile Include="Commands\iCommand.cs" />
     <Compile Include="Commands\IO\FileNameTool.cs" />
