@@ -234,7 +234,9 @@ namespace TFSAdminDashboard.DataAccess
             projectDefinition.WorkItemNumber = workitemsdata.workItemDefinitionCollection.Sum(x => x.TotalNumber);
 
             double closednumber = workitemsdata.workItemDefinitionCollection.Sum(x => x.ClosedNumber);
-            projectDefinition.WorkItemHealth = closednumber / projectDefinition.WorkItemNumber;
+
+
+            projectDefinition.WorkItemHealth = projectDefinition.WorkItemNumber != 0 ? closednumber / projectDefinition.WorkItemNumber : 0;
 
 
 
