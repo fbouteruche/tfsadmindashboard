@@ -27,7 +27,7 @@ namespace TFSAdminDashboard.DataAccess
 
                 var builds = DataServiceBuild.Builds(collectionName, projectName).Where(x => x.definition.name == def.name).OrderByDescending(x => x.finishTime);
 
-                if(def.type != "xaml")
+                if (def.type != "xaml")
                 {
                     logger.Trace("fetch details for {0}", def.name);
 
@@ -91,7 +91,7 @@ namespace TFSAdminDashboard.DataAccess
                     var allbuilds = DataServiceBuild.Builds(currCollection.name, project.name).OrderByDescending(x => x.startTime);
                     var JSonbuilds = allbuilds.Where(x => x.startTime.Date == DateTime.Now.AddDays(-1).Date);
 
-                    
+
 
                     if (allbuilds.Any())
                     {
@@ -102,22 +102,26 @@ namespace TFSAdminDashboard.DataAccess
                     foreach (Build buildRun in JSonbuilds)
                     {
                         // Do not consider ongoing build
-                        if(buildRun.finishTime > buildRun.startTime)
-                        { 
-                            BuildRun b = new BuildRun();
-
-                            builds.Add(new BuildRun()
+                        if (buildRun.finishTime > buildRun.startTime)
+                        {
+                            string agentName = DataServiceBuild.getWorkerName(buildRun);
+                            if (!string.IsNullOrEmpty(agentName) && !agentName.Contains("no "))
                             {
-                                startTime = buildRun.startTime,
-                                queueTime = buildRun.queueTime,
-                                finishTime = buildRun.finishTime,
-                                duration = (int)(buildRun.finishTime - buildRun.startTime).TotalMilliseconds,
-                                latency = (int)(buildRun.startTime - buildRun.queueTime).TotalMilliseconds,
-                                projectName = currCollection.name + "/" + project.name,
-                                buildName = buildRun.definition.name,
-                                buildNumber = buildRun.buildNumber,
-                                workerName = DataServiceBuild.getWorkerName(buildRun)
-                            });
+                                BuildRun b = new BuildRun();
+
+                                builds.Add(new BuildRun()
+                                {
+                                    startTime = buildRun.startTime,
+                                    queueTime = buildRun.queueTime,
+                                    finishTime = buildRun.finishTime,
+                                    duration = (int)(buildRun.finishTime - buildRun.startTime).TotalMilliseconds,
+                                    latency = (int)(buildRun.startTime - buildRun.queueTime).TotalMilliseconds,
+                                    projectName = currCollection.name + "/" + project.name,
+                                    buildName = buildRun.definition.name,
+                                    buildNumber = buildRun.buildNumber,
+                                    workerName = agentName
+                                });
+                            }
                         }
                     }
                 }
