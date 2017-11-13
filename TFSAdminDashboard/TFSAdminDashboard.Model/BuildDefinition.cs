@@ -40,5 +40,6 @@ namespace TFSAdminDashboard.DTO
 
         public DateTime? LastFail { get; set; }
         public bool UsesDependencyCheck { get; set; }
+        public bool UsesGitSubmodules { get; set; }
     }
 }

@@ -33,6 +33,7 @@ namespace TFSAdminDashboard.DataAccess
 
                     var buildDetails = DataServiceBuild.BuildDefinitionsDetails(def.url);
                     buildDef.UsesDependencyCheck = buildDetails.HasOwaspDependencyCheckEnabled;
+                    buildDef.UsesGitSubmodules = buildDetails.repository.checkoutSubmodules;
                 }
 
                 var success = builds.FirstOrDefault(x => x.result == "succeeded");

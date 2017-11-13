@@ -101,5 +101,6 @@ namespace TFSAdminDashboard.DTO
         public int TestPassedYesterday { get; set; }
         public DateTime LastTestResult { get; set; }
         public int UnitTestPassedYesterday { get; set; }
+        public bool UsesGitSubModules { get; set; }
     }
 }

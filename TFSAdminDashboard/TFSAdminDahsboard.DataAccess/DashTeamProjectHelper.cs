@@ -213,11 +213,17 @@ namespace TFSAdminDashboard.DataAccess
                 projectDefinition.XamlRatio = (double)buildData.Count(x => x.type == "xaml") / buildData.Count;
 
                 var owaspBuilds = buildData.Where(x => x.UsesDependencyCheck);
-
+                
                 if (owaspBuilds.Any())
                 {
                     projectDefinition.OwaspDependencyCheckBuildDefinitions = owaspBuilds.Count();
                     projectDefinition.OwaspDependencyCheckLastSuccess = owaspBuilds.OrderByDescending(x => x.LastSuccess).First().LastSuccess;
+                }
+
+                var submodulesBuilds = buildData.Where(x => x.UsesGitSubmodules);
+                if (submodulesBuilds.Any())
+                {
+                    projectDefinition.UsesGitSubModules = true;
                 }
 
                 projectDefinition.LastBuildOK = buildData.OrderByDescending(x => x.LastSuccess).First().LastSuccess;
