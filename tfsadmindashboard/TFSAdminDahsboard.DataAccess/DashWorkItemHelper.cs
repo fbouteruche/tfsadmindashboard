@@ -42,7 +42,8 @@ namespace TFSAdminDashboard.DataAccess
                     workItemDefinitionCollection.Add(witDefinition);
                     modifsYesterday += serviceAns.modifsYesterday;
 
-                    if(wit.name == "TestCase")
+
+                    if (wit.name == "Test Case")
                         testcasemodifyesterday += serviceAns.modifsYesterday;
 
                     if (serviceAns.lastmodif > lastModif)
