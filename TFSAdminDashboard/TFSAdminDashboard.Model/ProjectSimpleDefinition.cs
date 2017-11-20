@@ -22,6 +22,7 @@ namespace TFSAdminDashboard.DTO
         /// TFS internal ID
         /// </summary>
         public string Id { get; set; }
+
         /// <summary>
         /// TFS State
         /// </summary>
@@ -40,6 +41,9 @@ namespace TFSAdminDashboard.DTO
         /// </summary>
         public DateTime? UtcCreationDate { get; set; }
 
+        public string Platform { get; set; }
+        public string DM { get; set; }
+
         /// <summary>
         /// Did any commit occur in the last 10 days?
         /// </summary>
@@ -54,7 +58,13 @@ namespace TFSAdminDashboard.DTO
         /// Commit number, grand total
         /// </summary>
         public int GitCommitsYesterday { get; set; }
-       
+
+        public List<GitData> Repositories { get; set; }
+
+        public bool UsesGitSubModules { get; set; }
+
+        public bool TFVCFlag { get; set; }
+
         /// <summary>
         /// Number of build definitions
         /// </summary>
@@ -66,6 +76,14 @@ namespace TFSAdminDashboard.DTO
         /// </summary>
         public double BuildHealth { get; set; }
 
+        public DateTime? LastBuildOK { get; set; }
+        public DateTime? LastBuildKO { get; set; }
+
+        public double XamlRatio { get; set; }
+
+        public int OwaspDependencyCheckBuildDefinitions { get; set; }
+        public DateTime? OwaspDependencyCheckLastSuccess { get; set; }
+
         /// <summary>
         /// Number of workitems
         /// </summary>
@@ -75,32 +93,25 @@ namespace TFSAdminDashboard.DTO
         /// % of closed workitems
         /// </summary>
         public double WorkItemHealth { get; set; }
-        
+
+        public DateTime LastWorkItemModif { get; set; }
+        public int WorkItemModifYesterday { get; set; }
+
         /// <summary>
         /// Number of test cases
         /// </summary>
-        public int TestNumber { get; set; }
+        public int FuncTestNumber { get; set; }
 
         /// <summary>
         /// % of passed tests
         /// </summary>
-        public double TestHealth { get; set; }
-        public bool TFVCFlag { get; set; }
-        public string Platform { get; set; }
-        public string DM { get; set; }
-        public double XamlRatio { get; set; }
+        public double FuncTestHealth { get; set; }
 
-        public List<GitData> Repositories { get;  set; }
+        public int FuncTestPassedYesterday { get; set; }
+        public DateTime FuncTestLastResult { get; set; }
 
-        public int OwaspDependencyCheckBuildDefinitions { get; set; }
-        public DateTime? OwaspDependencyCheckLastSuccess { get; set; }
-        public DateTime? LastBuildOK { get; set; }
-        public DateTime? LastBuildKO { get; set; }
-        public DateTime LastWorkItemModif { get; set; }
-        public int WorkItemModifYesterday { get; set; }
-        public int TestPassedYesterday { get; set; }
-        public DateTime LastTestResult { get; set; }
+        public int FuncTestModifYesterday { get; set; }
+
         public int UnitTestPassedYesterday { get; set; }
-        public bool UsesGitSubModules { get; set; }
     }
 }

@@ -235,6 +235,7 @@ namespace TFSAdminDashboard.DataAccess
             var workitemsdata = DashWorkItemHelper.FeedWorkItemData(currCollection.name, project.name);
 
             projectDefinition.WorkItemModifYesterday = workitemsdata.modifsYesterday;
+            projectDefinition.FuncTestModifYesterday = workitemsdata.testcasemodifyesterday;
             projectDefinition.LastWorkItemModif = workitemsdata.lastmodif;
 
             projectDefinition.WorkItemNumber = workitemsdata.workItemDefinitionCollection.Sum(x => x.TotalNumber);
@@ -269,13 +270,13 @@ namespace TFSAdminDashboard.DataAccess
                 }
             }
 
-            projectDefinition.TestHealth = DashTestPlanHelper.GetTestResultsRatio(currCollection.name, project.name, workitemsdata.workItemDefinitionCollection, ref test_number, testResults);
+            projectDefinition.FuncTestHealth = DashTestPlanHelper.GetTestResultsRatio(currCollection.name, project.name, workitemsdata.workItemDefinitionCollection, ref test_number, testResults);
 
-            projectDefinition.TestPassedYesterday = testyesterday;
+            projectDefinition.FuncTestPassedYesterday = testyesterday;
             projectDefinition.UnitTestPassedYesterday = unittestyesterday;
-            projectDefinition.LastTestResult = lastTestResult;
+            projectDefinition.FuncTestLastResult = lastTestResult;
 
-            projectDefinition.TestNumber = test_number;
+            projectDefinition.FuncTestNumber = test_number;
 
             projectList.Add(projectDefinition);
         }

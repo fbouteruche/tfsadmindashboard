@@ -16,6 +16,8 @@ namespace TFSAdminDashboard.DataAccess
         {
             List<WorkItemDefinition> workItemDefinitionCollection = new List<WorkItemDefinition>();
             int modifsYesterday = 0;
+            int testcasemodifyesterday = 0;
+
             DateTime lastModif = new DateTime(2015, 06, 01);
 
 
@@ -39,6 +41,10 @@ namespace TFSAdminDashboard.DataAccess
                 {
                     workItemDefinitionCollection.Add(witDefinition);
                     modifsYesterday += serviceAns.modifsYesterday;
+
+                    if(wit.name == "TestCase")
+                        testcasemodifyesterday += serviceAns.modifsYesterday;
+
                     if (serviceAns.lastmodif > lastModif)
                         lastModif = serviceAns.lastmodif;
                 }
@@ -48,7 +54,8 @@ namespace TFSAdminDashboard.DataAccess
             {
                 workItemDefinitionCollection = workItemDefinitionCollection,
                 lastmodif = lastModif,
-                modifsYesterday = modifsYesterday
+                modifsYesterday = modifsYesterday,
+                testcasemodifyesterday = testcasemodifyesterday
             };
         }
     }

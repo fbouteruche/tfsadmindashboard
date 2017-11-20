@@ -12,5 +12,6 @@ namespace TFSAdminDashboard.DataAccess.BO
         public List<WorkItemDefinition> workItemDefinitionCollection;
         public DateTime lastmodif;
         public int modifsYesterday;
+        internal int testcasemodifyesterday;
     }
 }
