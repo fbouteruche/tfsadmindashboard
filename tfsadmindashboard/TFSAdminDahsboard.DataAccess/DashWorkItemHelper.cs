@@ -21,7 +21,7 @@ namespace TFSAdminDashboard.DataAccess
             DateTime lastModif = new DateTime(2015, 06, 01);
 
 
-            foreach (WorkItemType wit in DataServiceWorkItems.Types(collectionName, projectName))
+            Parallel.ForEach(DataServiceWorkItems.Types(collectionName, projectName), (wit) =>
             {
                 WorkItemDefinition witDefinition = new WorkItemDefinition() { Name = wit.name, Description = wit.description };
 
@@ -49,7 +49,7 @@ namespace TFSAdminDashboard.DataAccess
                     if (serviceAns.lastmodif > lastModif)
                         lastModif = serviceAns.lastmodif;
                 }
-            }
+            });
 
             return new WorkItemData()
             {
