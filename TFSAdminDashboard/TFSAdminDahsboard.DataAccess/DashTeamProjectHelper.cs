@@ -36,22 +36,6 @@ namespace TFSAdminDashboard.DataAccess
             return collectionList;
         }
 
-        public static ICollection<ProjectDefinition> GetProjects(string collectionName)
-        {
-            List<ProjectDefinition> projectList = new List<ProjectDefinition>();
-
-            foreach (TeamProject currProject in DataServiceTeamProjects.Projects(collectionName))
-            {
-                projectList.Add(new ProjectDefinition()
-                {
-                    Name = currProject.name,
-                    CollectionName = currProject.collectionName
-                });
-            }
-
-            return projectList;
-        }
-
         static int processedColl = 0;
         static int processed = 0;
         static List<ProjectSimpleDefinition> projectList = new List<ProjectSimpleDefinition>();
@@ -257,18 +241,18 @@ namespace TFSAdminDashboard.DataAccess
 
             DateTime lastTestResult = new DateTime(2015, 06, 01);
 
-            foreach(var result in testResults)
+            Parallel.ForEach(testResults, (result) =>
             {
                 if (result.testCase.id != null && result.completedDate > lastTestResult)
                     lastTestResult = result.completedDate;
-                if(result.completedDate.Date == DateTime.Now.AddDays(-1).Date)
+                if (result.completedDate.Date == DateTime.Now.AddDays(-1).Date)
                 {
                     if (result.testCase.id != null)
                         testyesterday += 1;
                     else
                         unittestyesterday += 1;
                 }
-            }
+            });
 
             projectDefinition.FuncTestHealth = DashTestPlanHelper.GetTestResultsRatio(currCollection.name, project.name, workitemsdata.workItemDefinitionCollection, ref test_number, testResults);
 

@@ -72,7 +72,7 @@ namespace TFSAdminDashboard.DataAccess
 
             var collections = DataServiceTeamProjects.Collections().Where(x => x.state == "Started");
 
-            foreach (TeamProjectCollection currCollection in collections)
+            foreach(TeamProjectCollection currCollection in collections)
             {
                 ++processedColl;
                 processed = 0;
@@ -82,7 +82,7 @@ namespace TFSAdminDashboard.DataAccess
 
                 logger.Info("   {0} project to process in collection {1}", collProjects.Count, currCollection.name);
 
-                foreach (TeamProject project in collProjects)
+                Parallel.ForEach(collProjects, (project) =>
                 {
                     ++processed;
 
@@ -101,7 +101,7 @@ namespace TFSAdminDashboard.DataAccess
                         logger.Info("{0} on {1} builds considered", JSonbuilds.Count(), allbuilds.Count());
                     }
 
-                    foreach (Build buildRun in JSonbuilds)
+                    Parallel.ForEach(JSonbuilds, (buildRun) =>
                     {
                         // Do not consider ongoing build
                         if (buildRun.finishTime > buildRun.startTime)
@@ -125,8 +125,8 @@ namespace TFSAdminDashboard.DataAccess
                                 });
                             }
                         }
-                    }
-                }
+                    });
+                });
             }
 
             return builds;
