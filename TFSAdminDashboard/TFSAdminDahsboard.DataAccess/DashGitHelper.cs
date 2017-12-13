@@ -4,6 +4,7 @@ using TFSAdminDashboard.DTO;
 using TFSDataService;
 using TFSDataService.JsonBusinessObjects;
 using System;
+using System.Threading.Tasks;
 
 namespace TFSAdminDashboard.DataAccess
 {
@@ -24,10 +25,10 @@ namespace TFSAdminDashboard.DataAccess
         {
             List<GitBranch> ans = new List<GitBranch>();
 
-            foreach (GitRepository repo in DataServiceGit.Repositories(collectionName, projectName))
-            {
-                ans.AddRange(DataServiceGit.Branches(collectionName, projectName, repo.name));
-            }
+            Parallel.ForEach(DataServiceGit.Repositories(collectionName, projectName), (repo) =>
+             {
+                 ans.AddRange(DataServiceGit.Branches(collectionName, projectName, repo.name));
+             });
 
             return ans;
         }
@@ -36,33 +37,33 @@ namespace TFSAdminDashboard.DataAccess
         {
             List<VersionControlItem> versionControlItemCollection = new List<VersionControlItem>();
 
-            foreach (GitRepository repo in DataServiceGit.Repositories(collectionName, projectName))
-            {
-                VersionControlItem v = new VersionControlItem()
-                {
-                    Repository = repo.name,
-                    isGit = true,
-                    DefaultBranch = repo.defaultBranch
-                };
+            Parallel.ForEach(DataServiceGit.Repositories(collectionName, projectName), (repo) =>
+           {
+               VersionControlItem v = new VersionControlItem()
+               {
+                   Repository = repo.name,
+                   isGit = true,
+                   DefaultBranch = repo.defaultBranch
+               };
 
-                var commits = DataServiceGit.Commits(collectionName, projectName, repo.name);
-                if (commits.Count > 0)
-                {
-                    var lastcommit = commits.OrderByDescending(x => x.author.date).First();
+               var commits = DataServiceGit.Commits(collectionName, projectName, repo.name);
+               if (commits.Count > 0)
+               {
+                   var lastcommit = commits.OrderByDescending(x => x.author.date).First();
 
-                    v.LastCommit = lastcommit.commitId;
-                    v.ItemDate = lastcommit.author.date;
-                }
-                else
-                {
-                    v.LastCommit = "Void repo";
-                    v.ItemDate = DateTime.MinValue;
-                }
+                   v.LastCommit = lastcommit.commitId;
+                   v.ItemDate = lastcommit.author.date;
+               }
+               else
+               {
+                   v.LastCommit = "Void repo";
+                   v.ItemDate = DateTime.MinValue;
+               }
 
-                v.TotalMasterCommitYesterday = commits.Where(x => x.author.date.Date == DateTime.Now.AddDays(-1).Date).ToList().Count;
+               v.TotalMasterCommitYesterday = commits.Where(x => x.author.date.Date == DateTime.Now.AddDays(-1).Date).ToList().Count;
 
-                versionControlItemCollection.Add(v);
-            }
+               versionControlItemCollection.Add(v);
+           });
 
             return versionControlItemCollection;
         }
@@ -77,6 +78,6 @@ namespace TFSAdminDashboard.DataAccess
             return DataServiceGit.isGitBased(collectionName, projectName);
         }
 
-      
+
     }
 }
