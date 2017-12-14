@@ -66,10 +66,11 @@ namespace TFSAdminDashboard.DataAccess
 
                 logger.Info("   {0} project to extract in collection {1}", collProjects.Count, currCollection.name);
 
-                foreach (TeamProject project in collProjects)
+
+                Parallel.ForEach(collProjects, (project) =>
                 {
                     ExtractInfos(projectList, tfsUrl, reportUrl, currCollection, collProjects, project);
-                };
+                });
 
 #if QUICKTEST
                 if (quicktested)
@@ -241,7 +242,7 @@ namespace TFSAdminDashboard.DataAccess
 
             DateTime lastTestResult = new DateTime(2015, 06, 01);
 
-            Parallel.ForEach(testResults, (result) =>
+           foreach(var result in testResults)
             {
                 if (result.testCase.id != null && result.completedDate > lastTestResult)
                     lastTestResult = result.completedDate;
@@ -252,7 +253,7 @@ namespace TFSAdminDashboard.DataAccess
                     else
                         unittestyesterday += 1;
                 }
-            });
+            }
 
             projectDefinition.FuncTestHealth = DashTestPlanHelper.GetTestResultsRatio(currCollection.name, project.name, workitemsdata.workItemDefinitionCollection, ref test_number, testResults);
 

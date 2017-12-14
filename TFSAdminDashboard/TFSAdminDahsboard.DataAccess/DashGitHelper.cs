@@ -25,10 +25,10 @@ namespace TFSAdminDashboard.DataAccess
         {
             List<GitBranch> ans = new List<GitBranch>();
 
-            Parallel.ForEach(DataServiceGit.Repositories(collectionName, projectName), (repo) =>
+            foreach(var repo in DataServiceGit.Repositories(collectionName, projectName))
              {
                  ans.AddRange(DataServiceGit.Branches(collectionName, projectName, repo.name));
-             });
+             }
 
             return ans;
         }
@@ -37,7 +37,7 @@ namespace TFSAdminDashboard.DataAccess
         {
             List<VersionControlItem> versionControlItemCollection = new List<VersionControlItem>();
 
-            Parallel.ForEach(DataServiceGit.Repositories(collectionName, projectName), (repo) =>
+            foreach (var repo in DataServiceGit.Repositories(collectionName, projectName))
            {
                VersionControlItem v = new VersionControlItem()
                {
@@ -63,7 +63,7 @@ namespace TFSAdminDashboard.DataAccess
                v.TotalMasterCommitYesterday = commits.Where(x => x.author.date.Date == DateTime.Now.AddDays(-1).Date).ToList().Count;
 
                versionControlItemCollection.Add(v);
-           });
+           }
 
             return versionControlItemCollection;
         }

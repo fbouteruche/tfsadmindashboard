@@ -18,7 +18,7 @@ namespace TFSAdminDashboard.DataAccess
         {
             List<Build_Definition> buildDefinitionCollection = new List<Build_Definition>();
 
-            Parallel.ForEach(DataServiceBuild.BuildDefinitions(collectionName, projectName), (def) =>
+            foreach(var def in DataServiceBuild.BuildDefinitions(collectionName, projectName))
             {
                 Build_Definition buildDef = new Build_Definition()
                 {
@@ -57,7 +57,7 @@ namespace TFSAdminDashboard.DataAccess
                     buildDef.Health = 100;
 
                 buildDefinitionCollection.Add(buildDef);
-            });
+            }
 
             return buildDefinitionCollection;
         }
@@ -101,7 +101,7 @@ namespace TFSAdminDashboard.DataAccess
                         logger.Info("{0} on {1} builds considered", JSonbuilds.Count(), allbuilds.Count());
                     }
 
-                    Parallel.ForEach(JSonbuilds, (buildRun) =>
+                   foreach(var buildRun in JSonbuilds)
                     {
                         // Do not consider ongoing build
                         if (buildRun.finishTime > buildRun.startTime)
@@ -125,7 +125,8 @@ namespace TFSAdminDashboard.DataAccess
                                 });
                             }
                         }
-                    });
+                    }
+
                 });
             }
 

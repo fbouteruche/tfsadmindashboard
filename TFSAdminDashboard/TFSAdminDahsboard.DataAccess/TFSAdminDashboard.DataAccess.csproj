@@ -55,8 +55,8 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="TFSDataService, Version=1.0.14.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\TFSDataService.1.0.14.0\lib\net452\TFSDataService.dll</HintPath>
+    <Reference Include="TFSDataService, Version=1.0.17.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\TFSDataService.1.0.17.0\lib\net452\TFSDataService.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
