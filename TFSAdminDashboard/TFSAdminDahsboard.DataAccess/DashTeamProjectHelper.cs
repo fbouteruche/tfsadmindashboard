@@ -99,7 +99,7 @@ namespace TFSAdminDashboard.DataAccess
             ProjectSimpleDefinition projectDefinition = new ProjectSimpleDefinition();
 
             // General data
-            logger.Trace("General Data");
+            logger.Trace($"{project.name} - General Data");
             projectDefinition.Name = string.Format("{0}/{1}", currCollection.name, project.name);
             projectDefinition.Platform = "TFSOAB";
 
@@ -149,7 +149,7 @@ namespace TFSAdminDashboard.DataAccess
 
             projectDefinition.TFVCFlag = DashVersionControlHelper.isTFVC(currCollection.name, project.name);
 
-            logger.Trace("Git Data");
+            logger.Trace($"{project.name} - Git Data");
             var commitsData = DashGitHelper.FeedGitData(currCollection.name, project.name);
             var branches = DashGitHelper.FeedGitBranchData(currCollection.name, project.name);
 
@@ -186,7 +186,7 @@ namespace TFSAdminDashboard.DataAccess
             projectDefinition.IsActive = projectDefinition.LastCommit > DateTime.Now.AddDays(-10);
 
             // get build data
-            logger.Trace("Build Data");
+            logger.Trace($"{project.name} - Build Data");
             var buildData = DashBuildHelper.FeedBuildData(currCollection.name, project.name);
 
             projectDefinition.BuildDefinitionNumber = buildData.Count;
@@ -216,7 +216,7 @@ namespace TFSAdminDashboard.DataAccess
             }
 
             // get Workitems data
-            logger.Trace("WorkItems Data");
+            logger.Trace($"{project.name} - WorkItems Data");
             var workitemsdata = DashWorkItemHelper.FeedWorkItemData(currCollection.name, project.name);
 
             projectDefinition.WorkItemModifYesterday = workitemsdata.modifsYesterday;
@@ -233,7 +233,7 @@ namespace TFSAdminDashboard.DataAccess
 
 
             // get test plan Data
-            logger.Trace("TestPlan Data");
+            logger.Trace($"{project.name} - TestPlan Data");
             int test_number = 0;
             var testResults = DataServiceTests.RunResults(currCollection.name, project.name);
 
