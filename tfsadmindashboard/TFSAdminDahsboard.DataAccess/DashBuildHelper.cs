@@ -18,7 +18,7 @@ namespace TFSAdminDashboard.DataAccess
         {
             List<Build_Definition> buildDefinitionCollection = new List<Build_Definition>();
 
-            Parallel.ForEach(DataServiceBuild.BuildDefinitions(collectionName, projectName), (def) =>
+            Parallel.ForEach(DataServiceBuild.BuildDefinitions(collectionName, projectName), new ParallelOptions { MaxDegreeOfParallelism = 4 }, (def) =>
             {
                 Build_Definition buildDef = new Build_Definition()
                 {
