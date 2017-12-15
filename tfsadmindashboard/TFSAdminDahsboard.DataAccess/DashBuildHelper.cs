@@ -18,7 +18,7 @@ namespace TFSAdminDashboard.DataAccess
         {
             List<Build_Definition> buildDefinitionCollection = new List<Build_Definition>();
 
-            foreach(var def in DataServiceBuild.BuildDefinitions(collectionName, projectName))
+            Parallel.ForEach(DataServiceBuild.BuildDefinitions(collectionName, projectName), (def) =>
             {
                 Build_Definition buildDef = new Build_Definition()
                 {
@@ -57,7 +57,7 @@ namespace TFSAdminDashboard.DataAccess
                     buildDef.Health = 100;
 
                 buildDefinitionCollection.Add(buildDef);
-            }
+            });
 
             return buildDefinitionCollection;
         }
