@@ -165,3 +165,4 @@ tfsadmindashboard/.vs/config/applicationhost.config
 /TFSAdminDashboard/TfsAdminDashboardCommands/Properties/VersionAssemblyInfo.cs
 *.nupkg
 /TFSAdminDashboard/.vs/TFSAdminConsole/v15/sqlite3/storage.ide
+/TFSAdminDashboard/.vs/TFSAdminConsole/v15

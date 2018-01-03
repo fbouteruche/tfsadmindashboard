@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using NLog;
 using TFSAdminDashboard.DataAccess.BO;
 using TFSAdminDashboard.DTO;
 using TFSDataService;
@@ -12,6 +13,8 @@ namespace TFSAdminDashboard.DataAccess
 {
     public class DashWorkItemHelper
     {
+        private static Logger logger = LogManager.GetCurrentClassLogger();
+
         public static WorkItemData FeedWorkItemData(string collectionName, string projectName)
         {
             List<WorkItemDefinition> workItemDefinitionCollection = new List<WorkItemDefinition>();
@@ -21,33 +24,41 @@ namespace TFSAdminDashboard.DataAccess
             DateTime lastModif = new DateTime(2015, 06, 01);
 
 
-           foreach(var wit in DataServiceWorkItems.Types(collectionName, projectName))
+            foreach (var wit in DataServiceWorkItems.Types(collectionName, projectName))
             {
-                WorkItemDefinition witDefinition = new WorkItemDefinition() { Name = wit.name, Description = wit.description };
-
-                var serviceAns = DataServiceWorkItems.StatesnModifs(collectionName, projectName, wit.name);
-
-                foreach (KeyValuePair<string, int> kvp in serviceAns.states)
+                try
                 {
-                    witDefinition.StateCollection.Add(kvp.Key, kvp.Value);
-                    witDefinition.TotalNumber += kvp.Value;
+                    WorkItemDefinition witDefinition = new WorkItemDefinition() { Name = wit.name, Description = wit.description };
 
-                    if (kvp.Key.ToUpper() == "CLOSED")
-                        witDefinition.ClosedNumber += kvp.Value;
+                    var serviceAns = DataServiceWorkItems.StatesnModifs(collectionName, projectName, wit.name);
+
+                    foreach (KeyValuePair<string, int> kvp in serviceAns.states)
+                    {
+                        witDefinition.StateCollection.Add(kvp.Key, kvp.Value);
+                        witDefinition.TotalNumber += kvp.Value;
+
+                        if (kvp.Key.ToUpper() == "CLOSED")
+                            witDefinition.ClosedNumber += kvp.Value;
+                    }
+
+                    // only mention wit types which are indeed used in the project
+                    if (witDefinition.StateCollection.Count >= 1)
+                    {
+                        workItemDefinitionCollection.Add(witDefinition);
+                        modifsYesterday += serviceAns.modifsYesterday;
+
+
+                        if (wit.name == "Test Case")
+                            testcasemodifyesterday += serviceAns.modifsYesterday;
+
+                        if (serviceAns.lastmodif > lastModif)
+                            lastModif = serviceAns.lastmodif;
+                    }
                 }
-
-                // only mention wit types which are indeed used in the project
-                if (witDefinition.StateCollection.Count >= 1)
+                catch (Exception e)
                 {
-                    workItemDefinitionCollection.Add(witDefinition);
-                    modifsYesterday += serviceAns.modifsYesterday;
-
-
-                    if (wit.name == "Test Case")
-                        testcasemodifyesterday += serviceAns.modifsYesterday;
-
-                    if (serviceAns.lastmodif > lastModif)
-                        lastModif = serviceAns.lastmodif;
+                    logger.Info(e, $"Error in StatesnModif for {collectionName}/{projectName}");
+                    continue;
                 }
             }
 
