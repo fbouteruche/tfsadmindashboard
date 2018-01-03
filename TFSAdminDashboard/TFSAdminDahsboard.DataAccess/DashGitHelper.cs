@@ -5,12 +5,15 @@ using TFSDataService;
 using TFSDataService.JsonBusinessObjects;
 using System;
 using System.Threading.Tasks;
+using NLog;
 
 namespace TFSAdminDashboard.DataAccess
 {
 
     public class DashGitHelper
     {
+        private static Logger logger = LogManager.GetCurrentClassLogger();
+
         internal static List<PullRequest> FeedPullRequestData(string collectionName, string projectName, string repoName)
         {
             return DataServiceGit.PullRequests(collectionName, projectName, repoName);
@@ -18,6 +21,7 @@ namespace TFSAdminDashboard.DataAccess
 
         internal static List<GitTag> FeedGitTagData(string collectionName, string projectName, string repoName)
         {
+            logger.Trace($"Get Tags for {collectionName}/{projectName}");
             return DataServiceGit.Tags(collectionName, projectName, repoName);
         }
 
