@@ -37,7 +37,7 @@ namespace TfsAdminDashboardConsole
         HelpText = "Extract also the OU property for each user in the Active Directory")]
         public bool extractUOFromAD { get; set; }
 
-        [Option("SaveAs", Required = false,
+        [Option("SaveAs", Required = false, DefaultValue = "CSV",
         HelpText = "'CSV' or 'JSON' output, default is CSV")]
         public string OutputFormat { get; set; }
 

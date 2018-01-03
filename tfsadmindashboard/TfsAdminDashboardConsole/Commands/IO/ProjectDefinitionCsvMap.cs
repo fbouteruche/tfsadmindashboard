@@ -14,12 +14,7 @@ namespace TfsAdminDashboardConsole.Commands
         {
             Map(m => m.CollectionName).Index(0).Name("Collection");
             Map(m => m.Name).Index(1).Name("Project");
-            Map(m => m.UtcCreationDate).Index(2).Name("Creation Date");
-
-            Map(m => m.LastCheckinDate).Index(3).Name("Last Checkin Date");
-            Map(m => m.LastFailedBuild).Index(4).Name("Last Failed Build Date");
-            Map(m => m.LastSuccessBuild).Index(5).Name("Last OK Build Date");
-
+            Map(m => m.Id).Index(2).Name("ID"); 
         }
     }
 }

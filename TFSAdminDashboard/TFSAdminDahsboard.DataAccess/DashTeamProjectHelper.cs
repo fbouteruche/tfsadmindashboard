@@ -103,7 +103,8 @@ namespace TFSAdminDashboard.DataAccess
 
                 // General data
                 logger.Trace($"{project.name} - General Data");
-                projectDefinition.Name = string.Format("{0}/{1}", currCollection.name, project.name);
+                projectDefinition.Name = project.name;
+                projectDefinition.Collection = currCollection.name;
                 projectDefinition.Id = project.id;
 
                 projectList.Add(projectDefinition);
